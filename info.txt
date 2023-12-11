@@ -1,0 +1,7 @@
+https://computing.llnl.gov/tutorials/parallel_comp/
+https://computing.llnl.gov/tutorials/pthreads/
+https://timmurphy.org/2010/05/04/pthreads-in-c-a-minimal-working-example/
+http://greenteapress.com/thinkos/html/thinkos012.html
+https://timmurphy.org/2014/04/26/using-fork-in-cc-a-minimum-working-example/
+https://stackoverflow.com/questions/876605/multiple-child-process
+https://stackoverflow.com/questions/9537068/sem-close-vs-sem-unlink-when-process-terminates
