@@ -27,4 +27,11 @@ fclean: clean
 
 re: fclean all
 
+test:
+	@gcc test.c -o test
+	@./test
+
+rtest:
+	@./test
+
 .PHONY: all clean fclean re
