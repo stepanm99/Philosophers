@@ -1,6 +1,6 @@
 NAME = philo
 
-SRC = main.c
+SRC = main.c arg_parsing.c data.c debug.c error.c time.c
 
 CC = cc
 FLAGS = -Wall -Wextra -Werror
