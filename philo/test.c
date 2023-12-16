@@ -4,6 +4,17 @@
 #include<unistd.h>
 #include<sys/time.h>
 
+// int main(void)
+// {
+// 	int n;
+
+// 	n = sizeof(int);
+// 	printf("size of int: %d\n", n);
+// 	n = sizeof(int*);
+// 	printf("sizeof in*: %d\n", n);
+// 	return (0);
+// }
+
 void	*ft_thread(void *arg)
 {
 	int	n;

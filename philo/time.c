@@ -6,7 +6,7 @@
 /*   By: smelicha <smelicha@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/16 19:59:19 by smelicha          #+#    #+#             */
-/*   Updated: 2023/12/16 20:07:30 by smelicha         ###   ########.fr       */
+/*   Updated: 2023/12/16 23:07:55 by smelicha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,13 +17,14 @@
 /// @return miliseconds since unix epoch
 uint64_t	get_time(void)
 {
-	struct timeval t;
+	struct timeval	t;
 
 	if (!gettimeofday(&t, NULL))
-		return ((t.tv_sec * (uint64_t)1000 + (t.tv_usec / 1000)));
+		return ((uint64_t)(t.tv_sec * 1000 + (t.tv_usec / 1000)));
 	else
 		return (0);
 }
+
 void	ft_usleep(uint64_t delay)
 {
 	uint64_t	start;

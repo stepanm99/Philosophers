@@ -3,7 +3,7 @@ NAME = philo
 SRC = main.c arg_parsing.c data.c debug.c error.c time.c
 
 CC = cc
-FLAGS = -Wall -Wextra -Werror
+FLAGS = -Wall -Wextra -Werror -g
 DFLAGS = -Wall -Wextra -Werror -g -fsanitize=address -static-libsan
 
 OBJ = $(SRC:.c=.o)
@@ -17,7 +17,7 @@ $(NAME): $(OBJ)
 
 %.o: %.c
 	@echo "Compiling $<"
-	@$(CC) $(CFLAGS) -c $< -o $@
+	@$(CC) $(FLAGS) -c $< -o $@
 
 clean:
 	@rm -f $(OBJ)

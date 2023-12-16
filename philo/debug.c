@@ -6,7 +6,7 @@
 /*   By: smelicha <smelicha@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/16 20:02:27 by smelicha          #+#    #+#             */
-/*   Updated: 2023/12/16 20:12:49 by smelicha         ###   ########.fr       */
+/*   Updated: 2023/12/16 23:58:45 by smelicha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,15 @@ void	time_test(int time)
 	else
 		printf("new time slept: %d\n", (t2.tv_usec - t1.tv_usec) / (suseconds_t)1);
 }
-void	print_start_time(t_data *data)
+
+void	print_philos(t_data *data)
 {
-	printf("start time: %ld s %d us\n", data->start->tv_sec, data->start->tv_usec);
+	int	i;
+
+	i = 0;
+	while (i != data->num_of_philos)
+	{
+		printf("number of philo: %i, number from philo: %i\n", (i + 1), data->philos[i].number);
+		i++;
+	}
 }

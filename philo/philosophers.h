@@ -6,18 +6,44 @@
 /*   By: smelicha <smelicha@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/15 17:59:11 by smelicha          #+#    #+#             */
-/*   Updated: 2023/12/16 20:13:17 by smelicha         ###   ########.fr       */
+/*   Updated: 2023/12/17 00:13:56 by smelicha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include<stdio.h>
-#include<unistd.h>
-#include<stdlib.h>
-#include<pthread.h>
-#include<sys/time.h>
-#include<stdint.h>
+#ifndef PHILOSOPHERS_H
+# define PHILOSOPHERS_H
 
+# include <stdio.h>
+# include <unistd.h>
+# include <stdlib.h>
+# include <pthread.h>
+# include <sys/time.h>
+# include <stdint.h>
 
+# define ALLOCATION_ERR 1
+# define ARGUMENT_ERR 2
+# define THREAD_ERR 3
+# define MUTEX_ERR 4
+/*state:
+	0 - dead
+	1 - eat
+	2 - sleep
+	3 - think
+*/
+typedef struct s_philo
+{
+	pthread_t		thread_id;
+	int				number;
+	unsigned int	ate;
+	uint64_t		last_eating;
+	char			state;
+	int				eat;
+	int				sleep;
+	int				die;
+	int				number_of_forks;
+	pthread_mutex_t	right_fork;
+	pthread_mutex_t	left_fork;
+}	t_philo;
 
 typedef struct s_data
 {
@@ -26,25 +52,30 @@ typedef struct s_data
 	int				sleep;
 	int				die;
 	int				must_eat;
-	struct timeval	*start;
+	uint64_t		start_time;
+	t_philo			*philos;
+	pthread_mutex_t	*forks;
 }	t_data;
 
-
 /*Utilities*/
-int		ft_atoi(const char *str, t_data *data);
+int			ft_atoi(const char *str, t_data *data);
 
 /*Time*/
 uint64_t	get_time(void);
 void		ft_usleep(uint64_t delay);
 
 /*Data handling*/
-void	arg_pars(t_data *data, int argc, const char **argv);
-void	free_data(t_data *data);
+void		arg_pars(t_data *data, int argc, const char **argv);
+void		free_data(t_data *data);
+void		prepare_philos_data(t_data *data);
+void		prepare_forks_data(t_data *data);
 
 /*Error*/
-void	error(t_data *data, int errno);
+void		error(t_data *data, int errno);
 
 /*Debug*/
-void	print_data(t_data *data);
-void	time_test(int time);
-void	print_start_time(t_data *data);
+void		print_data(t_data *data);
+void		time_test(int time);
+void		print_philos(t_data *data);
+
+#endif

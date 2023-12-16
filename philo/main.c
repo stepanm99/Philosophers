@@ -6,7 +6,7 @@
 /*   By: smelicha <smelicha@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/15 17:59:18 by smelicha          #+#    #+#             */
-/*   Updated: 2023/12/16 20:15:24 by smelicha         ###   ########.fr       */
+/*   Updated: 2023/12/17 00:14:04 by smelicha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,23 +16,18 @@ int	main(int argc, const char **argv)
 {
 	t_data	*data;
 	int		i;
-	
+
 	i = 10;
-	printf("argc: %i\n", argc);
 	data = NULL;
 	data = malloc(sizeof(t_data));
 	if (!data)
 		error(data, 1);
-	data->start = malloc(sizeof(struct timeval));
 	arg_pars(data, argc, argv);
 	print_data(data);
-	gettimeofday(data->start, NULL);
-	print_start_time(data);
-	while (i != 200)
-	{
-		time_test(i);
-		i += 10;
-	}
+	prepare_forks_data(data);
+	prepare_philos_data(data);
+	print_philos(data);
+	data->start_time = get_time();
 	free_data(data);
 	return (0);
 }
