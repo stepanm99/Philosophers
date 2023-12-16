@@ -6,7 +6,7 @@
 /*   By: smelicha <smelicha@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/15 17:59:18 by smelicha          #+#    #+#             */
-/*   Updated: 2023/12/15 17:59:31 by smelicha         ###   ########.fr       */
+/*   Updated: 2023/12/16 02:13:03 by smelicha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,17 +92,83 @@ void	error(t_data *data, int errno)
 		printf("Memory allocation error!\n");
 }
 
+
+// void	ft_usleep(unsigned long time)
+// {
+// 	struct timeval t1;
+// 	struct timeval t2;
+
+// 	gettimeofday(&t1, NULL);
+// }
+
+uint64_t	get_time(void)
+{
+	struct timeval t;
+
+	if (!gettimeofday(&t, NULL))
+		return ((t.tv_sec * (uint64_t)1000 + (t.tv_usec / 1000)));
+	else
+		return (0);
+}
+
+void	ft_usleep(uint64_t delay)
+{
+	uint64_t	start;
+
+	start = get_time();
+	while ((get_time() - start) < delay)
+		usleep(5);
+}
+
+void	time_test(int time)
+{
+	struct timeval t1;
+	struct timeval t2;
+
+	printf("\nrequested time: %ius\n", time * 1000);
+	gettimeofday(&t1, NULL);
+	usleep(time * 1000);
+	gettimeofday(&t2, NULL);
+	if (t2.tv_sec - t1.tv_sec)
+		printf("original time slept: %lu\n", ((t2.tv_usec + 1000000) - t1.tv_usec) / 1);
+	else
+		printf("original time slept: %lu\n", (t2.tv_usec - t1.tv_usec) / 1);
+	gettimeofday(&t1, NULL);
+	ft_usleep(time);
+	gettimeofday(&t2, NULL);
+
+	if (t2.tv_sec - t1.tv_sec)
+		printf("new time slept: %lu\n", ((t2.tv_usec + 1000000) - t1.tv_usec) / 1);
+	else
+		printf("new time slept: %lu\n", (t2.tv_usec - t1.tv_usec) / 1);
+}
+
+void	print_start_time(t_data *data)
+{
+	printf("start time: %lus %luus\n", data->start->tv_sec, data->start->tv_usec);
+}
+
 int	main(int argc, const char **argv)
 {
 	t_data	*data;
+	int		i;
 	
+	i = 10;
 	printf("argc: %i\n", argc);
 	data = NULL;
 	data = malloc(sizeof(t_data));
 	if (!data)
 		error(data, 1);
+	data->start = malloc(sizeof(struct timeval));
 	arg_pars(data, argc, argv);
 	print_data(data);
+	gettimeofday(data->start, NULL);
+	print_start_time(data);
+	while (i != 200)
+	{
+		time_test(i);
+		i += 10;
+	}
 	free_data(data);
 	return (0);
 }

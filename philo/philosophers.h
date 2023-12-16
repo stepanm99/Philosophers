@@ -6,7 +6,7 @@
 /*   By: smelicha <smelicha@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/15 17:59:11 by smelicha          #+#    #+#             */
-/*   Updated: 2023/12/15 17:59:14 by smelicha         ###   ########.fr       */
+/*   Updated: 2023/12/16 01:54:29 by smelicha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,16 +15,18 @@
 #include<stdlib.h>
 #include<pthread.h>
 #include<sys/time.h>
+#include<stdint.h>
 
 
 
 typedef struct s_data
 {
-	int	num_of_philos;
-	int	eat;
-	int	sleep;
-	int	die;
-	int	must_eat;
+	int				num_of_philos;
+	int				eat;
+	int				sleep;
+	int				die;
+	int				must_eat;
+	struct timeval	*start;
 }	t_data;
 
 
