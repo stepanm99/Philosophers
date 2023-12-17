@@ -6,6 +6,9 @@ https://timmurphy.org/2014/04/26/using-fork-in-cc-a-minimum-working-example/
 https://stackoverflow.com/questions/876605/multiple-child-process
 https://stackoverflow.com/questions/9537068/sem-close-vs-sem-unlink-when-process-terminates
 
+
+https://www.cs.cmu.edu/afs/cs/academic/class/15492-f07/www/pthreads.html
+
 functions:
 memset, printf, malloc, free, write,
 usleep, gettimeofday, pthread_create,
