@@ -6,7 +6,7 @@
 /*   By: smelicha <smelicha@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/15 17:59:11 by smelicha          #+#    #+#             */
-/*   Updated: 2023/12/17 23:08:59 by smelicha         ###   ########.fr       */
+/*   Updated: 2023/12/18 00:43:02 by smelicha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,7 @@ typedef struct s_philo
 	int				number_of_forks;
 	pthread_mutex_t	right_fork;
 	pthread_mutex_t	left_fork;
+	pthread_mutex_t	print;
 }	t_philo;
 
 typedef struct s_data

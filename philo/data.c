@@ -6,7 +6,7 @@
 /*   By: smelicha <smelicha@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/16 19:59:09 by smelicha          #+#    #+#             */
-/*   Updated: 2023/12/17 23:32:39 by smelicha         ###   ########.fr       */
+/*   Updated: 2023/12/18 00:56:18 by smelicha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,17 +19,21 @@ void	destroy_mutexes(t_data *data)
 	int	i;
 
 	i = 0;
-	pthread_mutex_destroy(&data->print);
+	if (data->print.__sig)
+		pthread_mutex_destroy(&data->print);
 	while (i != data->num_of_philos)
 	{
-		pthread_mutex_destroy(&data->philos[i].left_fork);
-		pthread_mutex_destroy(&data->philos[i].right_fork);
-		pthread_mutex_destroy(&data->forks[i]);
+		if (data->philos[i].left_fork.__sig)
+			pthread_mutex_destroy(&data->philos[i].left_fork);
+		if (data->philos[i].right_fork.__sig)
+			pthread_mutex_destroy(&data->philos[i].right_fork);
+		if (data->forks[i].__sig)
+			pthread_mutex_destroy(&data->forks[i]);
 		i++;
 	}
 }
 
-/// @brief Free all allocated data
+/// @brief Destroy mutexes and free memory
 /// @param data Main data struct
 void	free_data(t_data *data)
 {
@@ -54,7 +58,8 @@ void	prepare_forks_data(t_data *data)
 		error(data, ALLOCATION_ERR);
 	while (i != data->num_of_philos)
 	{
-		pthread_mutex_init(&data->forks[i], NULL);
+		if (pthread_mutex_init(&data->forks[i], NULL))
+			error(data, MUTEX_ERR);
 		i++;
 	}
 }
@@ -94,6 +99,7 @@ void	prepare_philos_data(t_data *data)
 		data->philos[i].die = data->die;
 		data->philos[i].state = 1;
 		data->philos[i].number_of_forks = data->num_of_philos;
+		data->philos[i].print = data->print;
 		give_philo_forks(data, i);
 		i++;
 	}

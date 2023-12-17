@@ -6,7 +6,7 @@
 /*   By: smelicha <smelicha@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/17 22:39:08 by smelicha          #+#    #+#             */
-/*   Updated: 2023/12/17 23:11:01 by smelicha         ###   ########.fr       */
+/*   Updated: 2023/12/18 00:44:01 by smelicha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,14 @@
 /// @param action What is the new state
 void	print_status(pthread_mutex_t print, int p_number, int state)
 {
-
+	pthread_mutex_lock(&print);
+	if (state == 1)
+		printf("");
+	if (state == 2)
+		printf("");
+	if (state == 3)
+		printf("");
+	pthread_mutex_unlock(&print);
 }
 
 /// @brief Routine of a single philosopher
@@ -26,5 +33,6 @@ void	print_status(pthread_mutex_t print, int p_number, int state)
 /// @param p_num Number of philosopher, used to acces OWN data from array
 void	philosopher(t_data *data, int p_num)
 {
-
+	data = data + 1 - 1;
+	p_num = p_num + 1 - 1;
 }

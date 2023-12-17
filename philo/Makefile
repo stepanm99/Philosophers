@@ -1,7 +1,7 @@
 NAME = philo
 
 SRC = main.c arg_parsing.c data.c debug.c error.c time.c \
-	deloyment_of_philos.c grim_reaper.c philosopher.c
+	deployment_of_philos.c grim_reaper.c philosopher.c
 
 CC = cc
 FLAGS = -Wall -Wextra -Werror -g
