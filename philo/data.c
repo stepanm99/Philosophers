@@ -6,14 +6,34 @@
 /*   By: smelicha <smelicha@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/16 19:59:09 by smelicha          #+#    #+#             */
-/*   Updated: 2023/12/17 00:13:26 by smelicha         ###   ########.fr       */
+/*   Updated: 2023/12/17 23:32:39 by smelicha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers.h"
 
+/// @brief Call mutex destroy routine to exit cleanly
+/// @param data Main data struct
+void	destroy_mutexes(t_data *data)
+{
+	int	i;
+
+	i = 0;
+	pthread_mutex_destroy(&data->print);
+	while (i != data->num_of_philos)
+	{
+		pthread_mutex_destroy(&data->philos[i].left_fork);
+		pthread_mutex_destroy(&data->philos[i].right_fork);
+		pthread_mutex_destroy(&data->forks[i]);
+		i++;
+	}
+}
+
+/// @brief Free all allocated data
+/// @param data Main data struct
 void	free_data(t_data *data)
 {
+	destroy_mutexes(data);
 	if (data->philos)
 		free(data->philos);
 	if (data->forks)
@@ -22,6 +42,8 @@ void	free_data(t_data *data)
 		free(data);
 }
 
+/// @brief Initialize array of forks (mutexes)
+/// @param data Main data struct
 void	prepare_forks_data(t_data *data)
 {
 	int	i;
@@ -37,7 +59,25 @@ void	prepare_forks_data(t_data *data)
 	}
 }
 
-/*TODO: figure out initial state and forks each philo has access to*/
+/// @brief Gives phlosopher acces to forks next to him
+/// @param data Main data struct
+/// @param i Number of the philosopher's data in array
+void	give_philo_forks(t_data *data, int i)
+{
+	if (i != 0)
+	{
+		data->philos[i].right_fork = data->forks[i - 1];
+		data->philos[i].left_fork = data->forks[i];
+	}
+	else
+	{
+		data->philos[i].right_fork = data->forks[data->num_of_philos - 1];
+		data->philos[i].left_fork = data->forks[i];
+	}
+}
+
+/// @brief Initialize array of philos with their data
+/// @param data Main data struct
 void	prepare_philos_data(t_data *data)
 {
 	int	i;
@@ -52,7 +92,9 @@ void	prepare_philos_data(t_data *data)
 		data->philos[i].eat = data->eat;
 		data->philos[i].sleep = data->sleep;
 		data->philos[i].die = data->die;
+		data->philos[i].state = 1;
 		data->philos[i].number_of_forks = data->num_of_philos;
+		give_philo_forks(data, i);
 		i++;
 	}
 }

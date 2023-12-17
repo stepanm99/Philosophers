@@ -6,7 +6,7 @@
 /*   By: smelicha <smelicha@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/16 19:59:14 by smelicha          #+#    #+#             */
-/*   Updated: 2023/12/16 20:03:42 by smelicha         ###   ########.fr       */
+/*   Updated: 2023/12/17 23:13:18 by smelicha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,10 @@ int	ft_atoi(const char *str, t_data *data)
 	return (n * negflag);
 }
 
+/// @brief Parses arguments to main data struct
+/// @param data Main data struct
+/// @param argc How many arguments were given
+/// @param argv Value of given arguments
 void	arg_pars(t_data *data, int argc, const char **argv)
 {
 	if (argv[1])

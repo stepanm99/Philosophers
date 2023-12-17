@@ -6,7 +6,7 @@
 /*   By: smelicha <smelicha@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/15 17:59:11 by smelicha          #+#    #+#             */
-/*   Updated: 2023/12/17 00:13:56 by smelicha         ###   ########.fr       */
+/*   Updated: 2023/12/17 23:08:59 by smelicha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,7 @@ typedef struct s_data
 	int				die;
 	int				must_eat;
 	uint64_t		start_time;
+	pthread_mutex_t	print;
 	t_philo			*philos;
 	pthread_mutex_t	*forks;
 }	t_data;

@@ -6,7 +6,7 @@
 /*   By: smelicha <smelicha@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/16 20:02:27 by smelicha          #+#    #+#             */
-/*   Updated: 2023/12/16 23:58:45 by smelicha         ###   ########.fr       */
+/*   Updated: 2023/12/17 23:23:21 by smelicha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@ void	print_data(t_data *data)
 	printf("sleep: %i\n", data->sleep);
 	printf("die: %i\n", data->die);
 	printf("must_eat: %i\n", data->must_eat);
+	printf("print mutex |%s| |%li|\n", data->print.__opaque, data->print.__sig);
 }
 void	time_test(int time)
 {
