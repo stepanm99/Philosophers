@@ -6,7 +6,7 @@
 /*   By: smelicha <smelicha@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/16 19:59:09 by smelicha          #+#    #+#             */
-/*   Updated: 2023/12/18 00:56:18 by smelicha         ###   ########.fr       */
+/*   Updated: 2023/12/18 16:29:43 by smelicha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,15 +19,15 @@ void	destroy_mutexes(t_data *data)
 	int	i;
 
 	i = 0;
-	if (data->print.__sig)
+	if (data->print.MUTEX_NUM)
 		pthread_mutex_destroy(&data->print);
 	while (i != data->num_of_philos)
 	{
-		if (data->philos[i].left_fork.__sig)
+		if (data->philos[i].left_fork.MUTEX_NUM)
 			pthread_mutex_destroy(&data->philos[i].left_fork);
-		if (data->philos[i].right_fork.__sig)
+		if (data->philos[i].right_fork.MUTEX_NUM)
 			pthread_mutex_destroy(&data->philos[i].right_fork);
-		if (data->forks[i].__sig)
+		if (data->forks[i].MUTEX_NUM)
 			pthread_mutex_destroy(&data->forks[i]);
 		i++;
 	}

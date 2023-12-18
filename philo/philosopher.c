@@ -6,7 +6,7 @@
 /*   By: smelicha <smelicha@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/17 22:39:08 by smelicha          #+#    #+#             */
-/*   Updated: 2023/12/18 00:44:01 by smelicha         ###   ########.fr       */
+/*   Updated: 2023/12/18 16:37:50 by smelicha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,11 +20,12 @@ void	print_status(pthread_mutex_t print, int p_number, int state)
 {
 	pthread_mutex_lock(&print);
 	if (state == 1)
-		printf("");
+		printf("eating\n");
 	if (state == 2)
-		printf("");
+		printf("sleaping\n");
 	if (state == 3)
-		printf("");
+		printf("thonking\n");
+	printf("p_number: %i\n", p_number);
 	pthread_mutex_unlock(&print);
 }
 

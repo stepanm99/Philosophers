@@ -6,7 +6,7 @@
 /*   By: smelicha <smelicha@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/15 17:59:11 by smelicha          #+#    #+#             */
-/*   Updated: 2023/12/18 00:43:02 by smelicha         ###   ########.fr       */
+/*   Updated: 2023/12/18 16:39:29 by smelicha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,15 @@
 # include <pthread.h>
 # include <sys/time.h>
 # include <stdint.h>
+
+/*Defining OS dependent mutex variable names*/
+
+# ifdef __APPLE__
+#  define MUTEX_NUM __sig
+# endif
+# ifdef __linux__
+#  define MUTEX_NUM __data.__lock
+# endif
 
 # define ALLOCATION_ERR 1
 # define ARGUMENT_ERR 2

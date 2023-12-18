@@ -6,7 +6,7 @@
 /*   By: smelicha <smelicha@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/17 23:38:01 by smelicha          #+#    #+#             */
-/*   Updated: 2023/12/18 00:39:14 by smelicha         ###   ########.fr       */
+/*   Updated: 2023/12/18 16:36:27 by smelicha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ somebody has died*/
 
 void	funeral(t_data *data)
 {
-
+	printf("num_of_philos: %i\n", data->num_of_philos);
 }
 
 void	grim_reaper(t_data *data)
