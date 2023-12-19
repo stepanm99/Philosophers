@@ -6,7 +6,7 @@
 /*   By: smelicha <smelicha@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/17 22:39:08 by smelicha          #+#    #+#             */
-/*   Updated: 2023/12/18 16:37:50 by smelicha         ###   ########.fr       */
+/*   Updated: 2023/12/19 22:22:58 by smelicha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,8 @@ void	print_status(pthread_mutex_t print, int p_number, int state)
 /// @param p_num Number of philosopher, used to acces OWN data from array
 void	philosopher(t_data *data, int p_num)
 {
-	data = data + 1 - 1;
-	p_num = p_num + 1 - 1;
+	pthread_mutex_lock(&data->print);
+	printf("Philosopher %i deployed at %lims after program started\n", (p_num + 1), (data->start_time - get_time()));
+	pthread_mutex_unlock(&data->print);
+	data->philos[p_num].state = 0;
 }
