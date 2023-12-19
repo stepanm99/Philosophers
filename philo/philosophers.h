@@ -6,7 +6,7 @@
 /*   By: smelicha <smelicha@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/15 17:59:11 by smelicha          #+#    #+#             */
-/*   Updated: 2023/12/18 16:39:29 by smelicha         ###   ########.fr       */
+/*   Updated: 2023/12/19 21:31:47 by smelicha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,7 @@
 	1 - eat
 	2 - sleep
 	3 - think
+	4 - full
 */
 typedef struct s_philo
 {
@@ -63,6 +64,7 @@ typedef struct s_data
 	int				die;
 	int				must_eat;
 	uint64_t		start_time;
+	pthread_t		grim_reaper;
 	pthread_mutex_t	print;
 	t_philo			*philos;
 	pthread_mutex_t	*forks;
