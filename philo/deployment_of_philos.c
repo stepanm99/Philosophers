@@ -6,7 +6,7 @@
 /*   By: smelicha <smelicha@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/17 22:40:52 by smelicha          #+#    #+#             */
-/*   Updated: 2023/12/17 23:52:41 by smelicha         ###   ########.fr       */
+/*   Updated: 2023/12/23 23:57:45 by smelicha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,13 +16,18 @@
 /// @param data Main data struct
 void	deploy_eaters(t_data *data)
 {
+	t_philo_arg	arg;
 	int	i;
 
 	i = 0;
+	arg.data = data;
+	arg.p_num = i;
 	if (data->num_of_philos % 2)
 	{
 		while (i < data->num_of_philos)
 		{
+			arg.p_num = i;
+			pthread_create(data->philos[i].thread_id, NULL, &philosopher, &arg);
 			i += 2;
 		}
 	}
@@ -30,6 +35,8 @@ void	deploy_eaters(t_data *data)
 	{
 		while (i < data->num_of_philos)
 		{
+			arg.p_num = i;
+			pthread_create(data->philos[i].thread_id, NULL, &philosopher, &arg);
 			i += 2;
 		}
 	}
@@ -39,13 +46,17 @@ void	deploy_eaters(t_data *data)
 /// @param data Main data struct
 void	deploy_rest(t_data *data)
 {
+	t_philo_arg	arg;
 	int	i;
 
 	i = 1;
+	arg.data = data;
 	if (data->num_of_philos % 2)
 	{
 		while (i < data->num_of_philos)
 		{
+			arg.p_num = i;
+			pthread_create(data->philos[i].thread_id, NULL, &philosopher, &arg);
 			i += 2;
 		}
 	}
@@ -53,6 +64,8 @@ void	deploy_rest(t_data *data)
 	{
 		while (i < data->num_of_philos)
 		{
+			arg.p_num = i;
+			pthread_create(data->philos[i].thread_id, NULL, &philosopher, &arg);
 			i += 2;
 		}
 	}
@@ -64,5 +77,5 @@ void	deploy_philosophers(t_data *data)
 {
 	deploy_eaters(data);
 	deploy_rest(data);
-	/*deploy grim reaper*/
+	pthread_create(data->grim_reaper, NULL, &grim_reaper, &data);
 }

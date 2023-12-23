@@ -6,7 +6,7 @@
 /*   By: smelicha <smelicha@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/15 17:59:11 by smelicha          #+#    #+#             */
-/*   Updated: 2023/12/19 21:31:47 by smelicha         ###   ########.fr       */
+/*   Updated: 2023/12/23 23:50:00 by smelicha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@
 # define ARGUMENT_ERR 2
 # define THREAD_ERR 3
 # define MUTEX_ERR 4
+
 /*state:
 	0 - dead
 	1 - eat
@@ -70,6 +71,12 @@ typedef struct s_data
 	pthread_mutex_t	*forks;
 }	t_data;
 
+typedef struct s_philo_arg
+{
+	t_data	*data;
+	int		p_num;
+}	t_philo_arg;
+
 /*Utilities*/
 int			ft_atoi(const char *str, t_data *data);
 
@@ -85,6 +92,13 @@ void		prepare_forks_data(t_data *data);
 
 /*Error*/
 void		error(t_data *data, int errno);
+
+/*Philosopher thread function*/
+
+void		philosopher(t_data *data, int p_num);
+
+/*Grim reaper thread function*/
+void		grim_reaper(t_data *data);
 
 /*Debug*/
 void		print_data(t_data *data);
