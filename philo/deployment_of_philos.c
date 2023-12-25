@@ -6,7 +6,7 @@
 /*   By: smelicha <smelicha@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/17 22:40:52 by smelicha          #+#    #+#             */
-/*   Updated: 2023/12/23 23:57:45 by smelicha         ###   ########.fr       */
+/*   Updated: 2023/12/25 21:24:43 by smelicha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,10 @@ void	deploy_eaters(t_data *data)
 {
 	t_philo_arg	arg;
 	int	i;
+	int	r;
 
 	i = 0;
+	r = 0;
 	arg.data = data;
 	arg.p_num = i;
 	if (data->num_of_philos % 2)
@@ -27,7 +29,7 @@ void	deploy_eaters(t_data *data)
 		while (i < data->num_of_philos)
 		{
 			arg.p_num = i;
-			pthread_create(data->philos[i].thread_id, NULL, &philosopher, &arg);
+			r += pthread_create(&data->philos[i].thread_id, NULL, (void *)&philosopher, &arg);
 			i += 2;
 		}
 	}
@@ -36,7 +38,7 @@ void	deploy_eaters(t_data *data)
 		while (i < data->num_of_philos)
 		{
 			arg.p_num = i;
-			pthread_create(data->philos[i].thread_id, NULL, &philosopher, &arg);
+			r += pthread_create(&data->philos[i].thread_id, NULL, (void *)&philosopher, &arg);
 			i += 2;
 		}
 	}
@@ -48,15 +50,17 @@ void	deploy_rest(t_data *data)
 {
 	t_philo_arg	arg;
 	int	i;
+	int	r;
 
 	i = 1;
+	r = 0;
 	arg.data = data;
 	if (data->num_of_philos % 2)
 	{
 		while (i < data->num_of_philos)
 		{
 			arg.p_num = i;
-			pthread_create(data->philos[i].thread_id, NULL, &philosopher, &arg);
+			r += pthread_create(&data->philos[i].thread_id, NULL, (void *)&philosopher, &arg);
 			i += 2;
 		}
 	}
@@ -65,7 +69,7 @@ void	deploy_rest(t_data *data)
 		while (i < data->num_of_philos)
 		{
 			arg.p_num = i;
-			pthread_create(data->philos[i].thread_id, NULL, &philosopher, &arg);
+			r += pthread_create(&data->philos[i].thread_id, NULL, (void *)&philosopher, &arg);
 			i += 2;
 		}
 	}
@@ -77,5 +81,5 @@ void	deploy_philosophers(t_data *data)
 {
 	deploy_eaters(data);
 	deploy_rest(data);
-	pthread_create(data->grim_reaper, NULL, &grim_reaper, &data);
+	pthread_create(&data->grim_reaper, NULL, (void *)&grim_reaper, &data);
 }

@@ -6,7 +6,7 @@
 /*   By: smelicha <smelicha@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/17 23:38:01 by smelicha          #+#    #+#             */
-/*   Updated: 2023/12/22 18:47:26 by smelicha         ###   ########.fr       */
+/*   Updated: 2023/12/25 21:14:27 by smelicha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,9 @@ void	grim_reaper(t_data *data)
 	int	i;
 
 	i = 0;
+	pthread_mutex_lock(&data->print);
+	printf("Grim reaper deployed!\n");
+	pthread_mutex_unlock(&data->print);
 	while(1)
 	{
 		if (!data->philos[i].state)

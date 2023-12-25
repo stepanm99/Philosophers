@@ -6,7 +6,7 @@
 /*   By: smelicha <smelicha@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/15 17:59:18 by smelicha          #+#    #+#             */
-/*   Updated: 2023/12/18 16:44:33 by smelicha         ###   ########.fr       */
+/*   Updated: 2023/12/25 21:11:23 by smelicha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,8 +34,9 @@ int	main(int argc, const char **argv)
 	prepare_philos_data(data);
 	print_philos(data);
 	data->start_time = get_time();
-	print_data(data);
+	deploy_philosophers(data);
+//	print_data(data);
 	free_data(data);
-	system("leaks philo");
+//	system("leaks philo");
 	return (0);
 }

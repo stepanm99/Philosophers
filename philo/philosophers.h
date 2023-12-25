@@ -6,7 +6,7 @@
 /*   By: smelicha <smelicha@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/15 17:59:11 by smelicha          #+#    #+#             */
-/*   Updated: 2023/12/23 23:50:00 by smelicha         ###   ########.fr       */
+/*   Updated: 2023/12/25 21:17:59 by smelicha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,8 +94,8 @@ void		prepare_forks_data(t_data *data);
 void		error(t_data *data, int errno);
 
 /*Philosopher thread function*/
-
-void		philosopher(t_data *data, int p_num);
+void		deploy_philosophers(t_data *data);
+void		philosopher(void *arg_ptr);
 
 /*Grim reaper thread function*/
 void		grim_reaper(t_data *data);
