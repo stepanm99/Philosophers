@@ -8,9 +8,11 @@
 			"type": "lldb",
 			"request": "launch",
 			"name": "Debug",
-			"program": "/Users/smelicha/Documents/in_progress/Philosophers/philo/philo",
-			"args": ["10", "500", "100", "100", "5"],
-			"cwd": "/Users/smelicha/Documents/in_progress/Philosophers/philo"
+			"program": "/home/stepan/Documents/Programming/Philosophers/philo/test",
+			"args": [],
+			"cwd": "/home/stepan/Documents/Programming/Philosophers/philo"
 		}
 	]
 }
+
+// "10", "500", "100", "100", "5"
