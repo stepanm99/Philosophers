@@ -6,7 +6,7 @@
 /*   By: smelicha <smelicha@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/15 17:59:11 by smelicha          #+#    #+#             */
-/*   Updated: 2023/12/25 21:17:59 by smelicha         ###   ########.fr       */
+/*   Updated: 2023/12/28 18:45:34 by smelicha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,7 @@ typedef struct s_data
 	int				sleep;
 	int				die;
 	int				must_eat;
+	char			print_flag;
 	uint64_t		start_time;
 	pthread_t		grim_reaper;
 	pthread_mutex_t	print;

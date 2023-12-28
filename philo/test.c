@@ -129,8 +129,8 @@ void	thread(void *data_ptr)
 	pthread_mutex_lock(test->print);
 	printf("message from thread %i with string %s\n", test->num, test->str);
 	pthread_mutex_unlock(test->print);
-	while (1)
-		sleep(1);
+	sleep(1);
+	pthread_exit(0);
 }
 
 int	main(void)
@@ -180,13 +180,13 @@ int	main(void)
 	i = 0;
 	while (i != 100)
 	{
-		pthread_kill(threads[i], SIGKILL);
+		pthread_detach(threads[i]);
 		i++;
 	}
 	i = 0;
 	while (i != 100)
 	{
-		free(threads[i]);
+//		free(threads[i]);
 		free(test[i].str);
 		i++;
 	}

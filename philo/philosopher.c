@@ -6,7 +6,7 @@
 /*   By: smelicha <smelicha@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/17 22:39:08 by smelicha          #+#    #+#             */
-/*   Updated: 2023/12/25 21:18:40 by smelicha         ###   ########.fr       */
+/*   Updated: 2023/12/28 18:46:25 by smelicha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,8 @@ void	philosopher(void *arg_ptr)
 	data = arg->data;
 	p_num = arg->p_num;
 
+	if (data->print_flag)
+		print_status(data->print, p_num, data->philos[p_num].state);
 	pthread_mutex_lock(&data->print);
 	printf("Philosopher %i deployed at %lims after program started\n", (p_num + 1), (data->start_time - get_time()));
 	pthread_mutex_unlock(&data->print);
