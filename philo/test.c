@@ -133,6 +133,42 @@ void	thread(void *data_ptr)
 	pthread_exit(0);
 }
 
+static void	create_threads(pthread_t *threads, t_test *test)
+{
+	int	i;
+
+	i = 0;
+	while (i != 100)
+	{
+		pthread_create(&threads[i], NULL, (void *)&thread, &test[i]);
+		i++;
+	}
+}
+
+static void	detach_threads(pthread_t *threads)
+{
+	int	i;
+
+	i = 0;
+	while (i != 100)
+	{
+		pthread_detach(threads[i]);
+		i++;
+	}
+}
+
+static void	print_threads(pthread_t *threads)
+{
+	int	i;
+
+	i = 0;
+	while (i != 100)
+	{
+		printf("thread nr %i has id: %lu\n", i, threads[i]);
+		i++;
+	}
+}
+
 int	main(void)
 {
 	t_test			*test;
@@ -170,19 +206,10 @@ int	main(void)
 		test[i].print = print;
 		i++;
 	}
-	i = 0;
-	while (i != 100)
-	{
-		pthread_create(&threads[i], NULL, (void *)&thread, &test[i]);
-		i++;
-	}
+	create_threads(threads, test);
+	print_threads(threads);
+	detach_threads(threads);
 	sleep(2);
-	i = 0;
-	while (i != 100)
-	{
-		pthread_detach(threads[i]);
-		i++;
-	}
 	i = 0;
 	while (i != 100)
 	{

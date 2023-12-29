@@ -6,7 +6,7 @@
 /*   By: smelicha <smelicha@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/15 17:59:18 by smelicha          #+#    #+#             */
-/*   Updated: 2023/12/25 21:11:23 by smelicha         ###   ########.fr       */
+/*   Updated: 2023/12/28 22:39:49 by smelicha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,9 @@ int	main(int argc, const char **argv)
 	if (!data)
 		error(data, 1);
 	arg_pars(data, argc, argv);
+	printf("num of philos from main: %i\n", data->num_of_philos);
+	data->start = 0;
+	data->print_flag = 1;
 	print_data(data);
 	pthread_mutex_init(&data->print, NULL); //initialize print mutex
 	prepare_forks_data(data);

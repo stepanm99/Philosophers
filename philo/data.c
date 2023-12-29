@@ -6,7 +6,7 @@
 /*   By: smelicha <smelicha@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/16 19:59:09 by smelicha          #+#    #+#             */
-/*   Updated: 2023/12/19 21:26:04 by smelicha         ###   ########.fr       */
+/*   Updated: 2023/12/28 22:26:48 by smelicha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,16 +19,10 @@ void	destroy_mutexes(t_data *data)
 	int	i;
 
 	i = 0;
-	if (data->print.MUTEX_NUM)
-		pthread_mutex_destroy(&data->print);
+	pthread_mutex_destroy(&data->print);
 	while (i != data->num_of_philos)
 	{
-		if (data->philos[i].left_fork.MUTEX_NUM)
-			pthread_mutex_destroy(&data->philos[i].left_fork);
-		if (data->philos[i].right_fork.MUTEX_NUM)
-			pthread_mutex_destroy(&data->philos[i].right_fork);
-		if (data->forks[i].MUTEX_NUM)
-			pthread_mutex_destroy(&data->forks[i]);
+		pthread_mutex_destroy(&data->forks[i]);
 		i++;
 	}
 }
@@ -53,6 +47,7 @@ void	prepare_forks_data(t_data *data)
 	int	i;
 
 	i = 0;
+	printf("num of philos from prepare forks: %i\n", data->num_of_philos);
 	data->forks = malloc(sizeof(pthread_mutex_t) * data->num_of_philos);
 	if (!data->forks)
 		error(data, ALLOCATION_ERR);
@@ -93,6 +88,7 @@ void	prepare_philos_data(t_data *data)
 		error(data, ALLOCATION_ERR);
 	while (i != data->num_of_philos)
 	{
+		data->philos[i].thread_id = 0;
 		data->philos[i].number = i + 1;
 		data->philos[i].eat = data->eat;
 		data->philos[i].sleep = data->sleep;

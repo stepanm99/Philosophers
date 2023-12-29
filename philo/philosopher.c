@@ -6,7 +6,7 @@
 /*   By: smelicha <smelicha@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/17 22:39:08 by smelicha          #+#    #+#             */
-/*   Updated: 2023/12/28 18:46:25 by smelicha         ###   ########.fr       */
+/*   Updated: 2023/12/28 22:34:23 by smelicha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,12 +42,14 @@ void	philosopher(void *arg_ptr)
 	data = arg->data;
 	p_num = arg->p_num;
 
+	while (!data->start)
+		usleep(50);
 	if (data->print_flag)
 		print_status(data->print, p_num, data->philos[p_num].state);
 	pthread_mutex_lock(&data->print);
 	printf("Philosopher %i deployed at %lims after program started\n", (p_num + 1), (data->start_time - get_time()));
 	pthread_mutex_unlock(&data->print);
 	data->philos[p_num].state = 0;
-	while (1)
-		usleep(1000);
+	sleep(1);
+	pthread_exit(NULL);
 }
