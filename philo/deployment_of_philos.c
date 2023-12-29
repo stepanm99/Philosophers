@@ -6,7 +6,7 @@
 /*   By: smelicha <smelicha@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/17 22:40:52 by smelicha          #+#    #+#             */
-/*   Updated: 2023/12/28 22:29:11 by smelicha         ###   ########.fr       */
+/*   Updated: 2023/12/29 01:57:04 by smelicha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ void	deploy_eaters(t_data *data)
 			arg.p_num = i;
 			r += pthread_create(&data->philos[i].thread_id, NULL, (void *)&philosopher, &arg);
 			i += 2;
+			usleep(1000);
 		}
 	}
 	else
@@ -40,6 +41,7 @@ void	deploy_eaters(t_data *data)
 			arg.p_num = i;
 			r += pthread_create(&data->philos[i].thread_id, NULL, (void *)&philosopher, &arg);
 			i += 2;
+			usleep(1000);
 		}
 	}
 }
@@ -62,6 +64,7 @@ void	deploy_rest(t_data *data)
 			arg.p_num = i;
 			r += pthread_create(&data->philos[i].thread_id, NULL, (void *)&philosopher, &arg);
 			i += 2;
+			usleep(1000);
 		}
 	}
 	else
@@ -71,6 +74,7 @@ void	deploy_rest(t_data *data)
 			arg.p_num = i;
 			r += pthread_create(&data->philos[i].thread_id, NULL, (void *)&philosopher, &arg);
 			i += 2;
+			usleep(1000);
 		}
 	}
 }
