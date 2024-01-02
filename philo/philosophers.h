@@ -6,7 +6,7 @@
 /*   By: smelicha <smelicha@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/15 17:59:11 by smelicha          #+#    #+#             */
-/*   Updated: 2024/01/02 19:42:02 by smelicha         ###   ########.fr       */
+/*   Updated: 2024/01/02 20:11:47 by smelicha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ typedef struct s_philo
 {
 	pthread_t		thread_id;
 	int				number;
-	unsigned int	ate;
+	int	ate;
 	uint64_t		last_eating;
 	char			state;
 	// int				eat;

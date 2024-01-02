@@ -6,7 +6,7 @@
 /*   By: smelicha <smelicha@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/17 22:39:08 by smelicha          #+#    #+#             */
-/*   Updated: 2024/01/02 20:08:00 by smelicha         ###   ########.fr       */
+/*   Updated: 2024/01/02 20:16:08 by smelicha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ static void	ft_sleep(t_data *data, int p_num)
 /// @return 0 if dead, else number of the state
 static int	ft_die(t_data *data, int p_num)
 {
-	if ((get_time() - data->philos[p_num].last_eating) > data->die)
+	if ((get_time() - data->philos[p_num].last_eating) > (uint64_t)data->die)
 	{
 		data->philos[p_num].state = 0;
 		print_status(data, p_num);
@@ -72,7 +72,7 @@ static int	ft_die(t_data *data, int p_num)
 /// @brief Routine of a single philosopher
 /// @param data Main struct where philosopher finds own data
 /// @param p_num Number of philosopher, used to acces OWN data from array
-static void	philosopher(void *arg_ptr)
+void	philosopher(void *arg_ptr)
 {
 	t_philo_arg	*arg;
 	t_data		*data;
