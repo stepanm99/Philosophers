@@ -6,7 +6,7 @@
 /*   By: smelicha <smelicha@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/16 19:59:09 by smelicha          #+#    #+#             */
-/*   Updated: 2024/01/02 20:33:00 by smelicha         ###   ########.fr       */
+/*   Updated: 2024/01/05 23:36:17 by smelicha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ void	prepare_forks_data(t_data *data)
 	int	i;
 
 	i = 0;
-	printf("num of philos from prepare forks: %i\n", data->num_of_philos);
+//	printf("num of philos from prepare forks: %i\n", data->num_of_philos);
 	data->forks = malloc(sizeof(pthread_mutex_t) * data->num_of_philos);
 	if (!data->forks)
 		error(data, ALLOCATION_ERR);
@@ -59,7 +59,7 @@ void	prepare_forks_data(t_data *data)
 	}
 }
 
-/// @brief Gives phlosopher acces to forks next to him
+/// @brief Gives philosopher acces to forks next to him
 /// @param data Main data struct
 /// @param i Number of the philosopher's data in array
 void	give_philo_forks(t_data *data, int i)

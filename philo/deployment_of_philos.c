@@ -6,7 +6,7 @@
 /*   By: smelicha <smelicha@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/17 22:40:52 by smelicha          #+#    #+#             */
-/*   Updated: 2023/12/29 01:57:04 by smelicha         ###   ########.fr       */
+/*   Updated: 2024/01/05 23:50:21 by smelicha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,10 +83,8 @@ void	deploy_rest(t_data *data)
 /// @param data Main data struct
 void	deploy_philosophers(t_data *data)
 {
-	printf("num of philos before deploying threads: %i\n", data->num_of_philos);
+	pthread_create(&data->grim_reaper, NULL, (void *)&grim_reaper, data);
 	deploy_eaters(data);
 	deploy_rest(data);
-	printf("num of philos after deploying threads: %i\n", data->num_of_philos);
-	pthread_create(&data->grim_reaper, NULL, (void *)&grim_reaper, data);
 	pthread_join(data->grim_reaper, NULL);
 }

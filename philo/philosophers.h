@@ -6,7 +6,7 @@
 /*   By: smelicha <smelicha@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/15 17:59:11 by smelicha          #+#    #+#             */
-/*   Updated: 2024/01/02 20:11:47 by smelicha         ###   ########.fr       */
+/*   Updated: 2024/01/05 22:40:07 by smelicha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,10 +48,6 @@ typedef struct s_philo
 	int	ate;
 	uint64_t		last_eating;
 	char			state;
-	// int				eat;
-	// int				sleep;
-	// int				die;
-	// int				number_of_forks;
 	pthread_mutex_t	right_fork;
 	pthread_mutex_t	left_fork;
 	pthread_mutex_t	print;
@@ -65,7 +61,7 @@ typedef struct s_data
 	int				die;
 	int				must_eat;
 	char			print_flag;
-	char			start;
+//	char			start;
 	uint64_t		start_time;
 	pthread_t		grim_reaper;
 	pthread_mutex_t	print;
