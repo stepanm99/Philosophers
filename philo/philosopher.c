@@ -6,7 +6,7 @@
 /*   By: smelicha <smelicha@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/17 22:39:08 by smelicha          #+#    #+#             */
-/*   Updated: 2024/01/05 23:51:59 by smelicha         ###   ########.fr       */
+/*   Updated: 2024/01/07 21:09:04 by smelicha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@
 /// @return 0 if dead, else number of the state
 static int	ft_die(t_data *data, int p_num)
 {
+//	printf("get time - last eating = %li vs ttd: %i from philo: %i\n", (get_time() - data->philos[p_num].last_eating), data->die, p_num);
 	if ((get_time() - data->philos[p_num].last_eating) > (uint64_t)data->die)
 	{
 		data->philos[p_num].state = 0;
@@ -42,24 +43,24 @@ static int	ft_die(t_data *data, int p_num)
 static void status_print_and_change(t_data *data, int p_num)
 {
 	pthread_mutex_lock(&data->print);
-	printf("philo %i from status function\n", p_num);
+//	printf("philo %i from status function\n", p_num);
 	pthread_mutex_unlock(&data->print);
 	pthread_mutex_lock(&data->print);
 	if (!ft_die(data, p_num))
-		printf("dead\n");
+		printf("%li %i died\n", (get_time() - data->start_time), p_num);
 	if (data->philos[p_num].state == 1)
 	{
-		printf("eating\n");
+		printf("%li %i is eating\n", (get_time() - data->start_time), p_num);
 		data->philos[p_num].state = 2;
 	}
 	if (data->philos[p_num].state == 2)
 	{
-		printf("sleaping\n");
+		printf("%li %i is sleeping\n", (get_time() - data->start_time), p_num);
 		data->philos[p_num].state = 3;
 	}
 	if (data->philos[p_num].state == 3)
 	{
-		printf("thonking\n");
+		printf("%li %i is thinking\n", (get_time() - data->start_time), p_num);
 		data->philos[p_num].state = 1;
 	}
 	pthread_mutex_unlock(&data->print);
@@ -72,16 +73,20 @@ static void	ft_eat(t_data *data, int p_num)
 {
 	if (data->philos[p_num].state != 1)
 		return ;
-	pthread_mutex_lock(&data->print);
-	printf("philo %i from eating function\n", p_num);
-	pthread_mutex_unlock(&data->print);
 	pthread_mutex_lock(&data->philos[p_num].left_fork);
+	pthread_mutex_lock(&data->print);
+	printf("%li %i has taken a fork\n", (get_time() - data->start_time), p_num);
+	pthread_mutex_unlock(&data->print);
 	pthread_mutex_lock(&data->philos[p_num].right_fork);
+	pthread_mutex_lock(&data->print);
+	printf("%li %i has taken a fork\n", (get_time() - data->start_time), p_num);
+	pthread_mutex_unlock(&data->print);
+	usleep(data->eat * 1000);
 	status_print_and_change(data, p_num);
 	data->philos[p_num].ate++;
-	usleep(data->eat * 1000);
 	pthread_mutex_unlock(&data->philos[p_num].left_fork);
 	pthread_mutex_unlock(&data->philos[p_num].right_fork);
+	data->philos[p_num].last_eating = get_time();
 }
 
 /// @brief sleep routine
@@ -91,12 +96,12 @@ static void	ft_sleep(t_data *data, int p_num)
 {
 	if (data->philos[p_num].state != 2)
 		return ;
-	pthread_mutex_lock(&data->print);
-	printf("philo %i from sleeping function\n", p_num);
-	pthread_mutex_unlock(&data->print);
+	// pthread_mutex_lock(&data->print);
+	// printf("philo %i from sleeping function\n", p_num);
+	// pthread_mutex_unlock(&data->print);
+	status_print_and_change(data, p_num);
 	status_print_and_change(data, p_num);
 	usleep(data->sleep * 1000);
-	status_print_and_change(data, p_num);
 }
 
 // static void	ft_full(t_data *data, int p_num)
@@ -128,11 +133,12 @@ void	philosopher(void *arg_ptr)
 	printf("Philosopher %i deployed at %lims after program started\n", (p_num + 1), (data->start_time - get_time()));
 	pthread_mutex_unlock(&data->print);
 	data->philos[p_num].state = 1;
-	usleep(5000 * data->num_of_philos);
+	usleep(2000 * data->num_of_philos);
+	data->philos[p_num].last_eating = get_time();
 	while (data->philos[p_num].state) // && data->philos[p_num].ate != data->must_eat
 	{
 		pthread_mutex_lock(&data->print);
-		printf("Philosopher %i while loop\n", (p_num + 1));
+//		printf("Philosopher %i while loop\n", (p_num + 1));
 		pthread_mutex_unlock(&data->print);
 		// if (!ft_die(data, p_num))
 		// 	break ;

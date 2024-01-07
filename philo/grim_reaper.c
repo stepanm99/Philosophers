@@ -6,7 +6,7 @@
 /*   By: smelicha <smelicha@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/17 23:38:01 by smelicha          #+#    #+#             */
-/*   Updated: 2024/01/05 23:49:06 by smelicha         ###   ########.fr       */
+/*   Updated: 2024/01/07 21:12:10 by smelicha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,6 +79,6 @@ void	grim_reaper(t_data *data)
 			i++;
 		else
 			i = 0;
-		usleep(100000);
+		usleep(data->die / 10);
 	}
 }

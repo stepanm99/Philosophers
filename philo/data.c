@@ -6,7 +6,7 @@
 /*   By: smelicha <smelicha@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/16 19:59:09 by smelicha          #+#    #+#             */
-/*   Updated: 2024/01/05 23:36:17 by smelicha         ###   ########.fr       */
+/*   Updated: 2024/01/07 21:11:16 by smelicha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,6 +90,7 @@ void	prepare_philos_data(t_data *data)
 	{
 		data->philos[i].thread_id = 0;
 		data->philos[i].number = i + 1;
+		data->philos[i].last_eating = 2 * data->num_of_philos;
 		// data->philos[i].eat = data->eat;
 		// data->philos[i].sleep = data->sleep;
 		// data->philos[i].die = data->die;
