@@ -6,7 +6,7 @@
 /*   By: smelicha <smelicha@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/15 17:59:11 by smelicha          #+#    #+#             */
-/*   Updated: 2024/01/07 14:52:07 by smelicha         ###   ########.fr       */
+/*   Updated: 2024/01/08 22:11:18 by smelicha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,8 +48,8 @@ typedef struct s_philo
 	int	ate;
 	uint64_t		last_eating;
 	char			state;
-	pthread_mutex_t	right_fork;
-	pthread_mutex_t	left_fork;
+	pthread_mutex_t	*right_fork;
+	pthread_mutex_t	*left_fork;
 	pthread_mutex_t	print;
 }	t_philo;
 

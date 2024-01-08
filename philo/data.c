@@ -6,7 +6,7 @@
 /*   By: smelicha <smelicha@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/16 19:59:09 by smelicha          #+#    #+#             */
-/*   Updated: 2024/01/07 21:11:16 by smelicha         ###   ########.fr       */
+/*   Updated: 2024/01/08 22:11:35 by smelicha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,13 +66,13 @@ void	give_philo_forks(t_data *data, int i)
 {
 	if (i != 0)
 	{
-		data->philos[i].right_fork = data->forks[i - 1];
-		data->philos[i].left_fork = data->forks[i];
+		data->philos[i].right_fork = &data->forks[i - 1];
+		data->philos[i].left_fork = &data->forks[i];
 	}
 	else
 	{
-		data->philos[i].right_fork = data->forks[data->num_of_philos - 1];
-		data->philos[i].left_fork = data->forks[i];
+		data->philos[i].right_fork = &data->forks[data->num_of_philos - 1];
+		data->philos[i].left_fork = &data->forks[i];
 	}
 }
 
