@@ -6,7 +6,7 @@
 /*   By: smelicha <smelicha@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/17 22:39:08 by smelicha          #+#    #+#             */
-/*   Updated: 2024/01/10 02:21:54 by smelicha         ###   ########.fr       */
+/*   Updated: 2024/01/10 16:58:59 by smelicha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,26 @@ static void status_print_and_change(t_data *data, int p_num)
 	pthread_mutex_unlock(&data->print);
 }
 
+void	ft_check_forks(t_data *data, int p_num)
+{
+	while (1)
+	{
+		pthread_mutex_lock(data->philos[p_num].right_sfgrd);
+		pthread_mutex_lock(data->philos[p_num].left_sfgrd);
+		if (!data->philos[p_num].left_fork->__data.__lock
+			&& !data->philos[p_num].right_fork->__data.__lock)
+			break ;
+		else
+		{
+			pthread_mutex_unlock(data->philos[p_num].right_sfgrd);
+			pthread_mutex_unlock(data->philos[p_num].left_sfgrd);
+			usleep(100);
+		}
+	}
+	pthread_mutex_unlock(data->philos[p_num].right_sfgrd);
+	pthread_mutex_unlock(data->philos[p_num].left_sfgrd);
+}
+
 /// @brief eat routine
 /// @param data 
 /// @param p_num 
@@ -73,9 +93,10 @@ static void	ft_eat(t_data *data, int p_num)
 {
 	if (data->philos[p_num].state != 1)
 		return ;
-	while (!data->philos[p_num].left_fork->__data.__lock
-		&& !data->philos[p_num].right_fork->__data.__lock)
-		usleep(100);
+	// while (!data->philos[p_num].left_fork->__data.__lock
+	// 	&& !data->philos[p_num].right_fork->__data.__lock)
+	// 	usleep(100);
+	ft_check_forks(data, p_num);
 	pthread_mutex_lock(data->philos[p_num].left_fork);
 	pthread_mutex_lock(&data->print);
 	printf("%li %i has taken a fork\n", (get_time() - data->start_time), p_num);
