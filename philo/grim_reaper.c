@@ -6,7 +6,7 @@
 /*   By: smelicha <smelicha@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/17 23:38:01 by smelicha          #+#    #+#             */
-/*   Updated: 2024/01/07 21:12:10 by smelicha         ###   ########.fr       */
+/*   Updated: 2024/01/09 14:00:38 by smelicha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,9 +47,9 @@ static void	funeral(t_data *data, int carcass_nr)
 
 	i = 0;
 	carcass_nr = carcass_nr;
-	// pthread_mutex_lock(&data->print);
-	// printf("%i died :(\n", (carcass_nr + 1));
-	// pthread_mutex_unlock(&data->print);
+	pthread_mutex_lock(&data->print);
+	printf("%li %i died\n", (get_time() - data->start_time), (carcass_nr));
+	pthread_mutex_unlock(&data->print);
 	while (i != data->num_of_philos)
 	{
 		pthread_cancel(data->philos[i].thread_id);
@@ -66,14 +66,14 @@ void	grim_reaper(t_data *data)
 	// pthread_mutex_lock(&data->print);
 	// printf("Grim reaper deployed!\n");
 	// pthread_mutex_unlock(&data->print);
-	usleep(1000);
+	usleep(data->die * 500);
 	print_thread_id(data);
 	detach_philos(data);
 //	data->start = 1;
 	while(1)
 	{
 //		printf("state of philo %i is %i\n", i, data->philos[i].state);
-		if (!data->philos[i].state)
+		if (get_time() - data->philos[i].last_eating > (uint64_t)data->die)
 			funeral(data, i);
 		if (i + 1 != data->num_of_philos)
 			i++;

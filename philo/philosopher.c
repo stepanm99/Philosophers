@@ -6,7 +6,7 @@
 /*   By: smelicha <smelicha@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/17 22:39:08 by smelicha          #+#    #+#             */
-/*   Updated: 2024/01/08 22:12:07 by smelicha         ###   ########.fr       */
+/*   Updated: 2024/01/10 02:21:54 by smelicha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,6 +73,9 @@ static void	ft_eat(t_data *data, int p_num)
 {
 	if (data->philos[p_num].state != 1)
 		return ;
+	while (!data->philos[p_num].left_fork->__data.__lock
+		&& !data->philos[p_num].right_fork->__data.__lock)
+		usleep(100);
 	pthread_mutex_lock(data->philos[p_num].left_fork);
 	pthread_mutex_lock(&data->print);
 	printf("%li %i has taken a fork\n", (get_time() - data->start_time), p_num);
@@ -84,9 +87,9 @@ static void	ft_eat(t_data *data, int p_num)
 	usleep(data->eat * 1000);
 	status_print_and_change(data, p_num);
 	data->philos[p_num].ate++;
+	data->philos[p_num].last_eating = get_time();
 	pthread_mutex_unlock(data->philos[p_num].left_fork);
 	pthread_mutex_unlock(data->philos[p_num].right_fork);
-	data->philos[p_num].last_eating = get_time();
 }
 
 /// @brief sleep routine
@@ -134,7 +137,6 @@ void	philosopher(void *arg_ptr)
 	pthread_mutex_unlock(&data->print);
 	data->philos[p_num].state = 1;
 	usleep(2000 * data->num_of_philos);
-	data->philos[p_num].last_eating = get_time();
 	while (data->philos[p_num].state) // && data->philos[p_num].ate != data->must_eat
 	{
 		pthread_mutex_lock(&data->print);

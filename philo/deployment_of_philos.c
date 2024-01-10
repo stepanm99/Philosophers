@@ -6,7 +6,7 @@
 /*   By: smelicha <smelicha@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/17 22:40:52 by smelicha          #+#    #+#             */
-/*   Updated: 2024/01/05 23:50:21 by smelicha         ###   ########.fr       */
+/*   Updated: 2024/01/09 13:56:10 by smelicha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,9 +29,10 @@ void	deploy_eaters(t_data *data)
 		while (i < data->num_of_philos)
 		{
 			arg.p_num = i;
+			data->philos[i].last_eating = get_time();
 			r += pthread_create(&data->philos[i].thread_id, NULL, (void *)&philosopher, &arg);
 			i += 2;
-			usleep(1000);
+//			usleep(1000);
 		}
 	}
 	else
@@ -39,9 +40,10 @@ void	deploy_eaters(t_data *data)
 		while (i < data->num_of_philos)
 		{
 			arg.p_num = i;
+			data->philos[i].last_eating = get_time();
 			r += pthread_create(&data->philos[i].thread_id, NULL, (void *)&philosopher, &arg);
 			i += 2;
-			usleep(1000);
+//			usleep(1000);
 		}
 	}
 }
@@ -62,9 +64,10 @@ void	deploy_rest(t_data *data)
 		while (i < data->num_of_philos)
 		{
 			arg.p_num = i;
+			data->philos[i].last_eating = get_time();
 			r += pthread_create(&data->philos[i].thread_id, NULL, (void *)&philosopher, &arg);
 			i += 2;
-			usleep(1000);
+//			usleep(1000);
 		}
 	}
 	else
@@ -72,9 +75,10 @@ void	deploy_rest(t_data *data)
 		while (i < data->num_of_philos)
 		{
 			arg.p_num = i;
+			data->philos[i].last_eating = get_time();
 			r += pthread_create(&data->philos[i].thread_id, NULL, (void *)&philosopher, &arg);
 			i += 2;
-			usleep(1000);
+//			usleep(1000);
 		}
 	}
 }
