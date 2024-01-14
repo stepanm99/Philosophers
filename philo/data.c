@@ -6,7 +6,7 @@
 /*   By: smelicha <smelicha@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/16 19:59:09 by smelicha          #+#    #+#             */
-/*   Updated: 2024/01/10 16:19:42 by smelicha         ###   ########.fr       */
+/*   Updated: 2024/01/10 19:04:46 by smelicha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,7 +107,7 @@ void	prepare_philos_data(t_data *data)
 		// data->philos[i].sleep = data->sleep;
 		// data->philos[i].die = data->die;
 		data->philos[i].ate = data->must_eat;
-		data->philos[i].state = 1;
+		data->philos[i].state = 0;
 //		data->philos[i].number_of_forks = data->num_of_philos;
 //		data->philos[i].print = data->print;
 		give_philo_forks(data, i);

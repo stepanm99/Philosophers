@@ -8,7 +8,7 @@
 			"type": "lldb",
 			"request": "launch",
 			"name": "Debug",
-			"program": "/home/stepan/Documents/Programming/Philosophers/philo/test",
+			"program": "/home/stepan/Documents/Programming/Philosophers/philo/philo",
 			"args": [],
 			"cwd": "/home/stepan/Documents/Programming/Philosophers/philo"
 		}

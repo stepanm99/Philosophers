@@ -6,7 +6,7 @@
 /*   By: smelicha <smelicha@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/17 23:38:01 by smelicha          #+#    #+#             */
-/*   Updated: 2024/01/09 14:00:38 by smelicha         ###   ########.fr       */
+/*   Updated: 2024/01/10 19:03:54 by smelicha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,18 +16,18 @@
 somebody has died*/
 
 
-static void	print_thread_id(t_data *data)
-{
-//	int	i;
+// static void	print_thread_id(t_data *data)
+// {
+// //	int	i;
 
-//	i = 0;
-	printf("number of philosophers from print threads: %i\n", data->num_of_philos);
-	// while (i < data->num_of_philos)
-	// {
-	// 	printf("id of thread: %i is %lu\n", i, data->philos[i].thread_id);
-	// 	i++;
-	// }
-}
+// //	i = 0;
+// 	printf("number of philosophers from print threads: %i\n", data->num_of_philos);
+// 	// while (i < data->num_of_philos)
+// 	// {
+// 	// 	printf("id of thread: %i is %lu\n", i, data->philos[i].thread_id);
+// 	// 	i++;
+// 	// }
+// }
 static void	detach_philos(t_data *data)
 {
 	int	i;
@@ -67,13 +67,14 @@ void	grim_reaper(t_data *data)
 	// printf("Grim reaper deployed!\n");
 	// pthread_mutex_unlock(&data->print);
 	usleep(data->die * 500);
-	print_thread_id(data);
+//	print_thread_id(data);
 	detach_philos(data);
 //	data->start = 1;
 	while(1)
 	{
 //		printf("state of philo %i is %i\n", i, data->philos[i].state);
-		if (get_time() - data->philos[i].last_eating > (uint64_t)data->die)
+		if ((get_time() - data->philos[i].last_eating > (uint64_t)data->die)
+			&& !data->philos[i].state)
 			funeral(data, i);
 		if (i + 1 != data->num_of_philos)
 			i++;
