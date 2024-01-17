@@ -6,7 +6,7 @@
 /*   By: smelicha <smelicha@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/17 23:38:01 by smelicha          #+#    #+#             */
-/*   Updated: 2024/01/10 19:03:54 by smelicha         ###   ########.fr       */
+/*   Updated: 2024/01/17 20:44:29 by smelicha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,14 +48,18 @@ static void	funeral(t_data *data, int carcass_nr)
 	i = 0;
 	carcass_nr = carcass_nr;
 	pthread_mutex_lock(&data->print);
-	printf("%li %i died\n", (get_time() - data->start_time), (carcass_nr));
+	printf("%li %i died (%i)\n", (get_time() - data->start_time), (carcass_nr), data->philos[carcass_nr].state);
 	pthread_mutex_unlock(&data->print);
 	while (i != data->num_of_philos)
 	{
-		pthread_cancel(data->philos[i].thread_id);
+		//pthread_cancel(data->philos[i].thread_id);
+		pthread_mutex_lock(&data->state_mut[i]);
+		data->philos[i].state = 0;
+		pthread_mutex_unlock(&data->state_mut[i]);
 		i++;
 	}
-	pthread_exit(NULL);
+	free_data(data);
+	exit(0);
 }
 
 void	grim_reaper(t_data *data)
@@ -74,7 +78,7 @@ void	grim_reaper(t_data *data)
 	{
 //		printf("state of philo %i is %i\n", i, data->philos[i].state);
 		if ((get_time() - data->philos[i].last_eating > (uint64_t)data->die)
-			&& !data->philos[i].state)
+			|| !data->philos[i].state)
 			funeral(data, i);
 		if (i + 1 != data->num_of_philos)
 			i++;

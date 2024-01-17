@@ -6,7 +6,7 @@
 /*   By: smelicha <smelicha@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/16 19:59:09 by smelicha          #+#    #+#             */
-/*   Updated: 2024/01/10 19:04:46 by smelicha         ###   ########.fr       */
+/*   Updated: 2024/01/16 22:49:21 by smelicha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ void	destroy_mutexes(t_data *data)
 	{
 		pthread_mutex_destroy(&data->forks[i]);
 		pthread_mutex_destroy(&data->fork_safeguard[i]);
+		pthread_mutex_destroy(&data->state_mut[i]);
 		i++;
 	}
 }
@@ -39,6 +40,8 @@ void	free_data(t_data *data)
 		free(data->forks);
 	if (data->fork_safeguard)
 		free(data->fork_safeguard);
+	if (data->state_mut)
+		free(data->state_mut);
 	if (data)
 		free(data);
 }
@@ -57,11 +60,16 @@ void	prepare_forks_data(t_data *data)
 	data->fork_safeguard = malloc(sizeof(pthread_mutex_t) * data->num_of_philos);
 	if (!data->fork_safeguard)
 		error(data, ALLOCATION_ERR);
+	data->state_mut = malloc(sizeof(pthread_mutex_t) * data->num_of_philos);
+	if (!data->state_mut)
+		error(data, ALLOCATION_ERR);
 	while (i != data->num_of_philos)
 	{
 		if (pthread_mutex_init(&data->forks[i], NULL))
 			error(data, MUTEX_ERR);
 		if (pthread_mutex_init(&data->fork_safeguard[i], NULL))
+			error(data, MUTEX_ERR);
+		if (pthread_mutex_init(&data->state_mut[i], NULL))
 			error(data, MUTEX_ERR);
 		i++;
 	}
@@ -78,6 +86,7 @@ void	give_philo_forks(t_data *data, int i)
 		data->philos[i].right_sfgrd = &data->fork_safeguard[i - 1];
 		data->philos[i].left_fork = &data->forks[i];
 		data->philos[i].left_sfgrd = &data->fork_safeguard[i];
+		data->philos[i].state_mut = &data->state_mut[i];
 	}
 	else
 	{
@@ -85,6 +94,7 @@ void	give_philo_forks(t_data *data, int i)
 		data->philos[i].right_sfgrd = &data->fork_safeguard[data->num_of_philos - 1];
 		data->philos[i].left_fork = &data->forks[i];
 		data->philos[i].left_sfgrd = &data->fork_safeguard[i];
+		data->philos[i].state_mut = &data->state_mut[i];
 	}
 }
 
@@ -103,13 +113,8 @@ void	prepare_philos_data(t_data *data)
 		data->philos[i].thread_id = 0;
 		data->philos[i].number = i + 1;
 		data->philos[i].last_eating = 2 * data->num_of_philos;
-		// data->philos[i].eat = data->eat;
-		// data->philos[i].sleep = data->sleep;
-		// data->philos[i].die = data->die;
 		data->philos[i].ate = data->must_eat;
 		data->philos[i].state = 0;
-//		data->philos[i].number_of_forks = data->num_of_philos;
-//		data->philos[i].print = data->print;
 		give_philo_forks(data, i);
 		i++;
 	}
