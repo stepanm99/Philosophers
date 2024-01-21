@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philosopher.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: smelicha <smelicha@student.42heilbronn.    +#+  +:+       +#+        */
+/*   By: stepan <stepan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/17 22:39:08 by smelicha          #+#    #+#             */
-/*   Updated: 2024/01/17 20:47:56 by smelicha         ###   ########.fr       */
+/*   Updated: 2024/01/20 23:40:31 by stepan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -161,11 +161,11 @@ static void	ft_get_forks_l(t_data *data, int p_num)
 	// pthread_mutex_unlock(&data->print);
 }
 
-static void	ft_synchro_start(t_data *data)
+static void	ft_synchro_start(t_data *data, int p_num)
 {
 	while (1)
 	{
-		if (data->start_time < get_time())
+		if ((data->start_time - p_num) < get_time())
 			break ;
 		usleep(100);
 	}
@@ -182,6 +182,9 @@ static void	ft_death_check(t_data *data, int p_num)
 	}
 	if ((get_time() - data->philos[p_num].last_eating) > (uint64_t)data->die)
 	{
+		pthread_mutex_lock(&data->print);
+		printf("%i died by itself\n", p_num);
+		pthread_mutex_unlock(&data->print);
 		data->philos[p_num].state = 0;
 		pthread_mutex_unlock(data->philos[p_num].state_mut);
 		ft_death_check(data, p_num);
@@ -201,7 +204,7 @@ void	philosopher(void *arg_ptr)
 	data = arg->data;
 	p_num = arg->p_num;
 	data->philos[p_num].state = 1;
-	ft_synchro_start(data);
+	ft_synchro_start(data, p_num);
 //	ft_usleep(2 * data->num_of_philos);
 	ft_eat(data, p_num);
 	pthread_exit(NULL);

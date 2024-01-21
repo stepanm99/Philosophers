@@ -48,7 +48,7 @@ static void	funeral(t_data *data, int carcass_nr)
 	i = 0;
 	carcass_nr = carcass_nr;
 	pthread_mutex_lock(&data->print);
-	printf("%li %i died (%i)\n", (get_time() - data->start_time), (carcass_nr), data->philos[carcass_nr].state);
+	printf("%li %i died (%li)\n", (get_time() - data->start_time), (carcass_nr), (get_time() - data->philos[carcass_nr].last_eating));
 	pthread_mutex_unlock(&data->print);
 	while (i != data->num_of_philos)
 	{
@@ -79,7 +79,12 @@ void	grim_reaper(t_data *data)
 //		printf("state of philo %i is %i\n", i, data->philos[i].state);
 		if ((get_time() - data->philos[i].last_eating > (uint64_t)data->die)
 			|| !data->philos[i].state)
+		{
+			pthread_mutex_lock(&data->print);
+			printf("philo state from grim: %i\n", data->philos[i].state);
+			pthread_mutex_unlock(&data->print);
 			funeral(data, i);
+		}
 		if (i + 1 != data->num_of_philos)
 			i++;
 		else

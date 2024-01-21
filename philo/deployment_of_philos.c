@@ -30,9 +30,10 @@ void	deploy_eaters(t_data *data)
 		{
 			arg.p_num = i;
 			data->philos[i].last_eating = get_time();
+			data->philos[i].state = 1;
 			r += pthread_create(&data->philos[i].thread_id, NULL, (void *)&philosopher, &arg);
 			i += 2;
-//			usleep(1000);
+//			ft_usleep(5);
 		}
 	}
 	else
@@ -41,9 +42,10 @@ void	deploy_eaters(t_data *data)
 		{
 			arg.p_num = i;
 			data->philos[i].last_eating = get_time();
+			data->philos[i].state = 1;
 			r += pthread_create(&data->philos[i].thread_id, NULL, (void *)&philosopher, &arg);
 			i += 2;
-//			usleep(1000);
+//			ft_usleep(5);
 		}
 	}
 }
@@ -65,6 +67,7 @@ void	deploy_rest(t_data *data)
 		{
 			arg.p_num = i;
 			data->philos[i].last_eating = get_time();
+			data->philos[i].state = 1;
 			r += pthread_create(&data->philos[i].thread_id, NULL, (void *)&philosopher, &arg);
 			i += 2;
 //			usleep(1000);
@@ -76,6 +79,7 @@ void	deploy_rest(t_data *data)
 		{
 			arg.p_num = i;
 			data->philos[i].last_eating = get_time();
+			data->philos[i].state = 1;
 			r += pthread_create(&data->philos[i].thread_id, NULL, (void *)&philosopher, &arg);
 			i += 2;
 //			usleep(1000);

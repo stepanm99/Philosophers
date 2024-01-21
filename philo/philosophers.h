@@ -45,7 +45,7 @@ typedef struct s_philo
 {
 	pthread_t		thread_id;
 	int				number;
-	int	ate;
+	int				ate;
 	uint64_t		last_eating;
 	char			state;
 	pthread_mutex_t	*state_mut;
