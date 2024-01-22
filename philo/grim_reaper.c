@@ -80,9 +80,9 @@ void	grim_reaper(t_data *data)
 		if ((get_time() - data->philos[i].last_eating > (uint64_t)data->die)
 			|| !data->philos[i].state)
 		{
-			pthread_mutex_lock(&data->print);
-			printf("philo state from grim: %i\n", data->philos[i].state);
-			pthread_mutex_unlock(&data->print);
+			// pthread_mutex_lock(&data->print);
+			// printf("philo state from grim: %i\n", data->philos[i].state);
+			// pthread_mutex_unlock(&data->print);
 			funeral(data, i);
 		}
 		if (i + 1 != data->num_of_philos)
