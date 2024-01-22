@@ -12,6 +12,22 @@
 
 #include "philosophers.h"
 
+
+void	ft_wait_for_thread(t_data *data, int p_num)
+{
+	while (1)
+	{
+		pthread_mutex_lock(&data->state_mut[p_num]);
+		if (data->philos[p_num].state != 2)
+		{
+			pthread_mutex_unlock(&data->state_mut[p_num]);
+			break ;
+		}
+		pthread_mutex_unlock(&data->state_mut[p_num]);
+		ft_usleep(50);
+	}
+}
+
 /// @brief Starts philosophers allowed to eat first
 /// @param data Main data struct
 void	deploy_eaters(t_data *data)
@@ -30,10 +46,10 @@ void	deploy_eaters(t_data *data)
 		{
 			arg.p_num = i;
 			data->philos[i].last_eating = get_time();
-			data->philos[i].state = 1;
+			data->philos[i].state = 2;
 			r += pthread_create(&data->philos[i].thread_id, NULL, (void *)&philosopher, &arg);
+			ft_wait_for_thread(data, i);
 			i += 2;
-			ft_usleep(data->num_of_philos * 2);
 		}
 	}
 	else
@@ -42,10 +58,10 @@ void	deploy_eaters(t_data *data)
 		{
 			arg.p_num = i;
 			data->philos[i].last_eating = get_time();
-			data->philos[i].state = 1;
+			data->philos[i].state = 2;
 			r += pthread_create(&data->philos[i].thread_id, NULL, (void *)&philosopher, &arg);
+			ft_wait_for_thread(data, i);
 			i += 2;
-			ft_usleep(data->num_of_philos * 2);
 		}
 	}
 }
@@ -67,10 +83,10 @@ void	deploy_rest(t_data *data)
 		{
 			arg.p_num = i;
 			data->philos[i].last_eating = get_time();
-			data->philos[i].state = 1;
+			data->philos[i].state = 2;
 			r += pthread_create(&data->philos[i].thread_id, NULL, (void *)&philosopher, &arg);
+			ft_wait_for_thread(data, i);
 			i += 2;
-			ft_usleep(data->num_of_philos * 2);
 		}
 	}
 	else
@@ -79,10 +95,10 @@ void	deploy_rest(t_data *data)
 		{
 			arg.p_num = i;
 			data->philos[i].last_eating = get_time();
-			data->philos[i].state = 1;
+			data->philos[i].state = 2;
 			r += pthread_create(&data->philos[i].thread_id, NULL, (void *)&philosopher, &arg);
+			ft_wait_for_thread(data, i);
 			i += 2;
-			usleep(data->num_of_philos * 2);
 		}
 	}
 }

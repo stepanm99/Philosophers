@@ -33,3 +33,13 @@ void	ft_usleep(uint64_t delay)
 	while ((get_time() - start) < delay)
 		usleep(5);
 }
+
+void	ft_synchro_start(t_data *data)
+{
+	while (1)
+	{
+		if ((data->start_time) < get_time())
+			break ;
+		usleep(100);
+	}
+}

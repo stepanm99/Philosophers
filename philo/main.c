@@ -37,7 +37,7 @@ int	main(int argc, const char **argv)
 	// }
 	prepare_philos_data(data);
 //	print_philos(data);
-	data->start_time = get_time() - ((data->num_of_philos * 3));
+	data->start_time = get_time() - ((data->num_of_philos * 10));
 	deploy_philosophers(data);
 //	print_data(data);
 	free_data(data);

@@ -86,6 +86,7 @@ int			ft_atoi(const char *str, t_data *data);
 /*Time*/
 uint64_t	get_time(void);
 void		ft_usleep(uint64_t delay);
+void		ft_synchro_start(t_data *data);
 
 /*Data handling*/
 void		arg_pars(t_data *data, int argc, const char **argv);

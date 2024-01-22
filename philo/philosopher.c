@@ -176,16 +176,6 @@ static void	ft_get_forks_l(t_data *data, int p_num)
 	pthread_mutex_unlock(&data->print);
 }
 
-static void	ft_synchro_start(t_data *data, int p_num)
-{
-	while (1)
-	{
-		if ((data->start_time - p_num) < get_time())
-			break ;
-		usleep(100);
-	}
-}
-
 static void	ft_death_check(t_data *data, int p_num)
 {
 
@@ -211,6 +201,7 @@ static void	ft_death_check(t_data *data, int p_num)
 	}
 	pthread_mutex_unlock(data->philos[p_num].state_mut);
 }
+
 /// @brief Routine of a single philosopher
 /// @param data Main struct where philosopher finds own data
 /// @param p_num Number of philosopher, used to acces OWN data from array
@@ -223,13 +214,16 @@ void	philosopher(void *arg_ptr)
 	arg = (t_philo_arg *)arg_ptr;
 	data = arg->data;
 	p_num = arg->p_num;
-	data->philos[p_num].state = 1;
 
 	pthread_mutex_lock(&data->print);
 	printf("Philo %i deployed!\n", p_num);
 	pthread_mutex_unlock(&data->print);
 
-	ft_synchro_start(data, p_num);
+	pthread_mutex_lock(data->philos[p_num].state_mut);
+	data->philos[p_num].state = 1;
+	pthread_mutex_unlock(data->philos[p_num].state_mut);
+
+	ft_synchro_start(data);
 
 	pthread_mutex_lock(&data->print);
 	printf("Philo %i started @ %li!\n", p_num, (get_time() - data->start_time));

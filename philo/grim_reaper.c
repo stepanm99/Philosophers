@@ -36,6 +36,9 @@ static void	detach_philos(t_data *data)
 	while (i != data->num_of_philos)
 	{
 //		printf("from pthread detach i: %i\n", i);
+		pthread_mutex_lock(&data->print);
+		printf("detaching TID %lu\n", data->philos[i].thread_id);
+		pthread_mutex_unlock(&data->print);
 		pthread_detach(data->philos[i].thread_id);
 		i++;
 	}
@@ -67,11 +70,9 @@ void	grim_reaper(t_data *data)
 	int	i;
 
 	i = 0;
-	// pthread_mutex_lock(&data->print);
-	// printf("Grim reaper deployed!\n");
-	// pthread_mutex_unlock(&data->print);
-	usleep(data->die * 500);
 //	print_thread_id(data);
+	ft_synchro_start(data);
+	ft_usleep(data->die / 2);
 	detach_philos(data);
 //	data->start = 1;
 	while(1)
