@@ -22,7 +22,6 @@ void	destroy_mutexes(t_data *data)
 	pthread_mutex_destroy(&data->print);
 	while (i != data->num_of_philos)
 	{
-		pthread_mutex_destroy(&data->forks[i]);
 		pthread_mutex_destroy(&data->fork_safeguard[i]);
 		pthread_mutex_destroy(&data->state_mut[i]);
 		i++;
@@ -54,7 +53,7 @@ void	prepare_forks_data(t_data *data)
 
 	i = 0;
 //	printf("num of philos from prepare forks: %i\n", data->num_of_philos);
-	data->forks = malloc(sizeof(pthread_mutex_t) * data->num_of_philos);
+	data->forks = malloc(sizeof(char) * data->num_of_philos);
 	if (!data->forks)
 		error(data, ALLOCATION_ERR);
 	data->fork_safeguard = malloc(sizeof(pthread_mutex_t) * data->num_of_philos);
@@ -65,8 +64,7 @@ void	prepare_forks_data(t_data *data)
 		error(data, ALLOCATION_ERR);
 	while (i != data->num_of_philos)
 	{
-		if (pthread_mutex_init(&data->forks[i], NULL))
-			error(data, MUTEX_ERR);
+		data->forks[i] = 0;
 		if (pthread_mutex_init(&data->fork_safeguard[i], NULL))
 			error(data, MUTEX_ERR);
 		if (pthread_mutex_init(&data->state_mut[i], NULL))

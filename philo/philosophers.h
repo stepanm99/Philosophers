@@ -49,9 +49,9 @@ typedef struct s_philo
 	uint64_t		last_eating;
 	char			state;
 	pthread_mutex_t	*state_mut;
-	pthread_mutex_t	*right_fork;
+	char			*right_fork;
 	pthread_mutex_t	*right_sfgrd;
-	pthread_mutex_t	*left_fork;
+	char			*left_fork;
 	pthread_mutex_t	*left_sfgrd;
 //	pthread_mutex_t	print;	probably not needed
 }	t_philo;
@@ -68,8 +68,8 @@ typedef struct s_data
 	uint64_t		start_time;
 	pthread_t		grim_reaper;
 	pthread_mutex_t	print;
+	char			*forks;
 	t_philo			*philos;
-	pthread_mutex_t	*forks;
 	pthread_mutex_t	*fork_safeguard;
 	pthread_mutex_t	*state_mut;
 }	t_data;
