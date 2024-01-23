@@ -15,6 +15,8 @@
 /*Here will be the code for thread that periodically checks if
 somebody has died*/
 
+static void	funeral(t_data *data, int carcass_nr, char print);
+
 static void	print_philos_stomachs(t_data *data)
 {
 	int	i;
@@ -41,11 +43,33 @@ static void	print_philos_stomachs(t_data *data)
 // 	// 	i++;
 // 	// }
 // }
+
+static void	wait_for_tid(t_data *data)
+{
+	int	i;
+
+	i = 0;
+	while (i != data->num_of_philos)
+	{
+		if (!data->philos[i].thread_id)
+			i = 0;
+		if ((get_time() - data->start_time) > (uint64_t)data->die)
+		{
+			pthread_mutex_lock(&data->print);
+			printf("Too many philos for this computer :(\n");
+			pthread_mutex_unlock(&data->print);
+			funeral(data, 0, 0);
+		}
+		i++;
+	}
+}
+
 static void	detach_philos(t_data *data)
 {
 	int	i;
 
 	i = 0;
+	wait_for_tid(data);
 	while (i != data->num_of_philos)
 	{
 //		printf("from pthread detach i: %i\n", i);
@@ -66,7 +90,7 @@ static void	funeral(t_data *data, int carcass_nr, char print)
 	if (print)
 	{
 		pthread_mutex_lock(&data->print);
-		printf("%li %i died\n", (get_time() - data->start_time),
+		printf("%lu %i died\n", (get_time() - data->start_time),
 			carcass_nr);
 		pthread_mutex_unlock(&data->print);
 	}
@@ -102,7 +126,6 @@ static void	obesity_alert(t_data *data, int fatty_nr)
 		}
 		i++;
 	}
-	i = 0;
 }
 
 void	grim_reaper(t_data *data)

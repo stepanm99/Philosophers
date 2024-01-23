@@ -34,12 +34,9 @@ void	deploy_eaters(t_data *data)
 {
 	t_philo_arg	arg;
 	int	i;
-	int	r;
 
 	i = 0;
-	r = 0;
 	arg.data = data;
-	arg.p_num = i;
 	if (data->num_of_philos % 2)
 	{
 		while (i < data->num_of_philos)
@@ -47,7 +44,7 @@ void	deploy_eaters(t_data *data)
 			arg.p_num = i;
 			data->philos[i].last_eating = get_time();
 			data->philos[i].state = 2;
-			r += pthread_create(&data->philos[i].thread_id, NULL, (void *)&philosopher, &arg);
+			pthread_create(&data->philos[i].thread_id, NULL, (void *)&philosopher, &arg);
 			ft_wait_for_thread(data, i);
 			i += 2;
 		}
@@ -59,7 +56,7 @@ void	deploy_eaters(t_data *data)
 			arg.p_num = i;
 			data->philos[i].last_eating = get_time();
 			data->philos[i].state = 2;
-			r += pthread_create(&data->philos[i].thread_id, NULL, (void *)&philosopher, &arg);
+			pthread_create(&data->philos[i].thread_id, NULL, (void *)&philosopher, &arg);
 			ft_wait_for_thread(data, i);
 			i += 2;
 		}
@@ -72,10 +69,8 @@ void	deploy_rest(t_data *data)
 {
 	t_philo_arg	arg;
 	int	i;
-	int	r;
 
 	i = 1;
-	r = 0;
 	arg.data = data;
 	if (data->num_of_philos % 2)
 	{
@@ -84,7 +79,7 @@ void	deploy_rest(t_data *data)
 			arg.p_num = i;
 			data->philos[i].last_eating = get_time();
 			data->philos[i].state = 2;
-			r += pthread_create(&data->philos[i].thread_id, NULL, (void *)&philosopher, &arg);
+			pthread_create(&data->philos[i].thread_id, NULL, (void *)&philosopher, &arg);
 			ft_wait_for_thread(data, i);
 			i += 2;
 		}
@@ -96,7 +91,7 @@ void	deploy_rest(t_data *data)
 			arg.p_num = i;
 			data->philos[i].last_eating = get_time();
 			data->philos[i].state = 2;
-			r += pthread_create(&data->philos[i].thread_id, NULL, (void *)&philosopher, &arg);
+			pthread_create(&data->philos[i].thread_id, NULL, (void *)&philosopher, &arg);
 			ft_wait_for_thread(data, i);
 			i += 2;
 		}
