@@ -15,6 +15,19 @@
 /*Here will be the code for thread that periodically checks if
 somebody has died*/
 
+static void	print_philos_stomachs(t_data *data)
+{
+	int	i;
+
+	i = 0;
+	while (i != data->num_of_philos)
+	{
+		pthread_mutex_lock(&data->print);
+		printf("Philo %i ate %i times\n", i, data->philos[i].ate);
+		pthread_mutex_unlock(&data->print);
+		i++;
+	}
+}
 
 // static void	print_thread_id(t_data *data)
 // {
@@ -49,7 +62,7 @@ static void	funeral(t_data *data, int carcass_nr, char print)
 	int	i;
 
 	i = 0;
-	carcass_nr = carcass_nr;
+	print_philos_stomachs(data);
 	if (print)
 	{
 		pthread_mutex_lock(&data->print);
@@ -79,12 +92,12 @@ static void	obesity_alert(t_data *data, int fatty_nr)
 	while (1)
 	{
 		if (!data->overeaters[i])
-			break ;
-		if (i == data->num_of_philos)
 		{
-			pthread_mutex_lock(&data->print);
-			printf("all philos might be obese\n");
 			pthread_mutex_unlock(&data->print);
+			break ;
+		}
+		if (i == (data->num_of_philos - 1))
+		{
 			funeral(data, i, 0);
 		}
 		i++;
