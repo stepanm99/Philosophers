@@ -33,6 +33,8 @@ void	destroy_mutexes(t_data *data)
 void	free_data(t_data *data)
 {
 	destroy_mutexes(data);
+	if (data->overeaters)
+		free(data->overeaters);
 	if (data->philos)
 		free(data->philos);
 	if (data->forks)
@@ -106,6 +108,9 @@ void	prepare_philos_data(t_data *data)
 	data->philos = malloc(sizeof(t_philo) * data->num_of_philos);
 	if (!data->philos)
 		error(data, ALLOCATION_ERR);
+	data->overeaters = malloc(sizeof(char) * data->num_of_philos);
+	if (!data->overeaters)
+		error(data, ALLOCATION_ERR);
 	while (i != data->num_of_philos)
 	{
 		data->philos[i].thread_id = 0;
@@ -113,6 +118,7 @@ void	prepare_philos_data(t_data *data)
 		data->philos[i].last_eating = 2 * data->num_of_philos;
 		data->philos[i].ate = data->must_eat;
 		data->philos[i].state = 0;
+		data->overeaters[i] = 0;
 		give_philo_forks(data, i);
 		i++;
 	}

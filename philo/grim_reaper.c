@@ -44,15 +44,19 @@ static void	detach_philos(t_data *data)
 	}
 }
 
-static void	funeral(t_data *data, int carcass_nr)
+static void	funeral(t_data *data, int carcass_nr, char print)
 {
 	int	i;
 
 	i = 0;
 	carcass_nr = carcass_nr;
-	pthread_mutex_lock(&data->print);
-	printf("%li %i died (%li)\n", (get_time() - data->start_time), (carcass_nr), (get_time() - data->philos[carcass_nr].last_eating));
-	pthread_mutex_unlock(&data->print);
+	if (print)
+	{
+		pthread_mutex_lock(&data->print);
+		printf("%li %i died\n", (get_time() - data->start_time),
+			carcass_nr);
+		pthread_mutex_unlock(&data->print);
+	}
 	while (i != data->num_of_philos)
 	{
 		//pthread_cancel(data->philos[i].thread_id);
@@ -63,6 +67,29 @@ static void	funeral(t_data *data, int carcass_nr)
 	}
 	free_data(data);
 	exit(0);
+}
+
+static void	obesity_alert(t_data *data, int fatty_nr)
+{
+	int	i;
+
+	i = 0;
+	if (!data->overeaters[fatty_nr])
+		data->overeaters[fatty_nr] = 1;
+	while (1)
+	{
+		if (!data->overeaters[i])
+			break ;
+		if (i == data->num_of_philos)
+		{
+			pthread_mutex_lock(&data->print);
+			printf("all philos might be obese\n");
+			pthread_mutex_unlock(&data->print);
+			funeral(data, i, 0);
+		}
+		i++;
+	}
+	i = 0;
 }
 
 void	grim_reaper(t_data *data)
@@ -80,11 +107,10 @@ void	grim_reaper(t_data *data)
 //		printf("state of philo %i is %i\n", i, data->philos[i].state);
 		if ((get_time() - data->philos[i].last_eating > (uint64_t)data->die)
 			|| !data->philos[i].state)
+			funeral(data, i, 1);
+		if (data->must_eat && data->philos[i].ate >= data->must_eat)
 		{
-			// pthread_mutex_lock(&data->print);
-			// printf("philo state from grim: %i\n", data->philos[i].state);
-			// pthread_mutex_unlock(&data->print);
-			funeral(data, i);
+			obesity_alert(data, i);
 		}
 		if (i + 1 != data->num_of_philos)
 			i++;

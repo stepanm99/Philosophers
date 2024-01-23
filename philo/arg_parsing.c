@@ -45,6 +45,7 @@ int	ft_atoi(const char *str, t_data *data)
 /// @param argv Value of given arguments
 void	arg_pars(t_data *data, int argc, const char **argv)
 {
+	printf("argc: %i\targv: %s\n", argc, argv[5]);
 	if (argv[1])
 		data->num_of_philos = ft_atoi(argv[1], data);
 	else
@@ -63,4 +64,5 @@ void	arg_pars(t_data *data, int argc, const char **argv)
 		error(data, 2);
 	if (argv[5] && argc == 6)
 		data->must_eat = ft_atoi(argv[5], data);
+	printf("must_eat = %i\n", data->must_eat);
 }

@@ -67,6 +67,7 @@ typedef struct s_data
 //	char			start;
 	uint64_t		start_time;
 	pthread_t		grim_reaper;
+	char			*overeaters;
 	pthread_mutex_t	print;
 	char			*forks;
 	t_philo			*philos;

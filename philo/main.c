@@ -26,7 +26,6 @@ int	main(int argc, const char **argv)
 //	printf("num of philos from main: %i\n", data->num_of_philos);
 //	data->start = 0;
 	data->print_flag = 1;
-	data->must_eat = 0;
 	print_data(data);
 	pthread_mutex_init(&data->print, NULL); //initialize print mutex
 	prepare_forks_data(data);
