@@ -116,7 +116,7 @@ void	prepare_philos_data(t_data *data)
 		data->philos[i].thread_id = 0;
 		data->philos[i].number = i + 1;
 		data->philos[i].last_eating = 2 * data->num_of_philos;
-		data->philos[i].ate = data->must_eat;
+		data->philos[i].ate = 0;
 		data->philos[i].state = 0;
 		data->overeaters[i] = 0;
 		give_philo_forks(data, i);

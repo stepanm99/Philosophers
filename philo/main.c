@@ -21,7 +21,7 @@ int	main(int argc, const char **argv)
 	data = NULL;
 	data = malloc(sizeof(t_data));
 	if (!data)
-		error(data, 1);
+		error(data, ALLOCATION_ERR);
 	arg_pars(data, argc, argv);
 //	printf("num of philos from main: %i\n", data->num_of_philos);
 //	data->start = 0;
