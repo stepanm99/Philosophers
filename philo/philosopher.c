@@ -108,13 +108,17 @@ static void	ft_get_forks_r(t_data *data, int p_num)
 	ft_death_check(data, p_num);
 	ft_print_eat(data, p_num);
 	ft_usleep(data->eat);
+	pthread_mutex_lock(data->philos[p_num].ate_mut);
 	data->philos[p_num].ate++;
+	pthread_mutex_unlock(data->philos[p_num].ate_mut);
 
 	pthread_mutex_lock(&data->print);
 	printf("Philo %i is incrementing ate to %i value\n", p_num, data->philos[p_num].ate);
 	pthread_mutex_unlock((&data->print));
 
+	pthread_mutex_lock(data->philos[p_num].last_eating_mut);
 	data->philos[p_num].last_eating = get_time();
+	pthread_mutex_unlock(data->philos[p_num].last_eating_mut);
 	pthread_mutex_lock(data->philos[p_num].left_sfgrd);
 	*data->philos[p_num].left_fork = 0;
 	pthread_mutex_unlock(data->philos[p_num].left_sfgrd);
@@ -158,13 +162,17 @@ static void	ft_get_forks_l(t_data *data, int p_num)
 	ft_death_check(data, p_num);
 	ft_print_eat(data, p_num);
 	ft_usleep(data->eat);
+	pthread_mutex_lock(data->philos[p_num].ate_mut);
 	data->philos[p_num].ate++;
+	pthread_mutex_unlock(data->philos[p_num].ate_mut);
 
 	pthread_mutex_lock(&data->print);
 	printf("Philo %i is incrementing ate to %i value\n", p_num, data->philos[p_num].ate);
 	pthread_mutex_unlock((&data->print));
 
+	pthread_mutex_lock(data->philos[p_num].last_eating_mut);
 	data->philos[p_num].last_eating = get_time();
+	pthread_mutex_unlock(data->philos[p_num].last_eating_mut);
 	// pthread_mutex_lock(&data->print);
 	// printf("before fork release l from philo %i @ %li\n", p_num, (data->start_time - get_time()));
 	// pthread_mutex_unlock(&data->print);
@@ -193,8 +201,10 @@ static void	ft_death_check(t_data *data, int p_num)
 		while (1)
 			sleep(1);
 	}
+	pthread_mutex_lock(data->philos[p_num].last_eating_mut);
 	if ((get_time() - data->philos[p_num].last_eating) > (uint64_t)data->die)
 	{
+		pthread_mutex_unlock(data->philos[p_num].last_eating_mut);
 		pthread_mutex_lock(&data->print);
 		printf("%i died by itself\n", p_num);
 		pthread_mutex_unlock(&data->print);
@@ -202,6 +212,7 @@ static void	ft_death_check(t_data *data, int p_num)
 		pthread_mutex_unlock(data->philos[p_num].state_mut);
 		ft_death_check(data, p_num);
 	}
+	pthread_mutex_unlock(data->philos[p_num].last_eating_mut);
 	pthread_mutex_unlock(data->philos[p_num].state_mut);
 }
 

@@ -24,6 +24,8 @@ void	destroy_mutexes(t_data *data)
 	{
 		pthread_mutex_destroy(&data->fork_safeguard[i]);
 		pthread_mutex_destroy(&data->state_mut[i]);
+		pthread_mutex_destroy(&data->last_eating_mut[i]);
+		pthread_mutex_destroy(&data->ate_mut[i]);
 		i++;
 	}
 }
@@ -43,6 +45,10 @@ void	free_data(t_data *data)
 		free(data->fork_safeguard);
 	if (data->state_mut)
 		free(data->state_mut);
+	if (data->last_eating_mut)
+		free(data->last_eating_mut);
+	if (data->ate_mut)
+		free(data->ate_mut);
 	if (data)
 		free(data);
 }
@@ -64,12 +70,22 @@ void	prepare_forks_data(t_data *data)
 	data->state_mut = malloc(sizeof(pthread_mutex_t) * data->num_of_philos);
 	if (!data->state_mut)
 		error(data, ALLOCATION_ERR);
+	data->last_eating_mut = malloc(sizeof(pthread_mutex_t) * data->num_of_philos);
+	if (!data->last_eating_mut)
+		error(data, ALLOCATION_ERR);
+	data->ate_mut = malloc(sizeof(pthread_mutex_t) * data->num_of_philos);
+	if (!data->ate_mut)
+		error(data, ALLOCATION_ERR);
 	while (i != data->num_of_philos)
 	{
 		data->forks[i] = 0;
 		if (pthread_mutex_init(&data->fork_safeguard[i], NULL))
 			error(data, MUTEX_ERR);
 		if (pthread_mutex_init(&data->state_mut[i], NULL))
+			error(data, MUTEX_ERR);
+		if (pthread_mutex_init(&data->last_eating_mut[i], NULL))
+			error(data, MUTEX_ERR);
+		if (pthread_mutex_init(&data->ate_mut[i], NULL))
 			error(data, MUTEX_ERR);
 		i++;
 	}
@@ -87,6 +103,8 @@ void	give_philo_forks(t_data *data, int i)
 		data->philos[i].left_fork = &data->forks[i];
 		data->philos[i].left_sfgrd = &data->fork_safeguard[i];
 		data->philos[i].state_mut = &data->state_mut[i];
+		data->philos[i].last_eating_mut = &data->last_eating_mut[i];
+		data->philos[i].ate_mut = &data->ate_mut[i];
 	}
 	else
 	{
@@ -95,6 +113,8 @@ void	give_philo_forks(t_data *data, int i)
 		data->philos[i].left_fork = &data->forks[i];
 		data->philos[i].left_sfgrd = &data->fork_safeguard[i];
 		data->philos[i].state_mut = &data->state_mut[i];
+		data->philos[i].last_eating_mut = &data->last_eating_mut[i];
+		data->philos[i].ate_mut = &data->ate_mut[i];
 	}
 }
 
