@@ -143,12 +143,15 @@ void	grim_reaper(t_data *data)
 	{
 //		printf("state of philo %i is %i\n", i, data->philos[i].state);
 		pthread_mutex_unlock(&data->last_eating_mut[i]);
-		if ((get_time() - data->philos[i].last_eating > (uint64_t)data->die)
-			|| !data->philos[i].state)
+//		pthread_mutex_lock(&data->state_mut[i]);
+		if (((get_time() - data->philos[i].last_eating > (uint64_t)data->die)
+			|| !data->philos[i].state) && data->philos[i].state != 2)
 		{
+//			pthread_mutex_unlock(&data->state_mut[i]);
 			pthread_mutex_unlock(&data->last_eating_mut[i]);
 			funeral(data, i, 1);
 		}
+//		pthread_mutex_unlock(&data->state_mut[i]);
 		pthread_mutex_unlock(&data->last_eating_mut[i]);
 		pthread_mutex_lock(&data->ate_mut[i]);
 		if (data->must_eat && data->philos[i].ate >= data->must_eat)

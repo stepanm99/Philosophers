@@ -106,6 +106,9 @@ static void	ft_get_forks_r(t_data *data, int p_num)
 		ft_usleep(data->eat / 12);
 	}
 	ft_death_check(data, p_num);
+	pthread_mutex_lock(data->philos[p_num].state_mut);
+	data->philos[p_num].state = 2;
+	pthread_mutex_unlock(data->philos[p_num].state_mut);
 	ft_print_eat(data, p_num);
 	ft_usleep(data->eat);
 	pthread_mutex_lock(data->philos[p_num].ate_mut);
@@ -118,6 +121,9 @@ static void	ft_get_forks_r(t_data *data, int p_num)
 
 	pthread_mutex_lock(data->philos[p_num].last_eating_mut);
 	data->philos[p_num].last_eating = get_time();
+	pthread_mutex_lock(data->philos[p_num].state_mut);
+	data->philos[p_num].state = 1;
+	pthread_mutex_unlock(data->philos[p_num].state_mut);
 	pthread_mutex_unlock(data->philos[p_num].last_eating_mut);
 	pthread_mutex_lock(data->philos[p_num].left_sfgrd);
 	*data->philos[p_num].left_fork = 0;
@@ -160,6 +166,9 @@ static void	ft_get_forks_l(t_data *data, int p_num)
 		ft_usleep(data->eat / 8);
 	}
 	ft_death_check(data, p_num);
+	pthread_mutex_lock(data->philos[p_num].state_mut);
+	data->philos[p_num].state = 2;
+	pthread_mutex_unlock(data->philos[p_num].state_mut);
 	ft_print_eat(data, p_num);
 	ft_usleep(data->eat);
 	pthread_mutex_lock(data->philos[p_num].ate_mut);
@@ -172,6 +181,9 @@ static void	ft_get_forks_l(t_data *data, int p_num)
 
 	pthread_mutex_lock(data->philos[p_num].last_eating_mut);
 	data->philos[p_num].last_eating = get_time();
+	pthread_mutex_lock(data->philos[p_num].state_mut);
+	data->philos[p_num].state = 1;
+	pthread_mutex_unlock(data->philos[p_num].state_mut);
 	pthread_mutex_unlock(data->philos[p_num].last_eating_mut);
 	// pthread_mutex_lock(&data->print);
 	// printf("before fork release l from philo %i @ %li\n", p_num, (data->start_time - get_time()));
