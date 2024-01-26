@@ -36,10 +36,8 @@
 
 /*state:
 	0 - dead
-	1 - eat
-	2 - sleep
-	3 - think
-	4 - full
+	1 - alive
+	2 - eating/starting
 */
 typedef struct s_philo
 {
@@ -55,7 +53,6 @@ typedef struct s_philo
 	pthread_mutex_t	*right_sfgrd;
 	char			*left_fork;
 	pthread_mutex_t	*left_sfgrd;
-//	pthread_mutex_t	print;	probably not needed
 }	t_philo;
 
 typedef struct s_data
@@ -66,7 +63,6 @@ typedef struct s_data
 	int				die;
 	int				must_eat;
 	char			print_flag;
-//	char			start;
 	uint64_t		start_time;
 	pthread_t		grim_reaper;
 	char			*overeaters;
@@ -102,9 +98,24 @@ void		prepare_forks_data(t_data *data);
 /*Error*/
 void		error(t_data *data, int errno);
 
-/*Philosopher thread function*/
+/*Philosopher thread deploying*/
 void		deploy_philosophers(t_data *data);
+
+/*Philosopher functions*/
 void		philosopher(void *arg_ptr);
+void		ft_eat(t_data *data, int p_num);
+void		ft_sleep(t_data *data, int p_num);
+void		ft_think(t_data *data, int p_num);
+void		ft_print_eat(t_data *data, int p_num);
+void		ft_print_take_forks(t_data *data, int p_num);
+void		ft_forks_unlock(t_data *data, int p_num);
+void		ft_common_sleep_and_stat_update(t_data *data, int p_num);
+void		ft_right_first_fork_lock(t_data *data, int p_num);
+void		ft_get_forks_r(t_data *data, int p_num);
+void		ft_left_first_fork_lock(t_data *data, int p_num);
+void		ft_get_forks_l(t_data *data, int p_num);
+void		ft_death_check(t_data *data, int p_num);
+
 
 /*Grim reaper thread function*/
 void		grim_reaper(t_data *data);

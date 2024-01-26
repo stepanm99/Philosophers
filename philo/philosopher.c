@@ -12,21 +12,14 @@
 
 #include "philosophers.h"
 
-static void	ft_eat(t_data *data, int p_num);
-static void	ft_sleep(t_data *data, int p_num);
-static void	ft_think(t_data *data, int p_num);
-static void	ft_get_forks_r(t_data *data, int p_num);
-static void	ft_get_forks_l(t_data *data, int p_num);
-static void	ft_death_check(t_data *data, int p_num);
-
-static void	ft_print_take_forks(t_data *data, int p_num)
+void	ft_print_take_forks(t_data *data, int p_num)
 {
 	pthread_mutex_lock(&data->print);
 	printf("%lu %i has taken a fork\n", (get_time() - data->start_time), p_num);
 	pthread_mutex_unlock(&data->print);
 }
 
-static void	ft_print_eat(t_data *data, int p_num)
+void	ft_print_eat(t_data *data, int p_num)
 {
 	pthread_mutex_lock(&data->print);
 	printf("%lu %i is eating\n", (get_time() - data->start_time), p_num);
@@ -36,7 +29,7 @@ static void	ft_print_eat(t_data *data, int p_num)
 /// @brief eat routine
 /// @param data 
 /// @param p_num 
-static void	ft_eat(t_data *data, int p_num)
+void	ft_eat(t_data *data, int p_num)
 {
 	// if (data->philos[p_num].state != 1)
 	// 	return ;
@@ -56,7 +49,7 @@ static void	ft_eat(t_data *data, int p_num)
 /// @brief sleep routine
 /// @param data 
 /// @param p_num 
-static void	ft_sleep(t_data *data, int p_num)
+void	ft_sleep(t_data *data, int p_num)
 {
 	// if (data->philos[p_num].state != 2)
 	// 	return ;
@@ -67,7 +60,7 @@ static void	ft_sleep(t_data *data, int p_num)
 	ft_think(data, p_num);
 }
 
-static void	ft_think(t_data *data, int p_num)
+void	ft_think(t_data *data, int p_num)
 {
 	ft_death_check(data, p_num);
 	pthread_mutex_lock(&data->print);
@@ -135,7 +128,7 @@ void	ft_right_first_fork_lock(t_data *data, int p_num)
 	}
 }
 
-static void	ft_get_forks_r(t_data *data, int p_num)
+void	ft_get_forks_r(t_data *data, int p_num)
 {
 
 	pthread_mutex_lock(&data->print);
@@ -177,7 +170,7 @@ void	ft_left_first_fork_lock(t_data *data, int p_num)
 	}
 }
 
-static void	ft_get_forks_l(t_data *data, int p_num)
+void	ft_get_forks_l(t_data *data, int p_num)
 {
 
 	pthread_mutex_lock(&data->print);
@@ -193,7 +186,7 @@ static void	ft_get_forks_l(t_data *data, int p_num)
 	pthread_mutex_unlock(&data->print);
 }
 
-static void	ft_death_check(t_data *data, int p_num)
+void	ft_death_check(t_data *data, int p_num)
 {
 
 	pthread_mutex_lock(&data->print);
