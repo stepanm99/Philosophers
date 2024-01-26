@@ -204,6 +204,7 @@ static void	ft_death_check(t_data *data, int p_num)
 
 	pthread_mutex_lock(&data->print);
 	printf("Philo %i checks its death\n", p_num);
+	printf("Time since last eating: %lu\n", (get_time() - data->philos[p_num].last_eating));
 	pthread_mutex_unlock(&data->print);
 
 	pthread_mutex_lock(data->philos[p_num].state_mut);

@@ -28,6 +28,32 @@ void	ft_wait_for_thread(t_data *data, int p_num)
 	}
 }
 
+void	ft_even_deploy_loop(t_data *data, t_philo_arg arg, int i)
+{
+	while (i < data->num_of_philos)
+	{
+		arg.p_num = i;
+		data->philos[i].last_eating = data->start_time;
+		data->philos[i].state = 2;
+		pthread_create(&data->philos[i].thread_id, NULL, (void *)&philosopher, &arg);
+		ft_wait_for_thread(data, i);
+		i += 2;
+	}
+}
+
+void	ft_odd_deploy_loop(t_data *data, t_philo_arg arg, int i)
+{
+	while (i < data->num_of_philos)
+	{
+		arg.p_num = i;
+		data->philos[i].last_eating = data->start_time;
+		data->philos[i].state = 2;
+		pthread_create(&data->philos[i].thread_id, NULL, (void *)&philosopher, &arg);
+		ft_wait_for_thread(data, i);
+		i += 2;
+	}
+}
+
 /// @brief Starts philosophers allowed to eat first
 /// @param data Main data struct
 void	deploy_eaters(t_data *data)
@@ -38,29 +64,9 @@ void	deploy_eaters(t_data *data)
 	i = 0;
 	arg.data = data;
 	if (data->num_of_philos % 2)
-	{
-		while (i < data->num_of_philos)
-		{
-			arg.p_num = i;
-			data->philos[i].last_eating = data->start_time;
-			data->philos[i].state = 2;
-			pthread_create(&data->philos[i].thread_id, NULL, (void *)&philosopher, &arg);
-			ft_wait_for_thread(data, i);
-			i += 2;
-		}
-	}
+		ft_even_deploy_loop(data, arg, i);
 	else
-	{
-		while (i < data->num_of_philos)
-		{
-			arg.p_num = i;
-			data->philos[i].last_eating = data->start_time;
-			data->philos[i].state = 2;
-			pthread_create(&data->philos[i].thread_id, NULL, (void *)&philosopher, &arg);
-			ft_wait_for_thread(data, i);
-			i += 2;
-		}
-	}
+		ft_odd_deploy_loop(data, arg, i);
 }
 
 /// @brief Starts other philosophers that will wait for the eaters to finish
@@ -73,29 +79,9 @@ void	deploy_rest(t_data *data)
 	i = 1;
 	arg.data = data;
 	if (data->num_of_philos % 2)
-	{
-		while (i < data->num_of_philos)
-		{
-			arg.p_num = i;
-			data->philos[i].last_eating = data->start_time;
-			data->philos[i].state = 2;
-			pthread_create(&data->philos[i].thread_id, NULL, (void *)&philosopher, &arg);
-			ft_wait_for_thread(data, i);
-			i += 2;
-		}
-	}
+		ft_even_deploy_loop(data, arg, i);
 	else
-	{
-		while (i < data->num_of_philos)
-		{
-			arg.p_num = i;
-			data->philos[i].last_eating = data->start_time;
-			data->philos[i].state = 2;
-			pthread_create(&data->philos[i].thread_id, NULL, (void *)&philosopher, &arg);
-			ft_wait_for_thread(data, i);
-			i += 2;
-		}
-	}
+		ft_odd_deploy_loop(data, arg, i);
 }
 
 /// @brief Routine to start the simulation
