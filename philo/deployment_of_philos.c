@@ -35,7 +35,8 @@ void	ft_even_deploy_loop(t_data *data, t_philo_arg arg, int i)
 		arg.p_num = i;
 		data->philos[i].last_eating = data->start_time;
 		data->philos[i].state = 2;
-		pthread_create(&data->philos[i].thread_id, NULL, (void *)&philosopher, &arg);
+		pthread_create(&data->philos[i].thread_id, NULL,
+					   (void *)&philosopher, &arg);
 		ft_wait_for_thread(data, i);
 		i += 2;
 	}
@@ -48,7 +49,8 @@ void	ft_odd_deploy_loop(t_data *data, t_philo_arg arg, int i)
 		arg.p_num = i;
 		data->philos[i].last_eating = data->start_time;
 		data->philos[i].state = 2;
-		pthread_create(&data->philos[i].thread_id, NULL, (void *)&philosopher, &arg);
+		pthread_create(&data->philos[i].thread_id, NULL,
+					   (void *)&philosopher, &arg);
 		ft_wait_for_thread(data, i);
 		i += 2;
 	}
@@ -63,6 +65,7 @@ void	deploy_eaters(t_data *data)
 
 	i = 0;
 	arg.data = data;
+	arg.p_num = i;
 	if (data->num_of_philos % 2)
 		ft_even_deploy_loop(data, arg, i);
 	else
@@ -78,6 +81,7 @@ void	deploy_rest(t_data *data)
 
 	i = 1;
 	arg.data = data;
+	arg.p_num = i;
 	if (data->num_of_philos % 2)
 		ft_even_deploy_loop(data, arg, i);
 	else
