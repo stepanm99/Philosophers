@@ -242,7 +242,8 @@ void	philosopher(void *arg_ptr)
 	p_num = arg->p_num;
 
 	pthread_mutex_lock(&data->print);
-	printf("Philo %i deployed!\n", p_num);
+	printf("Philo %i with TID: %li deployed @ %lu\n", p_num, data->philos[p_num].thread_id,
+		   (get_time() - data->start_time));
 	pthread_mutex_unlock(&data->print);
 
 	pthread_mutex_lock(data->philos[p_num].state_mut);
