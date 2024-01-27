@@ -106,14 +106,10 @@ void		philosopher(void *arg_ptr);
 void		ft_eat(t_data *data, int p_num);
 void		ft_sleep(t_data *data, int p_num);
 void		ft_think(t_data *data, int p_num);
-void		ft_print_eat(t_data *data, int p_num);
-void		ft_print_take_forks(t_data *data, int p_num);
 void		ft_forks_unlock(t_data *data, int p_num);
-void		ft_common_sleep_and_stat_update(t_data *data, int p_num);
+void		ft_sleep_and_stat_update(t_data *data, int p_num);
 void		ft_right_first_fork_lock(t_data *data, int p_num);
-void		ft_get_forks_r(t_data *data, int p_num);
 void		ft_left_first_fork_lock(t_data *data, int p_num);
-void		ft_get_forks_l(t_data *data, int p_num);
 void		ft_death_check(t_data *data, int p_num);
 
 

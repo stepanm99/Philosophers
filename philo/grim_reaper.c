@@ -132,6 +132,10 @@ static void	funeral(t_data *data, int carcass_nr, char print)
 // 	while (detach_flag)
 // 		detach_flag = detach_philos(data);
 	free_data(data);
+	ft_usleep(500);
+	pthread_mutex_lock(&data->print);
+	printf("Grim reaper is exiting @ %lu\n", (get_time() - data->start_time));
+	pthread_mutex_unlock(&data->print);
 	exit(0);
 }
 
