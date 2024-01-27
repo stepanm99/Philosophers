@@ -67,9 +67,9 @@ void	ft_death_check(t_data *data, int p_num)
 		pthread_mutex_lock(&data->print);
 		printf("Philo %i is exiting by itself @ %lu!\n", p_num, (get_time() - data->start_time));
 		pthread_mutex_unlock(&data->print);
-		exit(0);
-// 		while (1)
-// 			sleep(1);
+//		exit(0);
+ 		while (1)
+ 			sleep(1);
 	}
 	pthread_mutex_lock(data->philos[p_num].last_eating_mut);
 	if ((get_time() - data->philos[p_num].last_eating) > (uint64_t)data->die)
