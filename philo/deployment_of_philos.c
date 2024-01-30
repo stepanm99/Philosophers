@@ -36,7 +36,7 @@ void	ft_even_deploy_loop(t_data *data, t_philo_arg arg, int i)
 		data->philos[i].last_eating = data->start_time;
 		data->philos[i].state = 2;
 		pthread_create(&data->philos[i].thread_id, NULL,
-					   (void *)&philosopher, &arg);
+					   (void *)&ft_philosopher, &arg);
 		ft_wait_for_thread(data, i);
 		i += 2;
 	}
@@ -50,7 +50,7 @@ void	ft_odd_deploy_loop(t_data *data, t_philo_arg arg, int i)
 		data->philos[i].last_eating = data->start_time;
 		data->philos[i].state = 2;
 		pthread_create(&data->philos[i].thread_id, NULL,
-					   (void *)&philosopher, &arg);
+					   (void *)&ft_philosopher, &arg);
 		ft_wait_for_thread(data, i);
 		i += 2;
 	}
@@ -90,9 +90,9 @@ void	deploy_rest(t_data *data)
 
 /// @brief Routine to start the simulation
 /// @param data Main data struct
-void	deploy_philosophers(t_data *data)
+void	ft_deploy_philosophers(t_data *data)
 {
-	pthread_create(&data->grim_reaper, NULL, (void *)&grim_reaper, data);
+	pthread_create(&data->grim_reaper, NULL, (void *)&ft_grim_reaper, data);
 	deploy_eaters(data);
 	deploy_rest(data);
 	pthread_join(data->grim_reaper, NULL);

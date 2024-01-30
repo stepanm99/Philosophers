@@ -15,10 +15,10 @@
 /// @brief Prints error message, frees allocated memory and exits
 /// @param data pointer to main data struct
 /// @param errno what kind of error will be shown
-void	error(t_data *data, int errno)
+void	ft_error(t_data *data, int errno)
 {
 	if (data)
-		free_data(data);
+		ft_free_data(data);
 	if (errno == 2)
 	{
 		printf("Wrong argument!\n./philo [number of philosophers] ");

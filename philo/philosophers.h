@@ -85,24 +85,30 @@ typedef struct s_philo_arg
 int			ft_atoi(const char *str, t_data *data);
 
 /*Time*/
-uint64_t	get_time(void);
+uint64_t	ft_get_time(void);
 void		ft_usleep(uint64_t delay);
 void		ft_synchro_start(t_data *data);
 
 /*Data handling*/
-void		arg_pars(t_data *data, int argc, const char **argv);
-void		free_data(t_data *data);
-void		prepare_philos_data(t_data *data);
-void		prepare_forks_data(t_data *data);
+void		ft_arg_pars(t_data *data, int argc, const char **argv);
+void		ft_free_data(t_data *data);
+void		ft_destroy_mutexes(t_data *data);
+void		ft_prepare_philos_data(t_data *data);
+void		ft_prepare_forks_data(t_data *data);
 
 /*Error*/
-void		error(t_data *data, int errno);
+void		ft_error(t_data *data, int errno);
 
 /*Philosopher thread deploying*/
-void		deploy_philosophers(t_data *data);
+void		ft_deploy_philosophers(t_data *data);
+void		deploy_eaters(t_data *data);
+void		deploy_rest(t_data *data);
+void		ft_odd_deploy_loop(t_data *data, t_philo_arg arg, int i);
+void		ft_even_deploy_loop(t_data *data, t_philo_arg arg, int i);
+void		ft_wait_for_thread(t_data *data, int p_num);
 
 /*Philosopher functions*/
-void		philosopher(void *arg_ptr);
+void		ft_philosopher(void *arg_ptr);
 void		ft_eat(t_data *data, int p_num);
 void		ft_sleep(t_data *data, int p_num);
 void		ft_think(t_data *data, int p_num);
@@ -114,7 +120,7 @@ void		ft_death_check(t_data *data, int p_num);
 
 
 /*Grim reaper thread function*/
-void		grim_reaper(t_data *data);
+void		ft_grim_reaper(t_data *data);
 
 /*Debug*/
 void		print_data(t_data *data);

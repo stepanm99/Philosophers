@@ -15,9 +15,9 @@
 /*Here will be the code for thread that periodically checks if
 somebody has died*/
 
-static void	funeral(t_data *data, int carcass_nr, char print);
+static void	ft_funeral(t_data *data, int carcass_nr, char print);
 
-static void	print_philos_stomachs(t_data *data)
+static void	ft_print_philos_stomachs(t_data *data)
 {
 	int	i;
 
@@ -53,12 +53,12 @@ static void	wait_for_tid(t_data *data)
 	{
 		if (!data->philos[i].thread_id)
 			i = 0;
-		if ((get_time() - data->start_time) > (uint64_t)data->die)
+		if ((ft_get_time() - data->start_time) > (uint64_t)data->die)
 		{
 			pthread_mutex_lock(&data->print);
 			printf("Too many philos for this computer :(\n");
 			pthread_mutex_unlock(&data->print);
-			funeral(data, 0, 0);
+			ft_funeral(data, 0, 0);
 		}
 		i++;
 		ft_usleep(5);
@@ -104,14 +104,14 @@ static void	detach_philos(t_data *data)
 // 	return (0);
 // }
 
-static void	funeral(t_data *data, int carcass_nr, char print)
+static void	ft_funeral(t_data *data, int carcass_nr, char print)
 {
 	int				i;
 	unsigned long	t_o_d;
 
 	i = 0;
-	t_o_d = get_time() - data->start_time;
-	print_philos_stomachs(data);
+	t_o_d = ft_get_time() - data->start_time;
+	ft_print_philos_stomachs(data);
 	if (print)
 	{
 		pthread_mutex_lock(&data->print);
@@ -131,7 +131,7 @@ static void	funeral(t_data *data, int carcass_nr, char print)
 	pthread_mutex_unlock(&data->print);
 // 	while (detach_flag)
 // 		detach_flag = detach_philos(data);
-	free_data(data);
+	ft_free_data(data);
 	exit(0);
 }
 
@@ -151,13 +151,13 @@ static void	obesity_alert(t_data *data, int fatty_nr)
 		}
 		if (i == (data->num_of_philos - 1))
 		{
-			funeral(data, i, 0);
+			ft_funeral(data, i, 0);
 		}
 		i++;
 	}
 }
 
-void	grim_reaper(t_data *data)
+void	ft_grim_reaper(t_data *data)
 {
 	int		i;
 //	char	detach_flag;
@@ -176,12 +176,12 @@ void	grim_reaper(t_data *data)
 //		printf("state of philo %i is %i\n", i, data->philos[i].state);
 		pthread_mutex_lock(&data->last_eating_mut[i]);
 		pthread_mutex_lock(&data->state_mut[i]);
-		if (((get_time() - data->philos[i].last_eating > (uint64_t)data->die)
+		if (((ft_get_time() - data->philos[i].last_eating > (uint64_t)data->die)
 			|| !data->philos[i].state) && data->philos[i].state != 2)
 		{
 			pthread_mutex_unlock(&data->state_mut[i]);
 			pthread_mutex_unlock(&data->last_eating_mut[i]);
-			funeral(data, i, 1);
+			ft_funeral(data, i, 1);
 		}
 		pthread_mutex_unlock(&data->state_mut[i]);
 		pthread_mutex_unlock(&data->last_eating_mut[i]);

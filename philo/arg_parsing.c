@@ -26,7 +26,7 @@ int	ft_atoi(const char *str, t_data *data)
 	while (str[i] == '-' || str[i] == '+')
 	{
 		if (str[i + 1] == '-' || str[i + 1] == '+')
-			error(data, 2);
+			ft_error(data, 2);
 		if (str[i] == '-')
 			negflag = (-1);
 		i++;
@@ -43,25 +43,25 @@ int	ft_atoi(const char *str, t_data *data)
 /// @param data Main data struct
 /// @param argc How many arguments were given
 /// @param argv Value of given arguments
-void	arg_pars(t_data *data, int argc, const char **argv)
+void	ft_arg_pars(t_data *data, int argc, const char **argv)
 {
 	printf("argc: %i\targv: %s\n", argc, argv[5]);
 	if (argv[1])
 		data->num_of_philos = ft_atoi(argv[1], data);
 	else
-		error(data, 2);
+		ft_error(data, 2);
 	if (argv[2])
 		data->die = ft_atoi(argv[2], data);
 	else
-		error(data, 2);
+		ft_error(data, 2);
 	if (argv[3])
 		data->eat = ft_atoi(argv[3], data);
 	else
-		error(data, 2);
+		ft_error(data, 2);
 	if (argv[4])
 		data->sleep = ft_atoi(argv[4], data);
 	else
-		error(data, 2);
+		ft_error(data, 2);
 	if (argv[5] && argc == 6)
 		data->must_eat = ft_atoi(argv[5], data);
 	printf("must_eat = %i\n", data->must_eat);

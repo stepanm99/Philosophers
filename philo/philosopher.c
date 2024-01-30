@@ -37,7 +37,7 @@ void	ft_sleep(t_data *data, int p_num)
 	// if (data->philos[p_num].state != 2)
 	// 	return ;
 	pthread_mutex_lock(&data->print);
-	printf("%lu %i is sleeping\n", (get_time() - data->start_time), p_num);
+	printf("%lu %i is sleeping\n", (ft_get_time() - data->start_time), p_num);
 	pthread_mutex_unlock(&data->print);
 	ft_usleep(data->sleep);
 	ft_think(data, p_num);
@@ -47,7 +47,7 @@ void	ft_think(t_data *data, int p_num)
 {
 	ft_death_check(data, p_num);
 	pthread_mutex_lock(&data->print);
-	printf("%lu %i is thinking\n", (get_time() - data->start_time), p_num);
+	printf("%lu %i is thinking\n", (ft_get_time() - data->start_time), p_num);
 	pthread_mutex_unlock(&data->print);
 	ft_eat(data, p_num);
 }
@@ -57,7 +57,7 @@ void	ft_death_check(t_data *data, int p_num)
 
 	pthread_mutex_lock(&data->print);
 	printf("Philo %i checks its death\n", p_num);
-	printf("Time since last eating: %lu\n", (get_time() - data->philos[p_num].last_eating));
+	printf("Time since last eating: %lu\n", (ft_get_time() - data->philos[p_num].last_eating));
 	pthread_mutex_unlock(&data->print);
 
 	pthread_mutex_lock(data->philos[p_num].state_mut);
@@ -65,14 +65,14 @@ void	ft_death_check(t_data *data, int p_num)
 	{
 		pthread_mutex_unlock(data->philos[p_num].state_mut);
 		pthread_mutex_lock(&data->print);
-		printf("Philo %i is exiting by itself @ %lu!\n", p_num, (get_time() - data->start_time));
+		printf("Philo %i is exiting by itself @ %lu!\n", p_num, (ft_get_time() - data->start_time));
 		pthread_mutex_unlock(&data->print);
 //		exit(0);
  		while (1)
  			sleep(1);
 	}
 	pthread_mutex_lock(data->philos[p_num].last_eating_mut);
-	if ((get_time() - data->philos[p_num].last_eating) > (uint64_t)data->die)
+	if ((ft_get_time() - data->philos[p_num].last_eating) > (uint64_t)data->die)
 	{
 		pthread_mutex_unlock(data->philos[p_num].last_eating_mut);
 		pthread_mutex_lock(&data->print);
@@ -89,7 +89,7 @@ void	ft_death_check(t_data *data, int p_num)
 /// @brief Routine of a single philosopher
 /// @param data Main struct where philosopher finds own data
 /// @param p_num Number of philosopher, used to acces OWN data from array
-void	philosopher(void *arg_ptr)
+void	ft_philosopher(void *arg_ptr)
 {
 	t_philo_arg	*arg;
 	t_data		*data;
@@ -101,7 +101,7 @@ void	philosopher(void *arg_ptr)
 
 	pthread_mutex_lock(&data->print);
 	printf("Philo %i with TID: %li deployed @ %lu\n", p_num, data->philos[p_num].thread_id,
-		   (get_time() - data->start_time));
+		   (ft_get_time() - data->start_time));
 	pthread_mutex_unlock(&data->print);
 
 	pthread_mutex_lock(data->philos[p_num].state_mut);
@@ -111,7 +111,7 @@ void	philosopher(void *arg_ptr)
 	ft_synchro_start(data);
 
 	pthread_mutex_lock(&data->print);
-	printf("Philo %i started @ %lu!\n", p_num, (get_time() - data->start_time));
+	printf("Philo %i started @ %lu!\n", p_num, (ft_get_time() - data->start_time));
 	pthread_mutex_unlock(&data->print);
 
 //	ft_usleep(2 * data->num_of_philos);
