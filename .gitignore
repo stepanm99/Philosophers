@@ -1,3 +1,5 @@
 *.o
 philo/philo
+philo/test
+philo/a.out
 test
