@@ -15,18 +15,20 @@
 /// @brief eat routine
 /// @param data 
 /// @param p_num 
-void	ft_eat(t_data *data, int p_num)
+char	ft_eat(t_data *data, int p_num)
 {
-	ft_death_check(data, p_num);
+	if (ft_death_check(data, p_num))
+		return (1);
 	if (!(p_num % 2))
 		ft_right_first_fork_lock(data, p_num);
 	else
 		ft_left_first_fork_lock(data, p_num);
-	ft_death_check(data, p_num);
+	if (ft_death_check(data, p_num))
+		return (1);
 	ft_sleep_and_stat_update(data, p_num);
 	ft_forks_unlock(data, p_num);
 	ft_sleep(data, p_num);
-
+	return (0);
 }
 
 /// @brief sleep routine
@@ -52,7 +54,7 @@ void	ft_think(t_data *data, int p_num)
 	ft_eat(data, p_num);
 }
 
-void	ft_death_check(t_data *data, int p_num)
+char	ft_death_check(t_data *data, int p_num)
 {
 
 	pthread_mutex_lock(&data->print);
@@ -65,11 +67,9 @@ void	ft_death_check(t_data *data, int p_num)
 	{
 		pthread_mutex_unlock(data->philos[p_num].state_mut);
 		pthread_mutex_lock(&data->print);
-		printf("Philo %i is exiting by itself @ %lu!\n", p_num, (ft_get_time() - data->start_time));
+		printf("Philo %i is finished by itself @ %lu!\n", p_num, (ft_get_time() - data->start_time));
 		pthread_mutex_unlock(&data->print);
-//		exit(0);
- 		while (1)
- 			sleep(1);
+		return (1);
 	}
 	pthread_mutex_lock(data->philos[p_num].last_eating_mut);
 	if ((ft_get_time() - data->philos[p_num].last_eating) > (uint64_t)data->die)
@@ -80,16 +80,17 @@ void	ft_death_check(t_data *data, int p_num)
 		pthread_mutex_unlock(&data->print);
 		data->philos[p_num].state = 0;
 		pthread_mutex_unlock(data->philos[p_num].state_mut);
-		ft_death_check(data, p_num);
+		return (1);
 	}
 	pthread_mutex_unlock(data->philos[p_num].last_eating_mut);
 	pthread_mutex_unlock(data->philos[p_num].state_mut);
+	return (0);
 }
 
 /// @brief Routine of a single philosopher
 /// @param data Main struct where philosopher finds own data
 /// @param p_num Number of philosopher, used to acces OWN data from array
-void	ft_philosopher(void *arg_ptr)
+void	*ft_philosopher(void *arg_ptr)
 {
 	t_philo_arg	*arg;
 	t_data		*data;
@@ -115,6 +116,16 @@ void	ft_philosopher(void *arg_ptr)
 	pthread_mutex_unlock(&data->print);
 
 //	ft_usleep(2 * data->num_of_philos);
-	ft_eat(data, p_num);
+	while (1)
+	{
+		if (ft_eat(data, p_num))
+			ft_eat(data, p_num);
+		else
+			break ;
+	}
+	pthread_mutex_lock(&data->print);
+	printf("Philo %i reached end of main thread function\n", p_num);
+	pthread_mutex_unlock(&data->print);
+	return (NULL);
 //	pthread_exit(NULL);
 }

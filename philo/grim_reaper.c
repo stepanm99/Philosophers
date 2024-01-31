@@ -44,43 +44,43 @@ static void	ft_print_philos_stomachs(t_data *data)
 // 	// }
 // }
 
-static void	wait_for_tid(t_data *data)
-{
-	int	i;
+// static void	wait_for_tid(t_data *data)
+// {
+// 	int	i;
+//
+// 	i = 0;
+// 	while (i != data->num_of_philos)
+// 	{
+// 		if (!data->philos[i].thread_id)
+// 			i = 0;
+// 		if ((ft_get_time() - data->start_time) > (uint64_t)data->die)
+// 		{
+// 			pthread_mutex_lock(&data->print);
+// 			printf("Too many philos for this computer :(\n");
+// 			pthread_mutex_unlock(&data->print);
+// 			ft_funeral(data, 0, 0);
+// 		}
+// 		i++;
+// 		ft_usleep(5);
+// 	}
+// }
 
-	i = 0;
-	while (i != data->num_of_philos)
-	{
-		if (!data->philos[i].thread_id)
-			i = 0;
-		if ((ft_get_time() - data->start_time) > (uint64_t)data->die)
-		{
-			pthread_mutex_lock(&data->print);
-			printf("Too many philos for this computer :(\n");
-			pthread_mutex_unlock(&data->print);
-			ft_funeral(data, 0, 0);
-		}
-		i++;
-		ft_usleep(5);
-	}
-}
-
-static void	detach_philos(t_data *data)
-{
-	int	i;
-
-	i = 0;
-	wait_for_tid(data);
-	while (i != data->num_of_philos)
-	{
-//		printf("from pthread detach i: %i\n", i);
-		pthread_mutex_lock(&data->print);
-		printf("detaching TID %lu\n", data->philos[i].thread_id);
-		pthread_mutex_unlock(&data->print);
-		pthread_detach(data->philos[i].thread_id);
-		i++;
-	}
-}
+// static void	ft_join_philos(t_data *data)
+// {
+// 	int	i;
+//
+// 	i = 0;
+// 	wait_for_tid(data);
+// 	while (i != data->num_of_philos)
+// 	{
+// 		printf("from pthread detach i: %i\n", i);
+// 		pthread_mutex_lock(&data->print);
+// 		printf("joining TID %lu\n", data->philos[i].thread_id);
+// 		pthread_mutex_unlock(&data->print);
+// 		pthread_join(data->philos[i].thread_id, NULL);
+// 		i++;
+// 	}
+// }
 
 /* Alternative option of detaching philos but not very working*/
 // static char	detach_philos(t_data *data)
@@ -132,7 +132,7 @@ static void	ft_funeral(t_data *data, int carcass_nr, char print)
 // 	while (detach_flag)
 // 		detach_flag = detach_philos(data);
 	ft_free_data(data);
-	exit(0);
+//	exit(0);
 }
 
 static void	obesity_alert(t_data *data, int fatty_nr)
@@ -152,12 +152,13 @@ static void	obesity_alert(t_data *data, int fatty_nr)
 		if (i == (data->num_of_philos - 1))
 		{
 			ft_funeral(data, i, 0);
+			break ;
 		}
 		i++;
 	}
 }
 
-void	ft_grim_reaper(t_data *data)
+void	*ft_grim_reaper(t_data *data)
 {
 	int		i;
 //	char	detach_flag;
@@ -167,7 +168,7 @@ void	ft_grim_reaper(t_data *data)
 //	print_thread_id(data);
 	ft_synchro_start(data);
 	ft_usleep(data->die / 2);
-	detach_philos(data);  //seems like a better option overall
+//	ft_join_philos(data);  //seems like a better option overall
 //	data->start = 1;
 	while(1)
 	{
@@ -182,6 +183,7 @@ void	ft_grim_reaper(t_data *data)
 			pthread_mutex_unlock(&data->state_mut[i]);
 			pthread_mutex_unlock(&data->last_eating_mut[i]);
 			ft_funeral(data, i, 1);
+			break ;
 		}
 		pthread_mutex_unlock(&data->state_mut[i]);
 		pthread_mutex_unlock(&data->last_eating_mut[i]);
@@ -190,6 +192,7 @@ void	ft_grim_reaper(t_data *data)
 		{
 			pthread_mutex_unlock(&data->ate_mut[i]);
 			obesity_alert(data, i);
+			break ;
 		}
 		pthread_mutex_unlock(&data->ate_mut[i]);
 		if (i + 1 != data->num_of_philos)
@@ -198,4 +201,7 @@ void	ft_grim_reaper(t_data *data)
 			i = 0;
 		usleep(data->die / 10);
 	}
+	pthread_mutex_lock(&data->print);
+	printf("Grim Reaper reached end of its function!!!!!!!!!!!!!!!!!!\n");
+	return (NULL);
 }

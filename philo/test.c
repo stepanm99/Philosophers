@@ -8,6 +8,8 @@
 
 
 
+/*Pthread mutex structures for linux*/
+
 // typedef union
 // {
 //   struct __pthread_mutex_s __data;
@@ -49,33 +51,36 @@
 // };
 
 
-void	print_mutex_data(pthread_mutex_t mut)
-{
-//	printf("\n\nMutex data:\n");
-	printf("align = %li\n", mut.__align);
-	printf("__lock = %u\n", mut.__data.__count);
-	printf("__elision = %i\n", mut.__data.__elision);
-	printf("__kind = %i\n", mut.__data.__kind);
-	printf("__lock = %i\n", mut.__data.__lock);
-	printf("__nusers = %u\n", mut.__data.__nusers);
-	printf("__owner = %i\n", mut.__data.__owner);
-	printf("__spins = %i\n", mut.__data.__spins);
-}
 
-int	main(void)
-{
-	pthread_mutex_t	mut;
+/*Mutex variables test*/
 
-	pthread_mutex_init(&mut, NULL);
-	printf("\n\nmutex initialized\n");
-	print_mutex_data(mut);
-	pthread_mutex_lock(&mut);
-	printf("\n\nmutex locked\n");
-	print_mutex_data(mut);
-	pthread_mutex_unlock(&mut);
-	printf("\n\nmutex unlocked\n");
-	print_mutex_data(mut);
-}
+// void	print_mutex_data(pthread_mutex_t mut)
+// {
+// //	printf("\n\nMutex data:\n");
+// 	printf("align = %li\n", mut.__align);
+// 	printf("__lock = %u\n", mut.__data.__count);
+// 	printf("__elision = %i\n", mut.__data.__elision);
+// 	printf("__kind = %i\n", mut.__data.__kind);
+// 	printf("__lock = %i\n", mut.__data.__lock);
+// 	printf("__nusers = %u\n", mut.__data.__nusers);
+// 	printf("__owner = %i\n", mut.__data.__owner);
+// 	printf("__spins = %i\n", mut.__data.__spins);
+// }
+//
+// int	main(void)
+// {
+// 	pthread_mutex_t	mut;
+//
+// 	pthread_mutex_init(&mut, NULL);
+// 	printf("\n\nmutex initialized\n");
+// 	print_mutex_data(mut);
+// 	pthread_mutex_lock(&mut);
+// 	printf("\n\nmutex locked\n");
+// 	print_mutex_data(mut);
+// 	pthread_mutex_unlock(&mut);
+// 	printf("\n\nmutex unlocked\n");
+// 	print_mutex_data(mut);
+// }
 
 // void	ft_bzero(void *s, size_t l)
 // {
@@ -307,39 +312,72 @@ int	main(void)
 // 	return (0);
 // }
 
-// void	*ft_thread(void *arg)
-// {
-// 	int	n;
 
-// 	n = *(int *)arg;
-// 	printf("Number from a thread: %i\n", n);
-// 	while (n != 0)
-// 	{
-// 		printf("Hey, number from the thread: %i\n", n);
-// 		n--;
-// 	}
-// 	n = 0;
-// }
 
-// int	main(void)
-// {
-// 	pthread_t		thread1;
-// 	pthread_t		thread2;
-// 	struct timeval	t;
-// 	int			n;
-// 	int			m;
+/*
 
-// 	n = 42;
-// 	printf("Hello\n");
-// 	pthread_create(&thread1, NULL, ft_thread, (void *)&n);
-// 	m = 20;
-// 	pthread_create(&thread2, NULL, ft_thread, (void *)&m);
-// 	usleep(4800000);
-// 	printf("n: %i\tm: %i\n", n, m);
-// 	gettimeofday(&t, NULL);
-// 	printf("seconds: %lu microsecunds: %lu\n", t.tv_sec, t.tv_usec);
-// //	pthread_exit(NULL);
-// }
+ Here I tested that when thread function returns while there is pthread_join
+ function in main, there are no leaks!! Meaning I have to rework
+ my dear philosophers to be able to use pthread_join :(.....
+
+ */
+
+void	*ft_thread(void *arg)
+{
+	int	n;
+
+	n = *(int *)arg;
+	printf("Number from a thread: %i\n", n);
+	while (n != 0)
+	{
+		printf("Hey, number from the thread: %i\n", n);
+		n--;
+	}
+	n = 0;
+	usleep(200);
+	return (NULL);
+}
+
+int	main(void)
+{
+	pthread_t		thread1;
+	pthread_t		thread2;
+	pthread_t		*threads;
+	struct timeval	t;
+	int				n;
+	int				m;
+	int				i;
+
+	threads = NULL;
+	n = 42;
+	i = 0;
+	threads = malloc(sizeof(pthread_t) * n);
+	if (!threads)
+		return (-1);
+	printf("Hello\n");
+	pthread_create(&thread1, NULL, ft_thread, (void *)&n);
+	m = 20;
+	pthread_create(&thread2, NULL, ft_thread, (void *)&m);
+	while (i != n)
+	{
+		pthread_create(&threads[i], NULL, ft_thread, (void *)&n);
+		i++;
+	}
+	usleep(4800);
+	i = 0;
+	while (i != n)
+	{
+		pthread_join(threads[i], NULL);
+		i++;
+	}
+	pthread_join(thread1, NULL);
+	pthread_join(thread2, NULL);
+	printf("n: %i\tm: %i\n", n, m);
+	gettimeofday(&t, NULL);
+	printf("seconds: %lu microsecunds: %lu\n", t.tv_sec, t.tv_usec);
+	free(threads);
+	return (0);
+}
 
 // /*odd even test :D*/
 // int	main(void)

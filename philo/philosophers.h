@@ -108,19 +108,19 @@ void		ft_even_deploy_loop(t_data *data, t_philo_arg arg, int i);
 void		ft_wait_for_thread(t_data *data, int p_num);
 
 /*Philosopher functions*/
-void		ft_philosopher(void *arg_ptr);
-void		ft_eat(t_data *data, int p_num);
+void		*ft_philosopher(void *arg_ptr);
+char		ft_eat(t_data *data, int p_num);
 void		ft_sleep(t_data *data, int p_num);
 void		ft_think(t_data *data, int p_num);
 void		ft_forks_unlock(t_data *data, int p_num);
 void		ft_sleep_and_stat_update(t_data *data, int p_num);
 void		ft_right_first_fork_lock(t_data *data, int p_num);
 void		ft_left_first_fork_lock(t_data *data, int p_num);
-void		ft_death_check(t_data *data, int p_num);
+char		ft_death_check(t_data *data, int p_num);
 
 
 /*Grim reaper thread function*/
-void		ft_grim_reaper(t_data *data);
+void		*ft_grim_reaper(t_data *data);
 
 /*Debug*/
 void		print_data(t_data *data);

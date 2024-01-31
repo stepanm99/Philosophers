@@ -15,9 +15,9 @@
 int	main(int argc, const char **argv)
 {
 	t_data	*data;
-//	int		i;
+	int		i;
 
-//	i = 0;
+	i = 0;
 	data = NULL;
 	data = malloc(sizeof(t_data));
 	if (!data)
@@ -38,6 +38,11 @@ int	main(int argc, const char **argv)
 //	print_philos(data);
 	data->start_time = ft_get_time() + ((data->num_of_philos * 100));
 	ft_deploy_philosophers(data);
+	while (i != data->num_of_philos)
+	{
+		pthread_join(data->philos[i].thread_id, NULL);
+		i++;
+	}
 //	print_data(data);
 	ft_free_data(data);
 //	system("leaks philo");
