@@ -109,6 +109,9 @@ static void	ft_funeral(t_data *data, int carcass_nr, char print)
 	int				i;
 	unsigned long	t_o_d;
 
+	pthread_mutex_lock(&data->print);
+	printf("FUNERAL\n");
+	pthread_mutex_unlock(&data->print);
 	i = 0;
 	t_o_d = ft_get_time() - data->start_time;
 	ft_print_philos_stomachs(data);
@@ -152,7 +155,7 @@ static void	obesity_alert(t_data *data, int fatty_nr)
 		if (i == (data->num_of_philos - 1))
 		{
 			ft_funeral(data, i, 0);
-			break ;
+			return ;
 		}
 		i++;
 	}
@@ -183,7 +186,7 @@ void	*ft_grim_reaper(t_data *data)
 			pthread_mutex_unlock(&data->state_mut[i]);
 			pthread_mutex_unlock(&data->last_eating_mut[i]);
 			ft_funeral(data, i, 1);
-			break ;
+			return (NULL);
 		}
 		pthread_mutex_unlock(&data->state_mut[i]);
 		pthread_mutex_unlock(&data->last_eating_mut[i]);
@@ -192,7 +195,7 @@ void	*ft_grim_reaper(t_data *data)
 		{
 			pthread_mutex_unlock(&data->ate_mut[i]);
 			obesity_alert(data, i);
-			break ;
+			return (NULL) ;
 		}
 		pthread_mutex_unlock(&data->ate_mut[i]);
 		if (i + 1 != data->num_of_philos)
@@ -203,5 +206,6 @@ void	*ft_grim_reaper(t_data *data)
 	}
 	pthread_mutex_lock(&data->print);
 	printf("Grim Reaper reached end of its function!!!!!!!!!!!!!!!!!!\n");
+	pthread_mutex_unlock(&data->print);
 	return (NULL);
 }

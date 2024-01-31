@@ -38,11 +38,17 @@ int	main(int argc, const char **argv)
 //	print_philos(data);
 	data->start_time = ft_get_time() + ((data->num_of_philos * 100));
 	ft_deploy_philosophers(data);
+	pthread_mutex_lock(&data->print);
+	printf("Main before pthread join loop\n");
+	pthread_mutex_unlock(&data->print);
 	while (i != data->num_of_philos)
 	{
 		pthread_join(data->philos[i].thread_id, NULL);
 		i++;
 	}
+	pthread_mutex_lock(&data->print);
+	printf("Main after pthread join loop\n");
+	pthread_mutex_unlock(&data->print);
 //	print_data(data);
 	ft_free_data(data);
 //	system("leaks philo");
