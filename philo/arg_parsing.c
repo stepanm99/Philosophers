@@ -64,5 +64,7 @@ void	ft_arg_pars(t_data *data, int argc, const char **argv)
 		ft_error(data, 2);
 	if (argv[5] && argc == 6)
 		data->must_eat = ft_atoi(argv[5], data);
+	else
+		data->must_eat = 0;
 	printf("must_eat = %i\n", data->must_eat);
 }

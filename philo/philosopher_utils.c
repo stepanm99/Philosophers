@@ -31,7 +31,14 @@ void	ft_sleep_and_stat_update(t_data *data, int p_num)
 	pthread_mutex_lock(data->philos[p_num].last_eating_mut);
 	data->philos[p_num].last_eating = ft_get_time();
 	pthread_mutex_lock(data->philos[p_num].state_mut);
-	data->philos[p_num].state = 1;
+	if (data->philos[p_num].state)
+		data->philos[p_num].state = 1;
+	else
+	{
+		pthread_mutex_unlock(data->philos[p_num].state_mut);
+		pthread_mutex_unlock(data->philos[p_num].last_eating_mut);
+		return ;
+	}
 	pthread_mutex_unlock(data->philos[p_num].state_mut);
 	pthread_mutex_unlock(data->philos[p_num].last_eating_mut);
 }

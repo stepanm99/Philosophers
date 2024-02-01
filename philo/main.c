@@ -12,6 +12,27 @@
 
 #include "philosophers.h"
 
+// static void	wait_for_tid(t_data *data)
+// {
+// 	int	i;
+//
+// 	i = 0;
+// 	while (i != data->num_of_philos)
+// 	{
+// 		if (!data->philos[i].thread_id)
+// 			i = 0;
+// 		if ((ft_get_time() - data->start_time) > (uint64_t)data->die)
+// 		{
+// 			pthread_mutex_lock(&data->print);
+// 			printf("Too many philos for this computer :(\n");
+// 			pthread_mutex_unlock(&data->print);
+// 			ft_funeral(data, 0, 0);
+// 		}
+// 		i++;
+// 		ft_usleep(5);
+// 	}
+// }
+
 int	main(int argc, const char **argv)
 {
 	t_data	*data;
