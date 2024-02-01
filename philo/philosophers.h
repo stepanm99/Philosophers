@@ -121,6 +121,9 @@ char		ft_death_check(t_data *data, int p_num);
 
 /*Grim reaper thread function*/
 void		*ft_grim_reaper(t_data *data);
+void		ft_funeral(t_data *data, int carcass_nr, char print);
+void		obesity_alert(t_data *data, int fatty_nr);
+void		ft_print_philos_stomachs(t_data *data);
 
 /*Debug*/
 void		print_data(t_data *data);

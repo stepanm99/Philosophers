@@ -13,7 +13,13 @@ void	ft_forks_unlock(t_data *data, int p_num)
 void	ft_sleep_and_stat_update(t_data *data, int p_num)
 {
 	pthread_mutex_lock(data->philos[p_num].state_mut);
-	data->philos[p_num].state = 2;
+	if (data->philos[p_num].state)
+		data->philos[p_num].state = 2;
+	else
+	{
+		pthread_mutex_unlock(data->philos[p_num].state_mut);
+		return ;
+	}
 	pthread_mutex_unlock(data->philos[p_num].state_mut);
 	pthread_mutex_lock(&data->print);
 	printf("%lu %i is eating\n", (ft_get_time() - data->start_time), p_num);

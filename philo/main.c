@@ -50,6 +50,7 @@ int	main(int argc, const char **argv)
 	printf("Main after pthread join loop\n");
 	pthread_mutex_unlock(&data->print);
 //	print_data(data);
+	ft_print_philos_stomachs(data);
 	ft_free_data(data);
 //	system("leaks philo");
 	return (0);

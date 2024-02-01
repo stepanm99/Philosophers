@@ -18,17 +18,17 @@
 char	ft_eat(t_data *data, int p_num)
 {
 	if (ft_death_check(data, p_num))
-		return (1);
+		return (0);
 	if (!(p_num % 2))
 		ft_right_first_fork_lock(data, p_num);
 	else
 		ft_left_first_fork_lock(data, p_num);
 	if (ft_death_check(data, p_num))
-		return (1);
+		return (0);
 	ft_sleep_and_stat_update(data, p_num);
 	ft_forks_unlock(data, p_num);
 	ft_sleep(data, p_num);
-	return (0);
+	return (1);
 }
 
 /// @brief sleep routine
@@ -51,7 +51,6 @@ void	ft_think(t_data *data, int p_num)
 	pthread_mutex_lock(&data->print);
 	printf("%lu %i is thinking\n", (ft_get_time() - data->start_time), p_num);
 	pthread_mutex_unlock(&data->print);
-	ft_eat(data, p_num);
 }
 
 char	ft_death_check(t_data *data, int p_num)

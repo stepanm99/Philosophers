@@ -15,9 +15,7 @@
 /*Here will be the code for thread that periodically checks if
 somebody has died*/
 
-static void	ft_funeral(t_data *data, int carcass_nr, char print);
-
-static void	ft_print_philos_stomachs(t_data *data)
+void	ft_print_philos_stomachs(t_data *data)
 {
 	int	i;
 
@@ -104,7 +102,7 @@ static void	ft_print_philos_stomachs(t_data *data)
 // 	return (0);
 // }
 
-static void	ft_funeral(t_data *data, int carcass_nr, char print)
+void	ft_funeral(t_data *data, int carcass_nr, char print)
 {
 	int				i;
 	unsigned long	t_o_d;
@@ -138,7 +136,7 @@ static void	ft_funeral(t_data *data, int carcass_nr, char print)
 //	exit(0);
 }
 
-static void	obesity_alert(t_data *data, int fatty_nr)
+void	obesity_alert(t_data *data, int fatty_nr)
 {
 	int	i;
 
@@ -148,10 +146,7 @@ static void	obesity_alert(t_data *data, int fatty_nr)
 	while (1)
 	{
 		if (!data->overeaters[i])
-		{
-			pthread_mutex_unlock(&data->print);
 			break ;
-		}
 		if (i == (data->num_of_philos - 1))
 		{
 			ft_funeral(data, i, 0);
