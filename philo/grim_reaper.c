@@ -130,27 +130,32 @@ void	ft_funeral(t_data *data, int carcass_nr, char print)
 	pthread_mutex_lock(&data->print);
 	printf("All philos should be zero now\n");
 	pthread_mutex_unlock(&data->print);
+	return ;
 // 	while (detach_flag)
 // 		detach_flag = detach_philos(data);
-	ft_free_data(data);
+//	ft_free_data(data);
 //	exit(0);
 }
 
-void	obesity_alert(t_data *data, int fatty_nr)
+char	obesity_alert(t_data *data, int fatty_nr)
 {
 	int	i;
 
 	i = 0;
+	ft_print_philos_stomachs(data);
 	if (!data->overeaters[fatty_nr])
 		data->overeaters[fatty_nr] = 1;
 	while (1)
 	{
 		if (!data->overeaters[i])
-			break ;
+			return (0);
 		if (i == (data->num_of_philos - 1))
 		{
+			pthread_mutex_lock(&data->print);
+			printf("all philos obese\n");
+			pthread_mutex_unlock(&data->print);
 			ft_funeral(data, i, 0);
-			return ;
+			return (1);
 		}
 		i++;
 	}
@@ -188,9 +193,12 @@ void	*ft_grim_reaper(t_data *data)
 		pthread_mutex_lock(&data->ate_mut[i]);
 		if (data->must_eat && data->philos[i].ate >= data->must_eat)
 		{
+// 			pthread_mutex_lock(&data->print);
+// 			printf("Obesity triggered :D\n");
+// 			pthread_mutex_unlock(&data->print);
 			pthread_mutex_unlock(&data->ate_mut[i]);
-			obesity_alert(data, i);
-			return (NULL) ;
+			if (obesity_alert(data, i))
+				return (NULL) ;
 		}
 		pthread_mutex_unlock(&data->ate_mut[i]);
 		if (i + 1 != data->num_of_philos)
