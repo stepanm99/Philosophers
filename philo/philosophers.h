@@ -117,6 +117,7 @@ void		ft_sleep_and_stat_update(t_data *data, int p_num);
 void		ft_right_first_fork_lock(t_data *data, int p_num);
 void		ft_left_first_fork_lock(t_data *data, int p_num);
 char		ft_death_check(t_data *data, int p_num);
+char		ft_check_state(t_data *data, int p_num);
 
 
 /*Grim reaper thread function*/

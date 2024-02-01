@@ -95,12 +95,6 @@ void	ft_deploy_philosophers(t_data *data)
 	pthread_create(&data->grim_reaper, NULL, (void *)&ft_grim_reaper, data);
 	deploy_eaters(data);
 	deploy_rest(data);
-	pthread_mutex_lock(&data->print);
-	printf("Before pthread_join of Grim\n");
-	pthread_mutex_unlock(&data->print);
 	pthread_join(data->grim_reaper, NULL);
-	pthread_mutex_lock(&data->print);
-	printf("After pthread join of Grim\n");
-	pthread_mutex_unlock(&data->print);
 	return ;
 }

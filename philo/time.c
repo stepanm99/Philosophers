@@ -36,16 +36,10 @@ void	ft_usleep(uint64_t delay)
 
 void	ft_synchro_start(t_data *data)
 {
-	pthread_mutex_lock(&data->print);
-	printf("Entered synchro function @ %lu\n", (ft_get_time() - data->start_time));
-	pthread_mutex_unlock(&data->print);
 	while (1)
 	{
 		if ((data->start_time) < ft_get_time())
 			break ;
 		usleep(100);
 	}
-	pthread_mutex_lock(&data->print);
-	printf("Exited synchro function @ %lu\n", (ft_get_time() - data->start_time));
-	pthread_mutex_unlock(&data->print);
 }

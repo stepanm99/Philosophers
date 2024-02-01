@@ -1,5 +1,17 @@
 #include "philosophers.h"
 
+char	ft_check_state(t_data *data, int p_num)
+{
+	pthread_mutex_lock(data->philos[p_num].state_mut);
+	if (data->philos[p_num].state)
+	{
+		pthread_mutex_unlock(data->philos[p_num].state_mut);
+		return (0);
+	}
+	pthread_mutex_unlock(data->philos[p_num].state_mut);
+	return (1);
+}
+
 void	ft_forks_unlock(t_data *data, int p_num)
 {
 	pthread_mutex_lock(data->philos[p_num].left_sfgrd);
@@ -45,6 +57,8 @@ void	ft_sleep_and_stat_update(t_data *data, int p_num)
 
 void	ft_right_first_fork_lock(t_data *data, int p_num)
 {
+	if (ft_check_state(data, p_num))
+		return ;
 	while (1)
 	{
 		pthread_mutex_lock(data->philos[p_num].right_sfgrd);
@@ -55,9 +69,12 @@ void	ft_right_first_fork_lock(t_data *data, int p_num)
 		if (!*data->philos[p_num].left_fork)
 		{
 			*data->philos[p_num].left_fork = 1;
-			pthread_mutex_lock(&data->print);
-			printf("%lu %i has taken a fork\n", (ft_get_time() - data->start_time), p_num);
-			pthread_mutex_unlock(&data->print);
+			if (!ft_check_state(data, p_num))
+			{
+				pthread_mutex_lock(&data->print);
+				printf("%lu %i has taken a fork\n", (ft_get_time() - data->start_time), p_num);
+				pthread_mutex_unlock(&data->print);
+			}
 			pthread_mutex_unlock(data->philos[p_num].left_sfgrd);
 			break ;
 		}
@@ -70,6 +87,8 @@ void	ft_right_first_fork_lock(t_data *data, int p_num)
 
 void	ft_left_first_fork_lock(t_data *data, int p_num)
 {
+	if (ft_check_state(data, p_num))
+		return ;
 	while (1)
 	{
 		// pthread_mutex_lock(&data->print);
@@ -83,9 +102,12 @@ void	ft_left_first_fork_lock(t_data *data, int p_num)
 		if (!*data->philos[p_num].right_fork)
 		{
 			*data->philos[p_num].right_fork = 1;
-			pthread_mutex_lock(&data->print);
-			printf("%lu %i has taken a fork\n", (ft_get_time() - data->start_time), p_num);
-			pthread_mutex_unlock(&data->print);
+			if (!ft_check_state(data, p_num))
+			{
+				pthread_mutex_lock(&data->print);
+				printf("%lu %i has taken a fork\n", (ft_get_time() - data->start_time), p_num);
+				pthread_mutex_unlock(&data->print);
+			}
 			pthread_mutex_unlock(data->philos[p_num].right_sfgrd);
 			break ;
 		}

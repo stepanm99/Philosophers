@@ -107,12 +107,8 @@ void	ft_funeral(t_data *data, int carcass_nr, char print)
 	int				i;
 	unsigned long	t_o_d;
 
-	pthread_mutex_lock(&data->print);
-	printf("FUNERAL\n");
-	pthread_mutex_unlock(&data->print);
 	i = 0;
 	t_o_d = ft_get_time() - data->start_time;
-	ft_print_philos_stomachs(data);
 	if (print)
 	{
 		pthread_mutex_lock(&data->print);
@@ -121,20 +117,12 @@ void	ft_funeral(t_data *data, int carcass_nr, char print)
 	}
 	while (i != data->num_of_philos)
 	{
-		//pthread_cancel(data->philos[i].thread_id);
 		pthread_mutex_lock(&data->state_mut[i]);
 		data->philos[i].state = 0;
 		pthread_mutex_unlock(&data->state_mut[i]);
 		i++;
 	}
-	pthread_mutex_lock(&data->print);
-	printf("All philos should be zero now\n");
-	pthread_mutex_unlock(&data->print);
 	return ;
-// 	while (detach_flag)
-// 		detach_flag = detach_philos(data);
-//	ft_free_data(data);
-//	exit(0);
 }
 
 char	obesity_alert(t_data *data, int fatty_nr)
@@ -142,7 +130,7 @@ char	obesity_alert(t_data *data, int fatty_nr)
 	int	i;
 
 	i = 0;
-	ft_print_philos_stomachs(data);
+//	ft_print_philos_stomachs(data);
 	if (!data->overeaters[fatty_nr])
 		data->overeaters[fatty_nr] = 1;
 	while (1)
@@ -151,9 +139,6 @@ char	obesity_alert(t_data *data, int fatty_nr)
 			return (0);
 		if (i == (data->num_of_philos - 1))
 		{
-			pthread_mutex_lock(&data->print);
-			printf("all philos obese\n");
-			pthread_mutex_unlock(&data->print);
 			ft_funeral(data, i, 0);
 			return (1);
 		}
@@ -164,20 +149,12 @@ char	obesity_alert(t_data *data, int fatty_nr)
 void	*ft_grim_reaper(t_data *data)
 {
 	int		i;
-//	char	detach_flag;
 
 	i = 0;
-//	detach_flag = 1;
-//	print_thread_id(data);
 	ft_synchro_start(data);
 	ft_usleep(data->die / 2);
-//	ft_join_philos(data);  //seems like a better option overall
-//	data->start = 1;
 	while(1)
 	{
-//		if (detach_flag)
-//			detach_flag = detach_philos(data); //<<< second detach option, not very working
-//		printf("state of philo %i is %i\n", i, data->philos[i].state);
 		pthread_mutex_lock(&data->last_eating_mut[i]);
 		pthread_mutex_lock(&data->state_mut[i]);
 		if (((ft_get_time() - data->philos[i].last_eating > (uint64_t)data->die)
@@ -193,9 +170,6 @@ void	*ft_grim_reaper(t_data *data)
 		pthread_mutex_lock(&data->ate_mut[i]);
 		if (data->must_eat && data->philos[i].ate >= data->must_eat)
 		{
-// 			pthread_mutex_lock(&data->print);
-// 			printf("Obesity triggered :D\n");
-// 			pthread_mutex_unlock(&data->print);
 			pthread_mutex_unlock(&data->ate_mut[i]);
 			if (obesity_alert(data, i))
 				return (NULL) ;
@@ -207,8 +181,5 @@ void	*ft_grim_reaper(t_data *data)
 			i = 0;
 		usleep(data->die / 10);
 	}
-	pthread_mutex_lock(&data->print);
-	printf("Grim Reaper reached end of its function!!!!!!!!!!!!!!!!!!\n");
-	pthread_mutex_unlock(&data->print);
 	return (NULL);
 }
