@@ -20,15 +20,6 @@
 # include <sys/time.h>
 # include <stdint.h>
 
-/*Defining OS dependent mutex variable names*/
-
-# ifdef __APPLE__
-#  define MUTEX_NUM __sig
-# endif
-# ifdef __linux__
-#  define MUTEX_NUM __data.__lock
-# endif
-
 # define ALLOCATION_ERR 1
 # define ARGUMENT_ERR 2
 # define THREAD_ERR 3
@@ -118,7 +109,6 @@ void		ft_right_first_fork_lock(t_data *data, int p_num);
 void		ft_left_first_fork_lock(t_data *data, int p_num);
 char		ft_death_check(t_data *data, int p_num);
 char		ft_check_state(t_data *data, int p_num);
-
 
 /*Grim reaper thread function*/
 void		*ft_grim_reaper(t_data *data);

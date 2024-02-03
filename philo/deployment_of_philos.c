@@ -12,7 +12,6 @@
 
 #include "philosophers.h"
 
-
 void	ft_wait_for_thread(t_data *data, int p_num)
 {
 	while (1)
@@ -36,7 +35,7 @@ void	ft_even_deploy_loop(t_data *data, t_philo_arg arg, int i)
 		data->philos[i].last_eating = data->start_time;
 		data->philos[i].state = 2;
 		pthread_create(&data->philos[i].thread_id, NULL,
-					   (void *)&ft_philosopher, &arg);
+			(void *)&ft_philosopher, &arg);
 		ft_wait_for_thread(data, i);
 		i += 2;
 	}
@@ -50,7 +49,7 @@ void	ft_odd_deploy_loop(t_data *data, t_philo_arg arg, int i)
 		data->philos[i].last_eating = data->start_time;
 		data->philos[i].state = 2;
 		pthread_create(&data->philos[i].thread_id, NULL,
-					   (void *)&ft_philosopher, &arg);
+			(void *)&ft_philosopher, &arg);
 		ft_wait_for_thread(data, i);
 		i += 2;
 	}
@@ -61,7 +60,7 @@ void	ft_odd_deploy_loop(t_data *data, t_philo_arg arg, int i)
 void	deploy_eaters(t_data *data)
 {
 	t_philo_arg	arg;
-	int	i;
+	int			i;
 
 	i = 0;
 	arg.data = data;
@@ -77,7 +76,7 @@ void	deploy_eaters(t_data *data)
 void	deploy_rest(t_data *data)
 {
 	t_philo_arg	arg;
-	int	i;
+	int			i;
 
 	i = 1;
 	arg.data = data;

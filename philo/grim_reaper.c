@@ -29,19 +29,6 @@ void	ft_print_philos_stomachs(t_data *data)
 	}
 }
 
-// static void	print_thread_id(t_data *data)
-// {
-// //	int	i;
-
-// //	i = 0;
-// 	printf("number of philosophers from print threads: %i\n", data->num_of_philos);
-// 	// while (i < data->num_of_philos)
-// 	// {
-// 	// 	printf("id of thread: %i is %lu\n", i, data->philos[i].thread_id);
-// 	// 	i++;
-// 	// }
-// }
-
 // static void	wait_for_tid(t_data *data)
 // {
 // 	int	i;
@@ -130,7 +117,6 @@ char	obesity_alert(t_data *data, int fatty_nr)
 	int	i;
 
 	i = 0;
-//	ft_print_philos_stomachs(data);
 	if (!data->overeaters[fatty_nr])
 		data->overeaters[fatty_nr] = 1;
 	while (1)
@@ -153,12 +139,12 @@ void	*ft_grim_reaper(t_data *data)
 	i = 0;
 	ft_synchro_start(data);
 	ft_usleep(data->die / 2);
-	while(1)
+	while (1)
 	{
 		pthread_mutex_lock(&data->last_eating_mut[i]);
 		pthread_mutex_lock(&data->state_mut[i]);
 		if (((ft_get_time() - data->philos[i].last_eating > (uint64_t)data->die)
-			|| !data->philos[i].state) && data->philos[i].state != 2)
+				|| !data->philos[i].state) && data->philos[i].state != 2)
 		{
 			pthread_mutex_unlock(&data->state_mut[i]);
 			pthread_mutex_unlock(&data->last_eating_mut[i]);
@@ -172,7 +158,7 @@ void	*ft_grim_reaper(t_data *data)
 		{
 			pthread_mutex_unlock(&data->ate_mut[i]);
 			if (obesity_alert(data, i))
-				return (NULL) ;
+				return (NULL);
 		}
 		pthread_mutex_unlock(&data->ate_mut[i]);
 		if (i + 1 != data->num_of_philos)

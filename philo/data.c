@@ -60,7 +60,6 @@ void	ft_prepare_forks_data(t_data *data)
 	int	i;
 
 	i = 0;
-//	printf("num of philos from prepare forks: %i\n", data->num_of_philos);
 	data->forks = malloc(sizeof(char) * data->num_of_philos);
 	if (!data->forks)
 		ft_error(data, ALLOCATION_ERR);

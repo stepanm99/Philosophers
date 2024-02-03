@@ -61,18 +61,12 @@ char	ft_death_check(t_data *data, int p_num)
 	if (data->philos[p_num].state == 0)
 	{
 		pthread_mutex_unlock(data->philos[p_num].state_mut);
-// 		pthread_mutex_lock(&data->print);
-// 		printf("Philo %i is finished by itself @ %lu!\n", p_num, (ft_get_time() - data->start_time));
-// 		pthread_mutex_unlock(&data->print);
 		return (1);
 	}
 	pthread_mutex_lock(data->philos[p_num].last_eating_mut);
 	if ((ft_get_time() - data->philos[p_num].last_eating) > (uint64_t)data->die)
 	{
 		pthread_mutex_unlock(data->philos[p_num].last_eating_mut);
-// 		pthread_mutex_lock(&data->print);
-// 		printf("%i died by itself\n", p_num);
-// 		pthread_mutex_unlock(&data->print);
 		data->philos[p_num].state = 0;
 		pthread_mutex_unlock(data->philos[p_num].state_mut);
 		return (1);
@@ -94,23 +88,10 @@ void	*ft_philosopher(void *arg_ptr)
 	arg = (t_philo_arg *)arg_ptr;
 	data = arg->data;
 	p_num = arg->p_num;
-
-// 	pthread_mutex_lock(&data->print);
-// 	printf("Philo %i with TID: %li deployed @ %lu\n", p_num, data->philos[p_num].thread_id,
-// 		   (ft_get_time() - data->start_time));
-// 	pthread_mutex_unlock(&data->print);
-
 	pthread_mutex_lock(data->philos[p_num].state_mut);
 	data->philos[p_num].state = 1;
 	pthread_mutex_unlock(data->philos[p_num].state_mut);
-
 	ft_synchro_start(data);
-
-// 	pthread_mutex_lock(&data->print);
-// 	printf("Philo %i started @ %lu!\n", p_num, (ft_get_time() - data->start_time));
-// 	pthread_mutex_unlock(&data->print);
-
-//	ft_usleep(2 * data->num_of_philos);
 	while (1)
 	{
 		if (ft_eat(data, p_num))
@@ -118,9 +99,5 @@ void	*ft_philosopher(void *arg_ptr)
 		else
 			break ;
 	}
-// 	pthread_mutex_lock(&data->print);
-// 	printf("Philo %i reached end of main thread function\n", p_num);
-// 	pthread_mutex_unlock(&data->print);
 	return (NULL);
-//	pthread_exit(NULL);
 }

@@ -72,7 +72,8 @@ void	ft_right_first_fork_lock(t_data *data, int p_num)
 			if (!ft_check_state(data, p_num))
 			{
 				pthread_mutex_lock(&data->print);
-				printf("%lu %i has taken a fork\n", (ft_get_time() - data->start_time), p_num);
+				printf("%lu %i has taken a fork\n", (ft_get_time()
+						- data->start_time), p_num);
 				pthread_mutex_unlock(&data->print);
 			}
 			pthread_mutex_unlock(data->philos[p_num].left_sfgrd);
@@ -91,9 +92,6 @@ void	ft_left_first_fork_lock(t_data *data, int p_num)
 		return ;
 	while (1)
 	{
-		// pthread_mutex_lock(&data->print);
-		// printf("while get fork l from philo %i @ %li\n", p_num, (data->start_time - get_time()));
-		// pthread_mutex_unlock(&data->print);
 		pthread_mutex_lock(data->philos[p_num].left_sfgrd);
 		if (!*data->philos[p_num].left_fork)
 			*data->philos[p_num].left_fork = 1;
@@ -105,7 +103,8 @@ void	ft_left_first_fork_lock(t_data *data, int p_num)
 			if (!ft_check_state(data, p_num))
 			{
 				pthread_mutex_lock(&data->print);
-				printf("%lu %i has taken a fork\n", (ft_get_time() - data->start_time), p_num);
+				printf("%lu %i has taken a fork\n", (ft_get_time()
+						- data->start_time), p_num);
 				pthread_mutex_unlock(&data->print);
 			}
 			pthread_mutex_unlock(data->philos[p_num].right_sfgrd);
