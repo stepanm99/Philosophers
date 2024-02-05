@@ -30,51 +30,11 @@ void	ft_destroy_mutexes(t_data *data)
 	}
 }
 
-/// @brief Destroy mutexes and free memory
-/// @param data Main data struct
-void	ft_free_data(t_data *data)
-{
-	ft_destroy_mutexes(data);
-	if (data->overeaters)
-		free(data->overeaters);
-	if (data->philos)
-		free(data->philos);
-	if (data->forks)
-		free(data->forks);
-	if (data->fork_safeguard)
-		free(data->fork_safeguard);
-	if (data->state_mut)
-		free(data->state_mut);
-	if (data->last_eating_mut)
-		free(data->last_eating_mut);
-	if (data->ate_mut)
-		free(data->ate_mut);
-	if (data)
-		free(data);
-}
-
-/// @brief Initialize array of forks (mutexes)
-/// @param data Main data struct
-void	ft_prepare_forks_data(t_data *data)
+static void	ft_prepare_mutexes(t_data *data)
 {
 	int	i;
 
 	i = 0;
-	data->forks = malloc(sizeof(char) * data->num_of_philos);
-	if (!data->forks)
-		ft_error(data, ALLOCATION_ERR);
-	data->fork_safeguard = malloc(sizeof(pthread_mutex_t) * data->num_of_philos);
-	if (!data->fork_safeguard)
-		ft_error(data, ALLOCATION_ERR);
-	data->state_mut = malloc(sizeof(pthread_mutex_t) * data->num_of_philos);
-	if (!data->state_mut)
-		ft_error(data, ALLOCATION_ERR);
-	data->last_eating_mut = malloc(sizeof(pthread_mutex_t) * data->num_of_philos);
-	if (!data->last_eating_mut)
-		ft_error(data, ALLOCATION_ERR);
-	data->ate_mut = malloc(sizeof(pthread_mutex_t) * data->num_of_philos);
-	if (!data->ate_mut)
-		ft_error(data, ALLOCATION_ERR);
 	while (i != data->num_of_philos)
 	{
 		data->forks[i] = 0;
@@ -88,6 +48,30 @@ void	ft_prepare_forks_data(t_data *data)
 			ft_error(data, MUTEX_ERR);
 		i++;
 	}
+}
+
+/// @brief Initialize array of forks (mutexes)
+/// @param data Main data struct
+void	ft_prepare_forks_data(t_data *data)
+{
+	data->forks = malloc(sizeof(char) * data->num_of_philos);
+	if (!data->forks)
+		ft_error(data, ALLOCATION_ERR);
+	data->fork_safeguard = malloc(sizeof(pthread_mutex_t)
+			* data->num_of_philos);
+	if (!data->fork_safeguard)
+		ft_error(data, ALLOCATION_ERR);
+	data->state_mut = malloc(sizeof(pthread_mutex_t) * data->num_of_philos);
+	if (!data->state_mut)
+		ft_error(data, ALLOCATION_ERR);
+	data->last_eating_mut = malloc(sizeof(pthread_mutex_t)
+			* data->num_of_philos);
+	if (!data->last_eating_mut)
+		ft_error(data, ALLOCATION_ERR);
+	data->ate_mut = malloc(sizeof(pthread_mutex_t) * data->num_of_philos);
+	if (!data->ate_mut)
+		ft_error(data, ALLOCATION_ERR);
+	ft_prepare_mutexes(data);
 }
 
 /// @brief Gives philosopher acces to forks next to him
@@ -108,7 +92,8 @@ void	ft_give_philo_forks(t_data *data, int i)
 	else
 	{
 		data->philos[i].right_fork = &data->forks[data->num_of_philos - 1];
-		data->philos[i].right_sfgrd = &data->fork_safeguard[data->num_of_philos - 1];
+		data->philos[i].right_sfgrd = &data->fork_safeguard[data->num_of_philos
+			- 1];
 		data->philos[i].left_fork = &data->forks[i];
 		data->philos[i].left_sfgrd = &data->fork_safeguard[i];
 		data->philos[i].state_mut = &data->state_mut[i];
