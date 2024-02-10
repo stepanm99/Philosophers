@@ -6,12 +6,16 @@
 /*   By: smelicha <smelicha@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/17 22:40:52 by smelicha          #+#    #+#             */
-/*   Updated: 2024/01/09 13:56:10 by smelicha         ###   ########.fr       */
+/*   Updated: 2024/02/09 22:47:04 by smelicha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers.h"
 
+/// @brief Deploys only even philosophers
+/// @param data Main data struct
+/// @param arg Struct with data for each philo (number and data pointer)
+/// @param i Which philosopher to start with
 void	ft_even_deploy_loop(t_data *data, t_philo_arg arg, int i)
 {
 	while (i < data->num_of_philos)
@@ -26,6 +30,10 @@ void	ft_even_deploy_loop(t_data *data, t_philo_arg arg, int i)
 	}
 }
 
+/// @brief Deploys onle odd philosophers
+/// @param data Main data struct
+/// @param arg Struct with data for each philo (number and data pointer)
+/// @param i Which philosopher to start with
 void	ft_odd_deploy_loop(t_data *data, t_philo_arg arg, int i)
 {
 	while (i < data->num_of_philos)
@@ -40,7 +48,7 @@ void	ft_odd_deploy_loop(t_data *data, t_philo_arg arg, int i)
 	}
 }
 
-/// @brief Starts philosophers allowed to eat first
+/// @brief Starts philosophers that will eat first
 /// @param data Main data struct
 void	deploy_eaters(t_data *data)
 {
@@ -56,7 +64,7 @@ void	deploy_eaters(t_data *data)
 		ft_odd_deploy_loop(data, arg, i);
 }
 
-/// @brief Starts other philosophers that will wait for the eaters to finish
+/// @brief Starts other philosophers
 /// @param data Main data struct
 void	deploy_rest(t_data *data)
 {

@@ -6,17 +6,21 @@
 /*   By: smelicha <smelicha@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/17 23:38:01 by smelicha          #+#    #+#             */
-/*   Updated: 2024/01/17 20:44:29 by smelicha         ###   ########.fr       */
+/*   Updated: 2024/02/09 22:47:47 by smelicha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers.h"
 
+/// @brief Prints how many times each philosopher ate
+/// @param data Main data struct
 void	ft_print_philos_stomachs(t_data *data)
 {
 	int	i;
 
 	i = 0;
+	if (!PRINT_NUMBER_OF_EATS)
+		return ;
 	while (i != data->num_of_philos)
 	{
 		pthread_mutex_lock(&data->print);
@@ -26,6 +30,10 @@ void	ft_print_philos_stomachs(t_data *data)
 	}
 }
 
+/// @brief Procedure to terminate execution of threads to honor the dead philo
+/// @param data Main data struct
+/// @param carcass_nr Number of dead philosopher
+/// @param print flag in case philos die from obesity
 void	ft_funeral(t_data *data, int carcass_nr, char print)
 {
 	int				i;
@@ -49,6 +57,10 @@ void	ft_funeral(t_data *data, int carcass_nr, char print)
 	return ;
 }
 
+/// @brief Functions that keep track how obese philos are, if all, then funeral
+/// @param data Main data struct
+/// @param fatty_nr philosopher which fat layer is examined
+/// @return 
 char	obesity_alert(t_data *data, int fatty_nr)
 {
 	int	i;
@@ -69,6 +81,10 @@ char	obesity_alert(t_data *data, int fatty_nr)
 	}
 }
 
+/// @brief Check if the philosopher ate recently and is not starved
+/// @param data Main data struct
+/// @param i number of examined philo
+/// @return 1 when philo starved to death, 0 if philo is OK
 static char	ft_check_last_eating(t_data *data, int i)
 {
 	pthread_mutex_lock(&data->last_eating_mut[i]);
@@ -86,6 +102,9 @@ static char	ft_check_last_eating(t_data *data, int i)
 	return (0);
 }
 
+/// @brief Function of the thread that takes care of the dead
+/// @param data Main data struct
+/// @return NULL (always)
 void	*ft_grim_reaper(t_data *data)
 {
 	int		i;
@@ -111,5 +130,6 @@ void	*ft_grim_reaper(t_data *data)
 			i = 0;
 		usleep(data->die / 10);
 	}
+	ft_print_philos_stomachs(data);
 	return (NULL);
 }

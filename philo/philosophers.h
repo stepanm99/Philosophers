@@ -6,7 +6,7 @@
 /*   By: smelicha <smelicha@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/15 17:59:11 by smelicha          #+#    #+#             */
-/*   Updated: 2024/01/16 22:44:12 by smelicha         ###   ########.fr       */
+/*   Updated: 2024/02/09 23:02:05 by smelicha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,10 @@
 # define ARGUMENT_ERR 2
 # define THREAD_ERR 3
 # define MUTEX_ERR 4
+
+# ifndef PRINT_NUMBER_OF_EATS
+#  define PRINT_NUMBER_OF_EATS 0
+# endif
 
 /*state:
 	0 - dead
@@ -104,13 +108,13 @@ char		ft_eat(t_data *data, int p_num);
 void		ft_sleep(t_data *data, int p_num);
 void		ft_think(t_data *data, int p_num);
 void		ft_forks_unlock(t_data *data, int p_num);
-void		ft_sleep_and_stat_update(t_data *data, int p_num);
+void		ft_eat_dealy_and_stat_update(t_data *data, int p_num);
 void		ft_right_first_fork_lock(t_data *data, int p_num);
 void		ft_left_first_fork_lock(t_data *data, int p_num);
 char		ft_death_check(t_data *data, int p_num);
 char		ft_check_state(t_data *data, int p_num);
 void		ft_print_take_fork(t_data *data, int p_num);
-void		ft_print_eat(t_data *data, int p_num);
+void		ft_print_eat_and_delay(t_data *data, int p_num);
 
 /*Grim reaper thread function*/
 void		*ft_grim_reaper(t_data *data);

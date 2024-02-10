@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philosopher.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: stepan <stepan@student.42.fr>              +#+  +:+       +#+        */
+/*   By: smelicha <smelicha@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/17 22:39:08 by smelicha          #+#    #+#             */
-/*   Updated: 2024/01/20 23:40:31 by stepan           ###   ########.fr       */
+/*   Updated: 2024/02/09 23:01:23 by smelicha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ char	ft_eat(t_data *data, int p_num)
 		ft_left_first_fork_lock(data, p_num);
 	if (ft_death_check(data, p_num))
 		return (0);
-	ft_sleep_and_stat_update(data, p_num);
+	ft_eat_dealy_and_stat_update(data, p_num);
 	ft_forks_unlock(data, p_num);
 	ft_sleep(data, p_num);
 	return (1);
