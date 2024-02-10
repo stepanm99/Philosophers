@@ -6,7 +6,7 @@
 /*   By: smelicha <smelicha@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/17 23:38:01 by smelicha          #+#    #+#             */
-/*   Updated: 2024/02/09 22:47:47 by smelicha         ###   ########.fr       */
+/*   Updated: 2024/02/10 17:59:58 by smelicha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,6 +75,7 @@ char	obesity_alert(t_data *data, int fatty_nr)
 		if (i == (data->num_of_philos - 1))
 		{
 			ft_funeral(data, i, 0);
+			ft_print_philos_stomachs(data);
 			return (1);
 		}
 		i++;
@@ -130,6 +131,5 @@ void	*ft_grim_reaper(t_data *data)
 			i = 0;
 		usleep(data->die / 10);
 	}
-	ft_print_philos_stomachs(data);
 	return (NULL);
 }

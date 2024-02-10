@@ -6,7 +6,7 @@
 /*   By: smelicha <smelicha@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/16 19:59:09 by smelicha          #+#    #+#             */
-/*   Updated: 2024/01/16 22:49:21 by smelicha         ###   ########.fr       */
+/*   Updated: 2024/02/10 17:55:01 by smelicha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,8 @@ void	ft_destroy_mutexes(t_data *data)
 	}
 }
 
+/// @brief Initializes mutexes for all philos
+/// @param data Main data struct
 static void	ft_prepare_mutexes(t_data *data)
 {
 	int	i;
@@ -50,7 +52,7 @@ static void	ft_prepare_mutexes(t_data *data)
 	}
 }
 
-/// @brief Initialize array of forks (mutexes)
+/// @brief Allocates memory for mutexes (forks, safegurds, ...)
 /// @param data Main data struct
 void	ft_prepare_forks_data(t_data *data)
 {
@@ -102,7 +104,7 @@ void	ft_give_philo_forks(t_data *data, int i)
 	}
 }
 
-/// @brief Initialize array of philos with their data
+/// @brief Allocates memory for philos, initializes their data
 /// @param data Main data struct
 void	ft_prepare_philos_data(t_data *data)
 {

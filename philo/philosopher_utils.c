@@ -6,7 +6,7 @@
 /*   By: smelicha <smelicha@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/09 20:51:18 by smelicha          #+#    #+#             */
-/*   Updated: 2024/02/09 23:00:46 by smelicha         ###   ########.fr       */
+/*   Updated: 2024/02/10 17:50:23 by smelicha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,9 +56,9 @@ void	ft_print_eat_and_delay(t_data *data, int p_num)
 	pthread_mutex_unlock(data->philos[p_num].ate_mut);
 }
 
-/// @brief 
-/// @param data 
-/// @param p_num 
+/// @brief Updates stats, last eating and number of meals, and calls for delay
+/// @param data Main data struct
+/// @param p_num Number of philosopher
 void	ft_eat_dealy_and_stat_update(t_data *data, int p_num)
 {
 	pthread_mutex_lock(data->philos[p_num].state_mut);

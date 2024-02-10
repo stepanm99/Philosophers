@@ -6,7 +6,7 @@
 /*   By: smelicha <smelicha@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/17 22:40:52 by smelicha          #+#    #+#             */
-/*   Updated: 2024/02/09 22:47:04 by smelicha         ###   ########.fr       */
+/*   Updated: 2024/02/10 17:56:46 by smelicha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ void	ft_odd_deploy_loop(t_data *data, t_philo_arg arg, int i)
 	}
 }
 
-/// @brief Starts philosophers that will eat first
+/// @brief Deploys philosophers that will eat first
 /// @param data Main data struct
 void	deploy_eaters(t_data *data)
 {
@@ -64,7 +64,7 @@ void	deploy_eaters(t_data *data)
 		ft_odd_deploy_loop(data, arg, i);
 }
 
-/// @brief Starts other philosophers
+/// @brief Deploys rest of the philosophers
 /// @param data Main data struct
 void	deploy_rest(t_data *data)
 {

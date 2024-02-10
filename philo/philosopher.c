@@ -6,15 +6,16 @@
 /*   By: smelicha <smelicha@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/17 22:39:08 by smelicha          #+#    #+#             */
-/*   Updated: 2024/02/09 23:01:23 by smelicha         ###   ########.fr       */
+/*   Updated: 2024/02/10 17:48:34 by smelicha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers.h"
 
-/// @brief eat routine
-/// @param data 
-/// @param p_num 
+/// @brief Eat routine
+/// @param data Main data struct
+/// @param p_num Number of philosopher
+/// @return 1 if eating successfull, 0 if philo died
 char	ft_eat(t_data *data, int p_num)
 {
 	if (ft_death_check(data, p_num))
@@ -31,9 +32,9 @@ char	ft_eat(t_data *data, int p_num)
 	return (1);
 }
 
-/// @brief sleep routine
-/// @param data 
-/// @param p_num 
+/// @brief Sleep routine
+/// @param data Main data struct
+/// @param p_num Number of philosopher
 void	ft_sleep(t_data *data, int p_num)
 {
 	if (ft_check_state(data, p_num))
@@ -45,6 +46,9 @@ void	ft_sleep(t_data *data, int p_num)
 	ft_think(data, p_num);
 }
 
+/// @brief Thinking routine
+/// @param data Main data struct
+/// @param p_num Number of philosopher
 void	ft_think(t_data *data, int p_num)
 {
 	if (ft_check_state(data, p_num))
@@ -55,6 +59,10 @@ void	ft_think(t_data *data, int p_num)
 	pthread_mutex_unlock(&data->print);
 }
 
+/// @brief Check if the philo is still alive
+/// @param data Main data struct
+/// @param p_num Number of philosopher
+/// @return 1 if dead, 0 if alive
 char	ft_death_check(t_data *data, int p_num)
 {
 	pthread_mutex_lock(data->philos[p_num].state_mut);

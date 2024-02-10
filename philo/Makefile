@@ -7,6 +7,7 @@ SRC = main.c arg_parsing.c data.c deployment_utils.c error.c time.c \
 CC = cc
 FLAGS = -Wall -Wextra -Werror -g
 DFLAGS = -Wall -Wextra -Werror -g -fsanitize=address -static-libsan
+PRINT_FLAG = -D PRINT_NUMBER_OF_EATS=0
 
 OBJ = $(SRC:.c=.o)
 
@@ -19,7 +20,7 @@ $(NAME): $(OBJ)
 
 %.o: %.c
 	@echo "Compiling $<"
-	@$(CC) $(FLAGS) -c $< -o $@
+	@$(CC) $(FLAGS) $(PRINT_FLAG) -c $< -o $@
 
 clean:
 	@rm -f $(OBJ)

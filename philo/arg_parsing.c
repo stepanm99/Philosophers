@@ -6,12 +6,16 @@
 /*   By: smelicha <smelicha@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/16 19:59:14 by smelicha          #+#    #+#             */
-/*   Updated: 2023/12/17 23:13:18 by smelicha         ###   ########.fr       */
+/*   Updated: 2024/02/10 17:52:11 by smelicha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers.h"
 
+/// @brief Converts string to integer
+/// @param str Input string to be converted
+/// @param data Main data struct (used in case of error)
+/// @return Integer converted from string
 int	ft_atoi(const char *str, t_data *data)
 {
 	size_t	i;
