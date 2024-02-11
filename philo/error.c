@@ -6,7 +6,7 @@
 /*   By: smelicha <smelicha@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/16 20:05:04 by smelicha          #+#    #+#             */
-/*   Updated: 2023/12/18 16:35:30 by smelicha         ###   ########.fr       */
+/*   Updated: 2024/02/10 18:54:06 by smelicha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,10 @@
 
 /// @brief Destroy mutexes and free memory
 /// @param data Main data struct
-void	ft_free_data(t_data *data)
+void	ft_free_data(t_data *data, int errno)
 {
-	ft_destroy_mutexes(data);
+	if (errno != ARGUMENT_ERR)
+		ft_destroy_mutexes(data);
 	if (data->overeaters)
 		free(data->overeaters);
 	if (data->philos)
@@ -41,7 +42,7 @@ void	ft_free_data(t_data *data)
 void	ft_error(t_data *data, int errno)
 {
 	if (data)
-		ft_free_data(data);
+		ft_free_data(data, errno);
 	if (errno == 2)
 	{
 		printf("Wrong argument!\n./philo [number of philosophers] ");

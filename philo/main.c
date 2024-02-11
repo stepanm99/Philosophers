@@ -6,7 +6,7 @@
 /*   By: smelicha <smelicha@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/15 17:59:18 by smelicha          #+#    #+#             */
-/*   Updated: 2024/01/17 20:46:57 by smelicha         ###   ########.fr       */
+/*   Updated: 2024/02/10 18:54:53 by smelicha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,6 @@ int	main(int argc, const char **argv)
 		pthread_join(data->philos[i].thread_id, NULL);
 		i++;
 	}
-	ft_free_data(data);
+	ft_free_data(data, 0);
 	return (0);
 }

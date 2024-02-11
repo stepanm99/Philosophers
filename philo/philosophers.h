@@ -6,7 +6,7 @@
 /*   By: smelicha <smelicha@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/15 17:59:11 by smelicha          #+#    #+#             */
-/*   Updated: 2024/02/10 18:00:16 by smelicha         ###   ########.fr       */
+/*   Updated: 2024/02/10 18:53:15 by smelicha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,7 @@ void		ft_synchro_start(t_data *data);
 
 /*Data handling*/
 void		ft_arg_pars(t_data *data, int argc, const char **argv);
-void		ft_free_data(t_data *data);
+void		ft_free_data(t_data *data, int errno);
 void		ft_destroy_mutexes(t_data *data);
 void		ft_prepare_philos_data(t_data *data);
 void		ft_prepare_forks_data(t_data *data);

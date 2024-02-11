@@ -6,11 +6,33 @@
 /*   By: smelicha <smelicha@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/16 19:59:14 by smelicha          #+#    #+#             */
-/*   Updated: 2024/02/10 17:52:11 by smelicha         ###   ########.fr       */
+/*   Updated: 2024/02/11 02:20:44 by smelicha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers.h"
+
+/// @brief Checks if the argument is number only
+/// @param str String of the input argument
+/// @return 1 if wrong, 0 if ok
+char	ft_check_string(const char *str)
+{
+	int	i;
+
+	printf("checking: |%s|\n", str);
+	i = 0;
+	while (str[i])
+	{
+		printf("%c\n", str[i]);
+		if ((str[i] < '0' || str[i] > '9'))
+		{
+			printf("wrong argument triggered\n");
+			return (1);
+		}
+		i++;
+	}
+	return (0);
+}
 
 /// @brief Converts string to integer
 /// @param str Input string to be converted
@@ -25,16 +47,8 @@ int	ft_atoi(const char *str, t_data *data)
 	i = 0;
 	n = 0;
 	negflag = 1;
-	while ((str[i] >= 9 && str[i] <= 13) || str[i] == 32)
-		i++;
-	while (str[i] == '-' || str[i] == '+')
-	{
-		if (str[i + 1] == '-' || str[i + 1] == '+')
-			ft_error(data, 2);
-		if (str[i] == '-')
-			negflag = (-1);
-		i++;
-	}
+	if (ft_check_string(str))
+		ft_error(data, ARGUMENT_ERR);
 	while (str[i] >= '0' && str[i] <= '9')
 	{
 		n = n * 10 + (str[i] - '0');
