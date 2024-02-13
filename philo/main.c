@@ -6,7 +6,7 @@
 /*   By: smelicha <smelicha@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/15 17:59:18 by smelicha          #+#    #+#             */
-/*   Updated: 2024/02/10 18:54:53 by smelicha         ###   ########.fr       */
+/*   Updated: 2024/02/11 19:44:38 by smelicha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,6 @@ int	main(int argc, const char **argv)
 	if (!data)
 		ft_error(data, ALLOCATION_ERR);
 	ft_arg_pars(data, argc, argv);
-	data->print_flag = 1;
 	pthread_mutex_init(&data->print, NULL);
 	ft_prepare_forks_data(data);
 	ft_prepare_philos_data(data);
