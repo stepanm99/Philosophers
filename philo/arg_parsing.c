@@ -6,7 +6,7 @@
 /*   By: smelicha <smelicha@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/16 19:59:14 by smelicha          #+#    #+#             */
-/*   Updated: 2024/02/13 21:04:36 by smelicha         ###   ########.fr       */
+/*   Updated: 2024/02/14 01:41:24 by smelicha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,24 +63,17 @@ int	ft_atoi(const char *str, t_data *data)
 /// @param argv Value of given arguments
 void	ft_arg_pars(t_data *data, int argc, const char **argv)
 {
-	if (argv[1])
+	if (argc == 5 || argc == 6)
+	{
 		data->num_of_philos = ft_atoi(argv[1], data);
-	else
-		ft_error(data, ARGUMENT_ERR);
-	if (argv[2])
 		data->die = ft_atoi(argv[2], data);
-	else
-		ft_error(data, ARGUMENT_ERR);
-	if (argv[3])
 		data->eat = ft_atoi(argv[3], data);
-	else
-		ft_error(data, ARGUMENT_ERR);
-	if (argv[4])
 		data->sleep = ft_atoi(argv[4], data);
+		if (argc == 6)
+			data->must_eat = ft_atoi(argv[5], data);
+		else
+			data->must_eat = 0;
+	}
 	else
 		ft_error(data, ARGUMENT_ERR);
-	if (argv[5] && argc == 6)
-		data->must_eat = ft_atoi(argv[5], data);
-	else
-		data->must_eat = 0;
 }
