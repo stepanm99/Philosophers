@@ -6,7 +6,7 @@
 /*   By: smelicha <smelicha@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/16 19:59:14 by smelicha          #+#    #+#             */
-/*   Updated: 2024/02/14 01:41:24 by smelicha         ###   ########.fr       */
+/*   Updated: 2024/02/14 01:43:29 by smelicha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,16 +19,11 @@ char	ft_check_string(const char *str)
 {
 	int	i;
 
-	printf("checking: |%s|\n", str);
 	i = 0;
 	while (str[i])
 	{
-		printf("%c\n", str[i]);
 		if ((str[i] < '0' || str[i] > '9'))
-		{
-			printf("wrong argument triggered\n");
 			return (1);
-		}
 		i++;
 	}
 	return (0);

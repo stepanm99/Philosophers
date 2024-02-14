@@ -6,29 +6,11 @@
 /*   By: smelicha <smelicha@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/16 19:59:09 by smelicha          #+#    #+#             */
-/*   Updated: 2024/02/10 17:55:01 by smelicha         ###   ########.fr       */
+/*   Updated: 2024/02/14 01:47:14 by smelicha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers.h"
-
-/// @brief Call mutex destroy routine to exit cleanly
-/// @param data Main data struct
-void	ft_destroy_mutexes(t_data *data)
-{
-	int	i;
-
-	i = 0;
-	pthread_mutex_destroy(&data->print);
-	while (i != data->num_of_philos)
-	{
-		pthread_mutex_destroy(&data->fork_safeguard[i]);
-		pthread_mutex_destroy(&data->state_mut[i]);
-		pthread_mutex_destroy(&data->last_eating_mut[i]);
-		pthread_mutex_destroy(&data->ate_mut[i]);
-		i++;
-	}
-}
 
 /// @brief Initializes mutexes for all philos
 /// @param data Main data struct
