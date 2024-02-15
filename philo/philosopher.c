@@ -6,7 +6,7 @@
 /*   By: smelicha <smelicha@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/17 22:39:08 by smelicha          #+#    #+#             */
-/*   Updated: 2024/02/13 21:02:26 by smelicha         ###   ########.fr       */
+/*   Updated: 2024/02/14 20:27:24 by smelicha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ char	ft_eat(t_data *data, int p_num)
 	if (ft_death_check(data, p_num))
 		return (0);
 	if (!(p_num % 2))
-		ft_right_first_fork_lock(data, p_num);
+		ft_left_first_fork_lock(data, p_num);
 	else
 		ft_left_first_fork_lock(data, p_num);
 	if (ft_death_check(data, p_num))
