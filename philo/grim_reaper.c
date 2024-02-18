@@ -6,7 +6,7 @@
 /*   By: smelicha <smelicha@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/17 23:38:01 by smelicha          #+#    #+#             */
-/*   Updated: 2024/02/16 00:12:36 by smelicha         ###   ########.fr       */
+/*   Updated: 2024/02/18 21:31:22 by smelicha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,10 @@ void	ft_print_philos_stomachs(t_data *data)
 	while (i != data->num_of_philos)
 	{
 		pthread_mutex_lock(&data->print);
+		pthread_mutex_lock(data->philos[i].ate_mut);
 		printf("Philo %i ate %i times\n", i, data->philos[i].ate);
 		pthread_mutex_unlock(&data->print);
+		pthread_mutex_unlock(data->philos[i].ate_mut);
 		i++;
 	}
 }

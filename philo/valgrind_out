@@ -1,19 +1,105 @@
-4 1 has taken a fork
-14 1 is eating
-18 2 has taken a fork
-18 2 is eating
-218 1 is sleeping
-220 2 is sleeping
-227 0 has taken a fork
-227 0 is eating
-420 1 is thinking
-422 2 is thinking
-427 0 is sleeping
-438 2 has taken a fork
-438 2 is eating
-627 0 is thinking
-627 0 has taken a fork
-628 0 is eating
-638 2 is sleeping
-717 1 died
-847 1 has taken a fork
+4 9 has taken a fork
+17 9 is eating
+21 4 has taken a fork
+21 4 is eating
+22 1 has taken a fork
+23 1 is eating
+25 7 has taken a fork
+25 7 is eating
+27 0 has taken a fork
+27 0 is eating
+29 11 has taken a fork
+29 11 is eating
+32 6 has taken a fork
+33 6 is eating
+221 9 is sleeping
+222 4 is sleeping
+223 1 is sleeping
+225 7 is sleeping
+226 2 has taken a fork
+226 2 is eating
+227 0 is sleeping
+228 8 has taken a fork
+228 8 is eating
+229 11 is sleeping
+230 12 has taken a fork
+231 12 is eating
+232 10 has taken a fork
+232 10 is eating
+233 6 is sleeping
+244 5 has taken a fork
+244 5 is eating
+422 9 is thinking
+423 4 is thinking
+423 4 has taken a fork
+424 4 is eating
+424 1 is thinking
+425 7 is thinking
+426 2 is sleeping
+427 0 is thinking
+427 0 has taken a fork
+427 0 is eating
+428 8 is sleeping
+429 11 is thinking
+431 12 is sleeping
+433 10 is sleeping
+433 6 is thinking
+442 9 has taken a fork
+442 9 is eating
+445 5 is sleeping
+446 7 has taken a fork
+446 7 is eating
+449 11 has taken a fork
+449 11 is eating
+454 6 has taken a fork
+455 6 is eating
+624 4 is sleeping
+626 2 is thinking
+627 2 has taken a fork
+627 2 is eating
+628 0 is sleeping
+629 8 is thinking
+631 12 is thinking
+633 10 is thinking
+634 13 has taken a fork
+635 13 is eating
+643 9 is sleeping
+645 5 is thinking
+646 7 is sleeping
+649 11 is sleeping
+650 8 has taken a fork
+650 8 is eating
+651 12 has taken a fork
+651 12 is eating
+654 10 has taken a fork
+655 10 is eating
+655 6 is sleeping
+665 5 has taken a fork
+665 5 is eating
+824 4 is thinking
+825 4 has taken a fork
+825 4 is eating
+827 2 is sleeping
+829 0 is thinking
+836 13 is sleeping
+845 1 has taken a fork
+845 1 is eating
+846 9 is thinking
+847 7 is thinking
+849 11 is thinking
+850 8 is sleeping
+851 0 has taken a fork
+851 0 is eating
+852 12 is sleeping
+855 6 is thinking
+856 10 is sleeping
+865 5 is sleeping
+866 9 has taken a fork
+867 9 is eating
+867 7 has taken a fork
+867 7 is eating
+869 11 has taken a fork
+869 11 is eating
+875 6 has taken a fork
+875 6 is eating
+1008 3 died
