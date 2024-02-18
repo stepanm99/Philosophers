@@ -6,7 +6,7 @@
 /*   By: smelicha <smelicha@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/17 22:39:08 by smelicha          #+#    #+#             */
-/*   Updated: 2024/02/14 20:27:24 by smelicha         ###   ########.fr       */
+/*   Updated: 2024/02/16 00:07:12 by smelicha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ char	ft_eat(t_data *data, int p_num)
 	if (ft_death_check(data, p_num))
 		return (0);
 	if (!(p_num % 2))
-		ft_left_first_fork_lock(data, p_num);
+		ft_right_first_fork_lock(data, p_num);
 	else
 		ft_left_first_fork_lock(data, p_num);
 	if (ft_death_check(data, p_num))
@@ -65,17 +65,18 @@ void	ft_think(t_data *data, int p_num)
 /// @return 1 if dead, 0 if alive
 char	ft_death_check(t_data *data, int p_num)
 {
+	pthread_mutex_lock(data->philos[p_num].last_eating_mut);
 	pthread_mutex_lock(data->philos[p_num].state_mut);
 	if (data->philos[p_num].state == 0)
 	{
+		pthread_mutex_unlock(data->philos[p_num].last_eating_mut);
 		pthread_mutex_unlock(data->philos[p_num].state_mut);
 		return (1);
 	}
-	pthread_mutex_lock(data->philos[p_num].last_eating_mut);
 	if ((ft_get_time() - data->philos[p_num].last_eating) > (uint64_t)data->die)
 	{
-		pthread_mutex_unlock(data->philos[p_num].last_eating_mut);
 		data->philos[p_num].state = 0;
+		pthread_mutex_unlock(data->philos[p_num].last_eating_mut);
 		pthread_mutex_unlock(data->philos[p_num].state_mut);
 		return (1);
 	}

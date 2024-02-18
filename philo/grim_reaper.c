@@ -6,7 +6,7 @@
 /*   By: smelicha <smelicha@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/17 23:38:01 by smelicha          #+#    #+#             */
-/*   Updated: 2024/02/10 17:59:58 by smelicha         ###   ########.fr       */
+/*   Updated: 2024/02/16 00:12:36 by smelicha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,13 +93,13 @@ static char	ft_check_last_eating(t_data *data, int i)
 	if (((ft_get_time() - data->philos[i].last_eating > (uint64_t)data->die)
 			|| !data->philos[i].state) && data->philos[i].state != 2)
 	{
-		pthread_mutex_unlock(&data->state_mut[i]);
 		pthread_mutex_unlock(&data->last_eating_mut[i]);
+		pthread_mutex_unlock(&data->state_mut[i]);
 		ft_funeral(data, i, 1);
 		return (1);
 	}
-	pthread_mutex_unlock(&data->state_mut[i]);
 	pthread_mutex_unlock(&data->last_eating_mut[i]);
+	pthread_mutex_unlock(&data->state_mut[i]);
 	return (0);
 }
 
@@ -124,7 +124,8 @@ void	*ft_grim_reaper(t_data *data)
 			if (obesity_alert(data, i))
 				return (NULL);
 		}
-		pthread_mutex_unlock(&data->ate_mut[i]);
+		else
+			pthread_mutex_unlock(&data->ate_mut[i]);
 		if (i + 1 != data->num_of_philos)
 			i++;
 		else
