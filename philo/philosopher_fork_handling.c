@@ -6,7 +6,7 @@
 /*   By: smelicha <smelicha@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/09 20:51:28 by smelicha          #+#    #+#             */
-/*   Updated: 2024/02/18 21:28:20 by smelicha         ###   ########.fr       */
+/*   Updated: 2024/02/18 23:25:10 by smelicha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,8 @@ void	ft_right_first_fork_lock(t_data *data, int p_num)
 		if (*data->philos[p_num].left_fork == 0 && *data->philos[p_num].right_fork == 0)
 		{
 			*data->philos[p_num].left_fork = 1;
-			if (!ft_check_state(data, p_num))
-				ft_print_take_fork(data, p_num);
+			ft_print_take_fork(data, p_num);
+			*data->philos[p_num].right_fork = 1;
 			pthread_mutex_unlock(data->philos[p_num].right_sfgrd);
 			pthread_mutex_unlock(data->philos[p_num].left_sfgrd);
 			break ;
