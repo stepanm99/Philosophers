@@ -6,7 +6,7 @@
 /*   By: smelicha <smelicha@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/15 17:59:18 by smelicha          #+#    #+#             */
-/*   Updated: 2024/02/19 19:05:36 by smelicha         ###   ########.fr       */
+/*   Updated: 2024/02/19 21:07:41 by smelicha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ int	main(int argc, const char **argv)
 	ft_prepare_forks_data(data);
 	ft_prepare_philos_data(data);
 	data->start_time = ft_get_time() + ((data->num_of_philos * 100));
-	data->waiter_delay = data->start_time + (data->die / 6);
+	data->delayed_start = data->start_time + (data->die / 6);
 	ft_deploy_philosophers(data);
 	while (i != data->num_of_philos)
 	{
