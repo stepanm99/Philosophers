@@ -6,7 +6,7 @@
 /*   By: smelicha <smelicha@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/17 23:38:01 by smelicha          #+#    #+#             */
-/*   Updated: 2024/02/18 21:31:22 by smelicha         ###   ########.fr       */
+/*   Updated: 2024/02/19 18:57:16 by smelicha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,7 +113,7 @@ void	*ft_grim_reaper(t_data *data)
 	int		i;
 
 	i = 0;
-	ft_synchro_start(data);
+	ft_synchro_start(data, 0);
 	ft_usleep(data->die / 2);
 	while (1)
 	{
