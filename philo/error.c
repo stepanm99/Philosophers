@@ -6,7 +6,7 @@
 /*   By: smelicha <smelicha@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/16 20:05:04 by smelicha          #+#    #+#             */
-/*   Updated: 2023/12/18 16:35:30 by smelicha         ###   ########.fr       */
+/*   Updated: 2024/02/14 01:46:57 by smelicha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,10 +15,10 @@
 /// @brief Prints error message, frees allocated memory and exits
 /// @param data pointer to main data struct
 /// @param errno what kind of error will be shown
-void	error(t_data *data, int errno)
+void	ft_error(t_data *data, int errno)
 {
 	if (data)
-		free_data(data);
+		ft_free_data(data, errno);
 	if (errno == 2)
 	{
 		printf("Wrong argument!\n./philo [number of philosophers] ");

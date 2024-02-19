@@ -6,83 +6,87 @@
 /*   By: smelicha <smelicha@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/17 22:40:52 by smelicha          #+#    #+#             */
-/*   Updated: 2023/12/28 22:29:11 by smelicha         ###   ########.fr       */
+/*   Updated: 2024/02/10 17:56:46 by smelicha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers.h"
 
-/// @brief Starts philosophers allowed to eat first
+/// @brief Deploys only even philosophers
+/// @param data Main data struct
+/// @param arg Struct with data for each philo (number and data pointer)
+/// @param i Which philosopher to start with
+void	ft_even_deploy_loop(t_data *data, t_philo_arg arg, int i)
+{
+	while (i < data->num_of_philos)
+	{
+		arg.p_num = i;
+		data->philos[i].last_eating = data->start_time;
+		data->philos[i].state = 2;
+		pthread_create(&data->philos[i].thread_id, NULL,
+			(void *)&ft_philosopher, &arg);
+		ft_wait_for_thread(data, i);
+		i += 2;
+	}
+}
+
+/// @brief Deploys onle odd philosophers
+/// @param data Main data struct
+/// @param arg Struct with data for each philo (number and data pointer)
+/// @param i Which philosopher to start with
+void	ft_odd_deploy_loop(t_data *data, t_philo_arg arg, int i)
+{
+	while (i < data->num_of_philos)
+	{
+		arg.p_num = i;
+		data->philos[i].last_eating = data->start_time;
+		data->philos[i].state = 2;
+		pthread_create(&data->philos[i].thread_id, NULL,
+			(void *)&ft_philosopher, &arg);
+		ft_wait_for_thread(data, i);
+		i += 2;
+	}
+}
+
+/// @brief Deploys philosophers that will eat first
 /// @param data Main data struct
 void	deploy_eaters(t_data *data)
 {
 	t_philo_arg	arg;
-	int	i;
-	int	r;
+	int			i;
 
 	i = 0;
-	r = 0;
 	arg.data = data;
 	arg.p_num = i;
 	if (data->num_of_philos % 2)
-	{
-		while (i < data->num_of_philos)
-		{
-			arg.p_num = i;
-			r += pthread_create(&data->philos[i].thread_id, NULL, (void *)&philosopher, &arg);
-			i += 2;
-		}
-	}
+		ft_even_deploy_loop(data, arg, i);
 	else
-	{
-		while (i < data->num_of_philos)
-		{
-			arg.p_num = i;
-			r += pthread_create(&data->philos[i].thread_id, NULL, (void *)&philosopher, &arg);
-			i += 2;
-		}
-	}
+		ft_odd_deploy_loop(data, arg, i);
 }
 
-/// @brief Starts other philosophers that will wait for the eaters to finish
+/// @brief Deploys rest of the philosophers
 /// @param data Main data struct
 void	deploy_rest(t_data *data)
 {
 	t_philo_arg	arg;
-	int	i;
-	int	r;
+	int			i;
 
 	i = 1;
-	r = 0;
 	arg.data = data;
+	arg.p_num = i;
 	if (data->num_of_philos % 2)
-	{
-		while (i < data->num_of_philos)
-		{
-			arg.p_num = i;
-			r += pthread_create(&data->philos[i].thread_id, NULL, (void *)&philosopher, &arg);
-			i += 2;
-		}
-	}
+		ft_even_deploy_loop(data, arg, i);
 	else
-	{
-		while (i < data->num_of_philos)
-		{
-			arg.p_num = i;
-			r += pthread_create(&data->philos[i].thread_id, NULL, (void *)&philosopher, &arg);
-			i += 2;
-		}
-	}
+		ft_odd_deploy_loop(data, arg, i);
 }
 
 /// @brief Routine to start the simulation
 /// @param data Main data struct
-void	deploy_philosophers(t_data *data)
+void	ft_deploy_philosophers(t_data *data)
 {
-	printf("num of philos before deploying threads: %i\n", data->num_of_philos);
+	pthread_create(&data->grim_reaper, NULL, (void *)&ft_grim_reaper, data);
 	deploy_eaters(data);
 	deploy_rest(data);
-	printf("num of philos after deploying threads: %i\n", data->num_of_philos);
-	pthread_create(&data->grim_reaper, NULL, (void *)&grim_reaper, data);
 	pthread_join(data->grim_reaper, NULL);
+	return ;
 }

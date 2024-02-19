@@ -15,7 +15,7 @@
 /// @brief Gets current time since unix epoch in ms
 /// @param 
 /// @return miliseconds since unix epoch
-uint64_t	get_time(void)
+uint64_t	ft_get_time(void)
 {
 	struct timeval	t;
 
@@ -29,7 +29,17 @@ void	ft_usleep(uint64_t delay)
 {
 	uint64_t	start;
 
-	start = get_time();
-	while ((get_time() - start) < delay)
+	start = ft_get_time();
+	while ((ft_get_time() - start) < delay)
 		usleep(5);
+}
+
+void	ft_synchro_start(t_data *data)
+{
+	while (1)
+	{
+		if ((data->start_time) < ft_get_time())
+			break ;
+		usleep(100);
+	}
 }

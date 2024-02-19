@@ -55,3 +55,16 @@ About the logs of your program:
 ◦ timestamp_in_ms X is sleeping
 ◦ timestamp_in_ms X is thinking
 ◦ timestamp_in_ms X died
+
+
+
+ Use --history-level=approx or =none to gain increased speed, at
+==31316== the cost of reduced accuracy of conflicting-access information
+==31316== For lists of detected and suppressed errors, rerun with: -s
+==31316== ERROR SUMMARY: 3688 errors from 43 contexts (suppressed: 9381 from 213
+
+
+Use --history-level=approx or =none to gain increased speed, at
+==31472== the cost of reduced accuracy of conflicting-access information
+==31472== For lists of detected and suppressed errors, rerun with: -s
+==31472== ERROR SUMMARY: 3110 errors from 40 contexts (suppressed: 7554 from 202
