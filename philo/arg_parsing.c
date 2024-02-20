@@ -6,7 +6,7 @@
 /*   By: smelicha <smelicha@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/16 19:59:14 by smelicha          #+#    #+#             */
-/*   Updated: 2024/02/14 01:43:29 by smelicha         ###   ########.fr       */
+/*   Updated: 2024/02/20 18:53:12 by smelicha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,4 +71,6 @@ void	ft_arg_pars(t_data *data, int argc, const char **argv)
 	}
 	else
 		ft_error(data, ARGUMENT_ERR);
+	if (data->num_of_philos == 1)
+		ft_single_philo(data);
 }

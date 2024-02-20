@@ -6,7 +6,7 @@
 /*   By: smelicha <smelicha@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/15 17:59:11 by smelicha          #+#    #+#             */
-/*   Updated: 2024/02/19 21:07:22 by smelicha         ###   ########.fr       */
+/*   Updated: 2024/02/20 18:57:58 by smelicha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,6 +94,7 @@ void		ft_prepare_forks_data(t_data *data);
 
 /*Error*/
 void		ft_error(t_data *data, int errno);
+void		ft_single_philo(t_data *data);
 
 /*Philosopher thread deploying*/
 void		ft_deploy_philosophers(t_data *data);
