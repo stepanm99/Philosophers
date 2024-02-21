@@ -6,7 +6,7 @@
 /*   By: smelicha <smelicha@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/17 22:40:52 by smelicha          #+#    #+#             */
-/*   Updated: 2024/02/10 17:56:46 by smelicha         ###   ########.fr       */
+/*   Updated: 2024/02/19 18:49:31 by smelicha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,13 +16,14 @@
 /// @param data Main data struct
 /// @param arg Struct with data for each philo (number and data pointer)
 /// @param i Which philosopher to start with
-void	ft_even_deploy_loop(t_data *data, t_philo_arg arg, int i)
+void	ft_even_deploy_loop(t_data *data, t_philo_arg arg, int i, char w_flag)
 {
 	while (i < data->num_of_philos)
 	{
 		arg.p_num = i;
 		data->philos[i].last_eating = data->start_time;
 		data->philos[i].state = 2;
+		data->philos[i].waiter_flag = w_flag;
 		pthread_create(&data->philos[i].thread_id, NULL,
 			(void *)&ft_philosopher, &arg);
 		ft_wait_for_thread(data, i);
@@ -34,13 +35,14 @@ void	ft_even_deploy_loop(t_data *data, t_philo_arg arg, int i)
 /// @param data Main data struct
 /// @param arg Struct with data for each philo (number and data pointer)
 /// @param i Which philosopher to start with
-void	ft_odd_deploy_loop(t_data *data, t_philo_arg arg, int i)
+void	ft_odd_deploy_loop(t_data *data, t_philo_arg arg, int i, char w_flag)
 {
 	while (i < data->num_of_philos)
 	{
 		arg.p_num = i;
 		data->philos[i].last_eating = data->start_time;
 		data->philos[i].state = 2;
+		data->philos[i].waiter_flag = w_flag;
 		pthread_create(&data->philos[i].thread_id, NULL,
 			(void *)&ft_philosopher, &arg);
 		ft_wait_for_thread(data, i);
@@ -59,9 +61,9 @@ void	deploy_eaters(t_data *data)
 	arg.data = data;
 	arg.p_num = i;
 	if (data->num_of_philos % 2)
-		ft_even_deploy_loop(data, arg, i);
+		ft_even_deploy_loop(data, arg, i, 0);
 	else
-		ft_odd_deploy_loop(data, arg, i);
+		ft_odd_deploy_loop(data, arg, i, 0);
 }
 
 /// @brief Deploys rest of the philosophers
@@ -75,9 +77,9 @@ void	deploy_rest(t_data *data)
 	arg.data = data;
 	arg.p_num = i;
 	if (data->num_of_philos % 2)
-		ft_even_deploy_loop(data, arg, i);
+		ft_even_deploy_loop(data, arg, i, 1);
 	else
-		ft_odd_deploy_loop(data, arg, i);
+		ft_odd_deploy_loop(data, arg, i, 1);
 }
 
 /// @brief Routine to start the simulation

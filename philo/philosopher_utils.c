@@ -6,7 +6,7 @@
 /*   By: smelicha <smelicha@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/09 20:51:18 by smelicha          #+#    #+#             */
-/*   Updated: 2024/02/10 17:50:23 by smelicha         ###   ########.fr       */
+/*   Updated: 2024/02/20 21:48:55 by smelicha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,8 @@ void	ft_print_eat_and_delay(t_data *data, int p_num)
 {
 	pthread_mutex_unlock(data->philos[p_num].state_mut);
 	pthread_mutex_lock(&data->print);
-	printf("%lu %i is eating\n", (ft_get_time() - data->start_time), p_num);
+	printf("%lu %i is eating\n", (ft_get_time() - data->start_time),
+		p_num + 1);
 	pthread_mutex_unlock(&data->print);
 	ft_usleep(data->eat);
 	pthread_mutex_lock(data->philos[p_num].ate_mut);
@@ -92,6 +93,6 @@ void	ft_print_take_fork(t_data *data, int p_num)
 {
 	pthread_mutex_lock(&data->print);
 	printf("%lu %i has taken a fork\n", (ft_get_time()
-			- data->start_time), p_num);
+			- data->start_time), p_num + 1);
 	pthread_mutex_unlock(&data->print);
 }

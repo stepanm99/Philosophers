@@ -6,7 +6,7 @@
 /*   By: smelicha <smelicha@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/15 17:59:11 by smelicha          #+#    #+#             */
-/*   Updated: 2024/02/11 19:44:45 by smelicha         ###   ########.fr       */
+/*   Updated: 2024/02/20 18:57:58 by smelicha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,7 @@ typedef struct s_philo
 	int				ate;
 	uint64_t		last_eating;
 	char			state;
+	char			waiter_flag;
 	pthread_mutex_t	*state_mut;
 	pthread_mutex_t	*last_eating_mut;
 	pthread_mutex_t	*ate_mut;
@@ -58,6 +59,7 @@ typedef struct s_data
 	int				die;
 	int				must_eat;
 	uint64_t		start_time;
+	uint64_t		delayed_start;
 	pthread_t		grim_reaper;
 	char			*overeaters;
 	pthread_mutex_t	print;
@@ -81,7 +83,7 @@ int			ft_atoi(const char *str, t_data *data);
 /*Time*/
 uint64_t	ft_get_time(void);
 void		ft_usleep(uint64_t delay);
-void		ft_synchro_start(t_data *data);
+void		ft_synchro_start(t_data *data, char w_flag);
 
 /*Data handling*/
 void		ft_arg_pars(t_data *data, int argc, const char **argv);
@@ -92,13 +94,16 @@ void		ft_prepare_forks_data(t_data *data);
 
 /*Error*/
 void		ft_error(t_data *data, int errno);
+void		ft_single_philo(t_data *data);
 
 /*Philosopher thread deploying*/
 void		ft_deploy_philosophers(t_data *data);
 void		deploy_eaters(t_data *data);
 void		deploy_rest(t_data *data);
-void		ft_odd_deploy_loop(t_data *data, t_philo_arg arg, int i);
-void		ft_even_deploy_loop(t_data *data, t_philo_arg arg, int i);
+void		ft_odd_deploy_loop(t_data *data, t_philo_arg arg, int i,
+				char w_flag);
+void		ft_even_deploy_loop(t_data *data, t_philo_arg arg, int i,
+				char w_flag);
 void		ft_wait_for_thread(t_data *data, int p_num);
 
 /*Philosopher functions*/

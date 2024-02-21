@@ -6,7 +6,7 @@
 /*   By: smelicha <smelicha@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/17 23:38:01 by smelicha          #+#    #+#             */
-/*   Updated: 2024/02/18 21:31:22 by smelicha         ###   ########.fr       */
+/*   Updated: 2024/02/20 21:50:25 by smelicha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ void	ft_print_philos_stomachs(t_data *data)
 	{
 		pthread_mutex_lock(&data->print);
 		pthread_mutex_lock(data->philos[i].ate_mut);
-		printf("Philo %i ate %i times\n", i, data->philos[i].ate);
+		printf("Philo %i ate %i times\n", i + 1, data->philos[i].ate);
 		pthread_mutex_unlock(&data->print);
 		pthread_mutex_unlock(data->philos[i].ate_mut);
 		i++;
@@ -46,7 +46,7 @@ void	ft_funeral(t_data *data, int carcass_nr, char print)
 	if (print)
 	{
 		pthread_mutex_lock(&data->print);
-		printf("%lu %i died\n", t_o_d, carcass_nr);
+		printf("%lu %i died\n", t_o_d, carcass_nr + 1);
 		pthread_mutex_unlock(&data->print);
 	}
 	while (i != data->num_of_philos)
@@ -113,7 +113,7 @@ void	*ft_grim_reaper(t_data *data)
 	int		i;
 
 	i = 0;
-	ft_synchro_start(data);
+	ft_synchro_start(data, 0);
 	ft_usleep(data->die / 2);
 	while (1)
 	{

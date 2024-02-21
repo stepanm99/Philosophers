@@ -6,7 +6,7 @@
 /*   By: smelicha <smelicha@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/09 20:51:28 by smelicha          #+#    #+#             */
-/*   Updated: 2024/02/19 17:39:57 by smelicha         ###   ########.fr       */
+/*   Updated: 2024/02/20 18:07:40 by smelicha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,10 +17,10 @@
 /// @param p_num Number of philosopher
 void	ft_right_first_fork_lock(t_data *data, int p_num)
 {
-	if (ft_check_state(data, p_num))
-		return ;
 	while (1)
 	{
+		if (ft_check_state(data, p_num))
+			return ;
 		pthread_mutex_lock(data->philos[p_num].right_sfgrd);
 		pthread_mutex_lock(data->philos[p_num].left_sfgrd);
 		if (*data->philos[p_num].left_fork == 0 
@@ -47,10 +47,10 @@ void	ft_right_first_fork_lock(t_data *data, int p_num)
 /// @param p_num Number of philosopher
 void	ft_left_first_fork_lock(t_data *data, int p_num)
 {
-	if (ft_check_state(data, p_num))
-		return ;
 	while (1)
 	{
+		if (ft_check_state(data, p_num))
+			return ;
 		pthread_mutex_lock(data->philos[p_num].left_sfgrd);
 		pthread_mutex_lock(data->philos[p_num].right_sfgrd);
 		if (*data->philos[p_num].left_fork == 0
