@@ -6,7 +6,7 @@
 /*   By: smelicha <smelicha@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/09 20:51:18 by smelicha          #+#    #+#             */
-/*   Updated: 2024/02/27 18:30:42 by smelicha         ###   ########.fr       */
+/*   Updated: 2024/02/27 18:45:39 by smelicha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,8 +86,6 @@ void	ft_eat_dealy_and_stat_update(t_data *data, int p_num)
 /// @param p_num Number of philosopher
 void	ft_print_take_fork(t_data *data, int p_num)
 {
-	pthread_mutex_lock(&data->print);
 	printf("%llu %i has taken a fork\n", (ft_get_time()
 			- data->start_time), p_num + 1);
-	pthread_mutex_unlock(&data->print);
 }
