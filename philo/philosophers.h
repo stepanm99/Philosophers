@@ -6,7 +6,7 @@
 /*   By: smelicha <smelicha@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/15 17:59:11 by smelicha          #+#    #+#             */
-/*   Updated: 2024/02/20 18:57:58 by smelicha         ###   ########.fr       */
+/*   Updated: 2024/02/27 18:22:19 by smelicha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,13 +42,8 @@ typedef struct s_philo
 	uint64_t		last_eating;
 	char			state;
 	char			waiter_flag;
-	pthread_mutex_t	*state_mut;
-	pthread_mutex_t	*last_eating_mut;
-	pthread_mutex_t	*ate_mut;
 	char			*right_fork;
-	pthread_mutex_t	*right_sfgrd;
 	char			*left_fork;
-	pthread_mutex_t	*left_sfgrd;
 }	t_philo;
 
 typedef struct s_data
@@ -65,10 +60,6 @@ typedef struct s_data
 	pthread_mutex_t	print;
 	char			*forks;
 	t_philo			*philos;
-	pthread_mutex_t	*fork_safeguard;
-	pthread_mutex_t	*state_mut;
-	pthread_mutex_t	*last_eating_mut;
-	pthread_mutex_t	*ate_mut;
 }	t_data;
 
 typedef struct s_philo_arg

@@ -6,7 +6,7 @@
 /*   By: smelicha <smelicha@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/17 23:38:01 by smelicha          #+#    #+#             */
-/*   Updated: 2024/02/20 21:50:25 by smelicha         ###   ########.fr       */
+/*   Updated: 2024/02/27 18:29:09 by smelicha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,10 +24,8 @@ void	ft_print_philos_stomachs(t_data *data)
 	while (i != data->num_of_philos)
 	{
 		pthread_mutex_lock(&data->print);
-		pthread_mutex_lock(data->philos[i].ate_mut);
 		printf("Philo %i ate %i times\n", i + 1, data->philos[i].ate);
 		pthread_mutex_unlock(&data->print);
-		pthread_mutex_unlock(data->philos[i].ate_mut);
 		i++;
 	}
 }
@@ -51,9 +49,9 @@ void	ft_funeral(t_data *data, int carcass_nr, char print)
 	}
 	while (i != data->num_of_philos)
 	{
-		pthread_mutex_lock(&data->state_mut[i]);
+		pthread_mutex_lock(&data->print);
 		data->philos[i].state = 0;
-		pthread_mutex_unlock(&data->state_mut[i]);
+		pthread_mutex_unlock(&data->print);
 		i++;
 	}
 	return ;
@@ -90,18 +88,15 @@ char	obesity_alert(t_data *data, int fatty_nr)
 /// @return 1 when philo starved to death, 0 if philo is OK
 static char	ft_check_last_eating(t_data *data, int i)
 {
-	pthread_mutex_lock(&data->last_eating_mut[i]);
-	pthread_mutex_lock(&data->state_mut[i]);
+	pthread_mutex_lock(&data->print);
 	if (((ft_get_time() - data->philos[i].last_eating > (uint64_t)data->die)
 			|| !data->philos[i].state) && data->philos[i].state != 2)
 	{
-		pthread_mutex_unlock(&data->last_eating_mut[i]);
-		pthread_mutex_unlock(&data->state_mut[i]);
+		pthread_mutex_unlock(&data->print);
 		ft_funeral(data, i, 1);
 		return (1);
 	}
-	pthread_mutex_unlock(&data->last_eating_mut[i]);
-	pthread_mutex_unlock(&data->state_mut[i]);
+	pthread_mutex_unlock(&data->print);
 	return (0);
 }
 
@@ -119,15 +114,15 @@ void	*ft_grim_reaper(t_data *data)
 	{
 		if (ft_check_last_eating(data, i))
 			return (NULL);
-		pthread_mutex_lock(&data->ate_mut[i]);
+		pthread_mutex_lock(&data->print);
 		if (data->must_eat && data->philos[i].ate >= data->must_eat)
 		{
-			pthread_mutex_unlock(&data->ate_mut[i]);
+			pthread_mutex_unlock(&data->print);
 			if (obesity_alert(data, i))
 				return (NULL);
 		}
 		else
-			pthread_mutex_unlock(&data->ate_mut[i]);
+			pthread_mutex_unlock(&data->print);
 		if (i + 1 != data->num_of_philos)
 			i++;
 		else

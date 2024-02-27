@@ -6,7 +6,7 @@
 /*   By: smelicha <smelicha@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/09 20:51:38 by smelicha          #+#    #+#             */
-/*   Updated: 2024/02/09 22:48:22 by smelicha         ###   ########.fr       */
+/*   Updated: 2024/02/27 18:29:20 by smelicha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,13 +19,13 @@ void	ft_wait_for_thread(t_data *data, int p_num)
 {
 	while (1)
 	{
-		pthread_mutex_lock(&data->state_mut[p_num]);
+		pthread_mutex_lock(&data->print);
 		if (data->philos[p_num].state != 2)
 		{
-			pthread_mutex_unlock(&data->state_mut[p_num]);
+			pthread_mutex_unlock(&data->print);
 			break ;
 		}
-		pthread_mutex_unlock(&data->state_mut[p_num]);
+		pthread_mutex_unlock(&data->print);
 		ft_usleep(50);
 	}
 }
