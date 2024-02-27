@@ -8,7 +8,7 @@ pthread_create(&data->philos[i].thread_id, NULL, (void *)&ft_philosopher, &arg);
 */
 
 typedef struct s_data{
-	pthread_mutex_t	mut;
+	pthread_mutex_t	*mut;
 	int				id;
 }	t_data;
 
@@ -21,10 +21,10 @@ int	thread(void *arg)
 	i = 1000000;
 	while(i)
 	{
-		pthread_mutex_lock(&data->mut);
-		printf("thd id: %i\t\ti:%i\n", data->id, i);
+		pthread_mutex_lock(data->mut);
+//		printf("thd id: %i\t\ti:%i\n", data->id, i);
 		i--;
-		pthread_mutex_unlock(&data->mut);
+		pthread_mutex_unlock(data->mut);
 	}
 	return (0);
 }
@@ -42,8 +42,8 @@ int	main(void)
 	pthread_mutex_init(&mut2, NULL);
 	data1->id = 1;
 	data2->id = 2;
-	data1->mut = mut1;
-	data2->mut = mut2;
+	data1->mut = &mut1;
+	data2->mut = &mut2;
 
 	pthread_create(&t1, NULL, (void *)&thread, data1);
 	pthread_create(&t2, NULL, (void *)&thread, data2);
