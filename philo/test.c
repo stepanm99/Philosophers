@@ -19,6 +19,7 @@ typedef struct s_main{
 typedef struct s_data{
 	pthread_mutex_t	*main_mut;
 	pthread_mutex_t	*own_mut;
+	pthread_mutex_t	*ready_mut;
 	t_main			*main;
 	int				id;
 	int				ready;
@@ -147,8 +148,13 @@ void	wait_for_thread(t_main *main, int number_of_thread)
 {
 	while (1)
 	{
+		pthread_mutex_lock(&main->mutties[number_of_thread]);
 		if (main->threddies[number_of_thread].ready)
+		{
+			pthread_mutex_unlock(&main->mutties[number_of_thread]);
 			break;
+		}
+		pthread_mutex_unlock(&main->mutties[number_of_thread]);
 		usleep(10);
 	}
 }
@@ -177,7 +183,9 @@ int	thread(void *arg)
 	t_data			*data;
 
 	data = (t_data *)arg;
+	pthread_mutex_lock(data->own_mut);
 	data->ready = 1;
+	pthread_mutex_unlock(data->own_mut);
 	i = 10000;
 	while(i)
 	{
