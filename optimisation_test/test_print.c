@@ -2,9 +2,17 @@
 #include<stdio.h>
 #include<stdlib.h>
 #include<unistd.h>
+#include<sys/time.h>
+#include<stdint.h>
+
+/*
+Definitions
+*/
 
 typedef struct s_data	t_data;
-int	thread(void *arg);
+int			thread(void *arg);
+uint64_t	ft_get_time(void);
+uint64_t	ft_get_utime(void);
 
 typedef struct s_main{
 	pthread_t		*tiddies;
@@ -24,6 +32,117 @@ typedef struct s_data{
 	int				id;
 	int				ready;
 }	t_data;
+
+/*
+Tested functions
+*/
+
+void	ft_print_int(int num)
+{
+	int		temp;
+	int		mod;
+	char	digit;
+	int		i;
+
+	if (num == 0)
+	{
+		write(1, "0", 1);
+		return ;
+	}
+	temp = num;
+	i = 0;
+	mod = 1;
+	while (temp)
+	{
+		mod *= 10;
+		temp /=10;
+	}
+	temp = num;
+	while (mod != 1)
+	{
+		mod /= 10;
+		digit = (temp / mod) + '0';
+		write(1, &digit, 1);
+		temp -= (temp / mod) * mod;
+	}
+	return ;
+}
+
+void	ft_print_uint64(uint64_t num)
+{
+	uint64_t		temp;
+	uint64_t		mod;
+	char	digit;
+	int		i;
+
+	if (num == 0)
+	{
+		write(1, "0", 1);
+		return ;
+	}
+	temp = num;
+	i = 0;
+	mod = 1;
+	while (temp)
+	{
+		mod *= 10;
+		temp /=10;
+	}
+	temp = num;
+	while (mod != 1)
+	{
+		mod /= 10;
+		digit = (temp / mod) + '0';
+		write(1, &digit, 1);
+		temp -= (temp / mod) * mod;
+	}
+	return ;
+}
+
+//"time from %i is: %lu\n"
+void	ft_write_message(int id, uint64_t time)
+{
+	write(1, "time from ", 10);
+	ft_print_int(id);
+	write(1, " is: ", 5);
+	ft_print_uint64(time);
+	write(1, "\n", 1);
+}
+
+/*
+Util functions
+*/
+
+void	ft_usleep(uint64_t delay)
+{
+	uint64_t	start;
+
+	start = ft_get_utime();
+	while ((ft_get_utime() - start) < delay)
+		usleep(1);
+}
+
+//returns miliseconds
+uint64_t	ft_get_time(void)
+{
+	struct timeval	t;
+
+	if (!gettimeofday(&t, NULL))
+		return ((uint64_t)((t.tv_sec * 1000) + (t.tv_usec / 1000)));
+	else
+		return (0);
+}
+
+//returns microseconds
+uint64_t	ft_get_utime(void)
+{
+	struct timeval	t;
+
+	if (!gettimeofday(&t, NULL))
+		return ((uint64_t)((t.tv_sec * 1000000) + t.tv_usec));
+	else
+		return (0);
+}
 
 /*
 Data preparation and cleaning
@@ -180,13 +299,35 @@ Thread function
 int	thread(void *arg)
 {
 	int				i;
+	uint64_t		timer_start;
+	uint64_t		cummulative_delay_own;
+	uint64_t		cummulative_delay_lib;
 	t_data			*data;
 
 	data = (t_data *)arg;
+	timer_start = 0;
+	cummulative_delay_own = 0;
+	cummulative_delay_lib = 0;
 	pthread_mutex_lock(data->own_mut);
 	data->ready = 1;
 	pthread_mutex_unlock(data->own_mut);
-	i = 10000;
+	i = 100;
+	while (i)
+	{
+		pthread_mutex_lock(data->main_mut);
+		data->main->total_runs++;
+		pthread_mutex_unlock(data->main_mut);
+		pthread_mutex_lock(data->own_mut);
+		i--;
+		pthread_mutex_unlock(data->own_mut);
+
+		timer_start = ft_get_utime();
+		pthread_mutex_lock(data->main_mut);
+		printf("time from %i is: %lu\n", data->id, ft_get_time());
+		pthread_mutex_unlock(data->main_mut);
+		cummulative_delay_lib += ft_get_utime() - timer_start;
+	}
+	i = 100;
 	while(i)
 	{
 		pthread_mutex_lock(data->main_mut);
@@ -195,7 +336,17 @@ int	thread(void *arg)
 		pthread_mutex_lock(data->own_mut);
 		i--;
 		pthread_mutex_unlock(data->own_mut);
+
+		timer_start = ft_get_utime();
+		pthread_mutex_lock(data->main_mut);
+		ft_write_message(data->id, ft_get_time());
+		pthread_mutex_unlock(data->main_mut);
+		cummulative_delay_own += ft_get_utime() - timer_start;
 	}
+	ft_usleep(100000);
+	pthread_mutex_lock(data->main_mut);
+	printf("Average delay from %i is own:\t%lu\tlib:\t%lu\n", data->id, (cummulative_delay_own / 10), (cummulative_delay_lib / 10));
+	pthread_mutex_unlock(data->main_mut);
 	return (0);
 }
 
@@ -209,6 +360,11 @@ int	main(int argc, const char **argv)
 	int		i;
 
 	i = 0;
+	if (argc != 2)
+	{
+		printf("No argument :(... Give it number of threads to run!\n");
+		return (0);
+	}
 	main = malloc(sizeof(t_main));
 	if (!main)
 		return (-1);
