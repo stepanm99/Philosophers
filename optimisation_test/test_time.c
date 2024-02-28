@@ -248,9 +248,11 @@ int	thread(void *arg)
 		pthread_mutex_lock(data->own_mut);
 		i--;
 		pthread_mutex_unlock(data->own_mut);
+
 		timer_start = ft_get_utime();
 		ft_usleep(10000);
 		cummulative_delay_own += ft_get_utime() - timer_start;
+		
 		timer_start = ft_get_utime();
 		usleep(10000);
 		cummulative_delay_lib += ft_get_utime() - timer_start;

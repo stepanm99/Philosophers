@@ -312,22 +312,6 @@ int	thread(void *arg)
 	data->ready = 1;
 	pthread_mutex_unlock(data->own_mut);
 	i = 100;
-	while (i)
-	{
-		pthread_mutex_lock(data->main_mut);
-		data->main->total_runs++;
-		pthread_mutex_unlock(data->main_mut);
-		pthread_mutex_lock(data->own_mut);
-		i--;
-		pthread_mutex_unlock(data->own_mut);
-
-		timer_start = ft_get_utime();
-		pthread_mutex_lock(data->main_mut);
-		printf("time from %i is: %lu\n", data->id, ft_get_time());
-		pthread_mutex_unlock(data->main_mut);
-		cummulative_delay_lib += ft_get_utime() - timer_start;
-	}
-	i = 100;
 	while(i)
 	{
 		pthread_mutex_lock(data->main_mut);
@@ -342,6 +326,24 @@ int	thread(void *arg)
 		ft_write_message(data->id, ft_get_time());
 		pthread_mutex_unlock(data->main_mut);
 		cummulative_delay_own += ft_get_utime() - timer_start;
+		usleep(1000);
+	}
+	i = 100;
+	while (i)
+	{
+		pthread_mutex_lock(data->main_mut);
+		data->main->total_runs++;
+		pthread_mutex_unlock(data->main_mut);
+		pthread_mutex_lock(data->own_mut);
+		i--;
+		pthread_mutex_unlock(data->own_mut);
+
+		timer_start = ft_get_utime();
+		pthread_mutex_lock(data->main_mut);
+		printf("time from %i is: %lu\n", data->id, ft_get_time());
+		pthread_mutex_unlock(data->main_mut);
+		cummulative_delay_lib += ft_get_utime() - timer_start;
+		usleep(1000);
 	}
 	ft_usleep(100000);
 	pthread_mutex_lock(data->main_mut);
