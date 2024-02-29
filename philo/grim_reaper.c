@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   grim_reaper.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: smelicha <smelicha@student.42heilbronn.    +#+  +:+       +#+        */
+/*   By: stepan <stepan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/17 23:38:01 by smelicha          #+#    #+#             */
-/*   Updated: 2024/02/27 18:29:09 by smelicha         ###   ########.fr       */
+/*   Updated: 2024/02/29 00:22:36 by stepan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,21 +112,22 @@ void	*ft_grim_reaper(t_data *data)
 	ft_usleep(data->die / 2);
 	while (1)
 	{
-		if (ft_check_last_eating(data, i))
-			return (NULL);
-		pthread_mutex_lock(&data->print);
-		if (data->must_eat && data->philos[i].ate >= data->must_eat)
+		while (i != data->num_of_philos)
 		{
-			pthread_mutex_unlock(&data->print);
-			if (obesity_alert(data, i))
+			if (ft_check_last_eating(data, i))
 				return (NULL);
-		}
-		else
-			pthread_mutex_unlock(&data->print);
-		if (i + 1 != data->num_of_philos)
+			pthread_mutex_lock(&data->print);
+			if (data->must_eat && data->philos[i].ate >= data->must_eat)
+			{
+				pthread_mutex_unlock(&data->print);
+				if (obesity_alert(data, i))
+					return (NULL);
+			}
+			else
+				pthread_mutex_unlock(&data->print);
 			i++;
-		else
-			i = 0;
+		}
+		i = 0;
 		usleep(data->die / 10);
 	}
 	return (NULL);

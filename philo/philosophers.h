@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philosophers.h                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: smelicha <smelicha@student.42heilbronn.    +#+  +:+       +#+        */
+/*   By: stepan <stepan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/15 17:59:11 by smelicha          #+#    #+#             */
-/*   Updated: 2024/02/27 18:22:19 by smelicha         ###   ########.fr       */
+/*   Updated: 2024/02/29 01:27:12 by stepan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,8 @@ typedef struct s_data
 	pthread_t		grim_reaper;
 	char			*overeaters;
 	pthread_mutex_t	print;
+	pthread_mutex_t	*philo_data_mutex;
+	pthread_mutex_t
 	char			*forks;
 	t_philo			*philos;
 }	t_data;

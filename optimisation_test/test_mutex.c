@@ -1,3 +1,8 @@
+/*
+Program to test how much time in microseconds does it take to lock
+and unlock mutex with optional number of threads. Output is average
+of 10 samples from each thread.
+*/
 #include<pthread.h>
 #include<stdio.h>
 #include<stdlib.h>
@@ -37,6 +42,11 @@ typedef struct s_data{
 Tested functions
 */
 
+
+/*
+Util functions
+*/
+
 void	ft_usleep(uint64_t delay)
 {
 	uint64_t	start;
@@ -45,10 +55,6 @@ void	ft_usleep(uint64_t delay)
 	while ((ft_get_utime() - start) < delay)
 		usleep(1);
 }
-
-/*
-Util functions
-*/
 
 //returns miliseconds
 uint64_t	ft_get_time(void)
@@ -229,39 +235,41 @@ int	thread(void *arg)
 	int				i;
 	uint64_t		timer_start;
 	uint64_t		timer_end;
-	uint64_t		cummulative_delay_own;
-	uint64_t		cummulative_delay_lib;
+	uint64_t		cummulative_delay_lock;
+	uint64_t		cummulative_delay_unlock;
 	t_data			*data;
 
 	data = (t_data *)arg;
 	timer_start = 0;
 	timer_end = 0;
-	cummulative_delay_own = 0;
-	cummulative_delay_lib = 0;
+	cummulative_delay_lock = 0;
+	cummulative_delay_unlock = 0;
 	pthread_mutex_lock(data->own_mut);
 	data->ready = 1;
 	pthread_mutex_unlock(data->own_mut);
 	i = 10;
 	while(i)
 	{
-		pthread_mutex_lock(data->main_mut);
-		data->main->total_runs++;
-		pthread_mutex_unlock(data->main_mut);
+		pthread_mutex_lock(data->own_mut);
 		i--;
+		pthread_mutex_unlock(data->own_mut);
 
 		timer_start = ft_get_utime();
-		ft_usleep(10000);
+		pthread_mutex_lock(data->main_mut);
+//		usleep(1);
 		timer_end = ft_get_utime();
-		cummulative_delay_own += timer_end - timer_start;
-
+		cummulative_delay_lock += timer_end - timer_start;
+		data->main->total_runs++;
 		timer_start = ft_get_utime();
-		usleep(10000);
+		pthread_mutex_unlock(data->main_mut);
+//		usleep(1);
 		timer_end = ft_get_utime();
-		cummulative_delay_lib += timer_end - timer_start;
+		cummulative_delay_unlock += timer_end - timer_start;
+		usleep(1000);
 	}
+	ft_usleep(100000);
 	pthread_mutex_lock(data->main_mut);
-	printf("Average delay from %i is own:\t%lu\tlib:\t%lu\tdifference: %li\n", data->id, (cummulative_delay_own / 10),
-		(cummulative_delay_lib / 10), (long int)((cummulative_delay_lib / 10) - (cummulative_delay_own / 10)));
+	printf("Average delay from %i for lock:\t%lu\tunlock:\t%lu\n", data->id, (cummulative_delay_lock / 10), (cummulative_delay_unlock / 10));
 	pthread_mutex_unlock(data->main_mut);
 	return (0);
 }
