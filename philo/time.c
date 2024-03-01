@@ -6,7 +6,7 @@
 /*   By: smelicha <smelicha@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/16 19:59:19 by smelicha          #+#    #+#             */
-/*   Updated: 2024/02/19 21:10:05 by smelicha         ###   ########.fr       */
+/*   Updated: 2024/03/01 22:40:55 by smelicha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,13 +25,24 @@ uint64_t	ft_get_time(void)
 		return (0);
 }
 
+uint64_t	ft_get_utime(void)
+{
+	struct timeval	t;
+
+	if (!gettimeofday(&t, NULL))
+		return ((uint64_t)((t.tv_sec * 1000000) + t.tv_usec));
+	else
+		return (0);
+}
+
 void	ft_usleep(uint64_t delay)
 {
 	uint64_t	start;
 
-	start = ft_get_time();
-	while ((ft_get_time() - start) < delay)
-		usleep(5);
+	delay *= 1000;
+	start = ft_get_utime();
+	while ((ft_get_utime() - start) < delay)
+		usleep(1);
 }
 
 void	ft_synchro_start(t_data *data, char w_flag)
