@@ -6,7 +6,7 @@
 /*   By: smelicha <smelicha@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/15 17:59:11 by smelicha          #+#    #+#             */
-/*   Updated: 2024/03/01 22:38:29 by smelicha         ###   ########.fr       */
+/*   Updated: 2024/03/02 19:47:09 by smelicha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,7 @@ typedef struct s_data
 	char			*overeaters;
 	pthread_mutex_t	print;
 	pthread_mutex_t	*philo_data_mutex;
+	pthread_mutex_t	*fork_mutex;
 	char			*forks;
 	t_philo			*philos;
 }	t_data;
@@ -66,6 +67,7 @@ typedef struct s_data
 typedef struct s_philo_arg
 {
 	t_data	*data;
+	t_philo	*philo;
 	int		p_num;
 }	t_philo_arg;
 

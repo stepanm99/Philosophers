@@ -6,7 +6,7 @@
 /*   By: smelicha <smelicha@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/16 19:59:09 by smelicha          #+#    #+#             */
-/*   Updated: 2024/02/27 18:23:18 by smelicha         ###   ########.fr       */
+/*   Updated: 2024/03/02 19:46:14 by smelicha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,12 @@ void	ft_prepare_forks_data(t_data *data)
 {
 	data->forks = malloc(sizeof(char) * data->num_of_philos);
 	if (!data->forks)
+		ft_error(data, ALLOCATION_ERR);
+	data->philo_data_mutex = malloc(sizeof(pthread_mutex_t) * data->num_of_philos);
+	if (!data->philo_data_mutex)
+		ft_error(data, ALLOCATION_ERR);
+	data->fork_mutex = malloc(sizeof(pthread_mutex_t) * data->num_of_philos);
+	if (!data->fork_mutex)
 		ft_error(data, ALLOCATION_ERR);
 }
 

@@ -6,7 +6,7 @@
 /*   By: smelicha <smelicha@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/16 19:59:19 by smelicha          #+#    #+#             */
-/*   Updated: 2024/03/01 22:40:55 by smelicha         ###   ########.fr       */
+/*   Updated: 2024/03/02 20:21:51 by smelicha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ void	ft_synchro_start(t_data *data, char w_flag)
 		{
 			if ((data->delayed_start) <= ft_get_time())
 				break ;
-			usleep(100);
+			ft_usleep(10);
 		}
 	}
 	else
@@ -62,7 +62,7 @@ void	ft_synchro_start(t_data *data, char w_flag)
 		{
 			if ((data->start_time) <= ft_get_time())
 				break ;
-			usleep(100);
+			ft_usleep(10);
 		}
 	}
 }
