@@ -6,7 +6,7 @@
 /*   By: smelicha <smelicha@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/16 19:59:09 by smelicha          #+#    #+#             */
-/*   Updated: 2024/03/02 21:18:55 by smelicha         ###   ########.fr       */
+/*   Updated: 2024/03/02 21:37:37 by smelicha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,8 @@ void	ft_prepare_forks_data(t_data *data)
 	while (i != data->num_of_philos)
 	{
 		data->forks[i] = 0;
+		pthread_mutex_init(&data->philo_data_mutex[i], NULL);
+		pthread_mutex_init(&data->fork_mutex[i], NULL);
 		i++;
 	}
 }
