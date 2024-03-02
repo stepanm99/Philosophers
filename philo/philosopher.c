@@ -6,7 +6,7 @@
 /*   By: smelicha <smelicha@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/17 22:39:08 by smelicha          #+#    #+#             */
-/*   Updated: 2024/03/01 22:38:54 by smelicha         ###   ########.fr       */
+/*   Updated: 2024/03/02 23:21:46 by smelicha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,70 +16,72 @@
 /// @param data Main data struct
 /// @param p_num Number of philosopher
 /// @return 1 if eating successfull, 0 if philo died
-char	ft_eat(t_data *data, int p_num)
+char	ft_eat(t_philo *philo, int p_num)
 {
-	if (ft_death_check(data, p_num))
+	if (ft_death_check(philo))
 		return (0);
 	if (!(p_num % 2))
-		ft_right_first_fork_lock(data, p_num);
+		ft_right_first_fork_lock(philo, p_num);
 	else
-		ft_right_first_fork_lock(data, p_num);
-	if (ft_death_check(data, p_num))
+		ft_left_first_fork_lock(philo, p_num);
+	if (ft_death_check(philo))
 		return (0);
-	ft_eat_dealy_and_stat_update(data, p_num);
-	ft_forks_unlock(data, p_num);
-	ft_sleep(data, p_num);
+	ft_eat_dealy_and_stat_update(philo, p_num);
+	if (!(p_num % 2))
+		ft_forks_release_right_first(philo);
+	else
+		ft_forks_release_left_first(philo);
+	ft_sleep(philo, p_num);
 	return (1);
 }
 
 /// @brief Sleep routine
 /// @param data Main data struct
 /// @param p_num Number of philosopher
-void	ft_sleep(t_data *data, int p_num)
+void	ft_sleep(t_philo *philo, int p_num)
 {
-	if (ft_check_state(data, p_num))
+	if (ft_death_check(philo))
 		return ;
-	pthread_mutex_lock(&data->print);
-	printf("%llu %i is sleeping\n", (ft_get_time() - data->start_time),
+	pthread_mutex_lock(philo->print);
+	printf("%llu %i is sleeping\n", (ft_get_time() - philo->start_time),
 		p_num + 1);
-	pthread_mutex_unlock(&data->print);
-	ft_usleep(data->sleep);
-	ft_think(data, p_num);
+	pthread_mutex_unlock(philo->print);
+	ft_usleep(philo->sleep);
+	ft_think(philo, p_num);
 }
 
 /// @brief Thinking routine
 /// @param data Main data struct
 /// @param p_num Number of philosopher
-void	ft_think(t_data *data, int p_num)
+void	ft_think(t_philo *philo, int p_num)
 {
-	if (ft_check_state(data, p_num))
+	if (ft_death_check(philo))
 		return ;
-	ft_death_check(data, p_num);
-	pthread_mutex_lock(&data->print);
-	printf("%llu %i is thinking\n", (ft_get_time() - data->start_time),
+	pthread_mutex_lock(philo->print);
+	printf("%llu %i is thinking\n", (ft_get_time() - philo->start_time),
 		p_num + 1);
-	pthread_mutex_unlock(&data->print);
+	pthread_mutex_unlock(philo->print);
 }
 
 /// @brief Check if the philo is still alive
 /// @param data Main data struct
 /// @param p_num Number of philosopher
 /// @return 1 if dead, 0 if alive
-char	ft_death_check(t_data *data, int p_num)
+char	ft_death_check(t_philo *philo)
 {
-	pthread_mutex_lock(&data->print);
-	if (data->philos[p_num].state == 0)
+	pthread_mutex_lock(philo->data_mut);
+	if (philo->state == 0)
 	{
-		pthread_mutex_unlock(&data->print);
+		pthread_mutex_unlock(philo->data_mut);
 		return (1);
 	}
-	if ((ft_get_time() - data->philos[p_num].last_eating) > (uint64_t)data->die)
+	if ((ft_get_time() - philo->last_eating) > (uint64_t)philo->die)
 	{
-		data->philos[p_num].state = 0;
-		pthread_mutex_unlock(&data->print);
+		philo->state = 0;
+		pthread_mutex_unlock(philo->data_mut);
 		return (1);
 	}
-	pthread_mutex_unlock(&data->print);
+	pthread_mutex_unlock(philo->data_mut);
 	return (0);
 }
 
@@ -89,22 +91,22 @@ char	ft_death_check(t_data *data, int p_num)
 void	*ft_philosopher(void *arg_ptr)
 {
 	t_philo_arg	*arg;
-	t_data		*data;
+	t_philo		*philo;
 	int			p_num;
 	char		eat_return;
 
 	arg = (t_philo_arg *)arg_ptr;
-	data = arg->data;
+	philo = arg->philo;
 	p_num = arg->p_num;
 	eat_return = 1;
-	pthread_mutex_lock(&data->print);
-	data->philos[p_num].state = 1;
-	pthread_mutex_unlock(&data->print);
-	ft_synchro_start(data, data->philos[p_num].waiter_flag);
+	pthread_mutex_lock(philo->print);
+	philo->state = 1;
+	pthread_mutex_unlock(philo->print);
+	ft_synchro_start(philo->start_time + ((philo->eat / 2) * (p_num % 2)));
 	while (1)
 	{
 		if (eat_return)
-			eat_return = ft_eat(data, p_num);
+			eat_return = ft_eat(philo, philo->number);
 		else
 			break ;
 	}

@@ -6,7 +6,7 @@
 /*   By: smelicha <smelicha@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/16 19:59:19 by smelicha          #+#    #+#             */
-/*   Updated: 2024/03/02 20:21:51 by smelicha         ###   ########.fr       */
+/*   Updated: 2024/03/02 23:20:16 by smelicha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,24 +45,13 @@ void	ft_usleep(uint64_t delay)
 		usleep(1);
 }
 
-void	ft_synchro_start(t_data *data, char w_flag)
+void	ft_synchro_start(uint64_t start_time)
 {
-	if (w_flag)
+	start_time *= 1000;
+	while (1)
 	{
-		while (1)
-		{
-			if ((data->delayed_start) <= ft_get_time())
-				break ;
-			ft_usleep(10);
-		}
-	}
-	else
-	{
-		while (1)
-		{
-			if ((data->start_time) <= ft_get_time())
-				break ;
-			ft_usleep(10);
-		}
+		if (start_time <= ft_get_utime())
+			break ;
+		ft_usleep(10);
 	}
 }

@@ -6,86 +6,77 @@
 /*   By: smelicha <smelicha@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/09 20:51:18 by smelicha          #+#    #+#             */
-/*   Updated: 2024/03/01 22:39:05 by smelicha         ###   ########.fr       */
+/*   Updated: 2024/03/02 23:29:08 by smelicha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers.h"
 
-/// @brief Checks if the philosopher wasn't deemed dead by Grim
-/// @param data Main data struct
-/// @param p_num Number of philosopher
-/// @return 0 if alive, 1 if dead
-char	ft_check_state(t_data *data, int p_num)
-{
-	pthread_mutex_lock(&data->print);
-	if (data->philos[p_num].state)
-	{
-		pthread_mutex_unlock(&data->print);
-		return (0);
-	}
-	pthread_mutex_unlock(&data->print);
-	return (1);
-}
-
 /// @brief Simple routine to unlock forks
 /// @param data Main data struct
 /// @param p_num Number of philosopher
-void	ft_forks_unlock(t_data *data, int p_num)
+void	ft_forks_release_right_first(t_philo *philo)
 {
-	pthread_mutex_lock(&data->print);
-	*data->philos[p_num].left_fork = 0;
-	*data->philos[p_num].right_fork = 0;
-	pthread_mutex_unlock(&data->print);
+	pthread_mutex_lock(philo->right_sfgrd);
+	pthread_mutex_lock(philo->left_sfgrd);
+	philo->left_fork = 0;
+	philo->right_fork = 0;
+	pthread_mutex_unlock(philo->right_sfgrd);
+	pthread_mutex_unlock(philo->left_sfgrd);
+}
+
+void	ft_forks_release_left_first(t_philo *philo)
+{
+	pthread_mutex_lock(philo->left_sfgrd);
+	pthread_mutex_lock(philo->right_sfgrd);
+	philo->left_fork = 0;
+	philo->right_fork = 0;
+	pthread_mutex_unlock(philo->left_sfgrd);
+	pthread_mutex_unlock(philo->right_sfgrd);
 }
 
 /// @brief Prints message that philosopher eats and when
 /// @param data Main data struct
 /// @param p_num Number of philosopher
-void	ft_print_eat_and_delay(t_data *data, int p_num)
+void	ft_print_eat_and_delay(t_philo *philo, int p_num)
 {
-	pthread_mutex_unlock(&data->print);
-	pthread_mutex_lock(&data->print);
-	printf("%llu %i is eating\n", (ft_get_time() - data->start_time),
+	if (ft_death_check(philo))
+		return ;
+	pthread_mutex_lock(philo->print);
+	printf("%llu %i is eating\n", (ft_get_time() - philo->start_time),
 		p_num + 1);
-	pthread_mutex_unlock(&data->print);
-	ft_usleep(data->eat);
-	pthread_mutex_lock(&data->print);
-	data->philos[p_num].ate++;
-	pthread_mutex_unlock(&data->print);
+	pthread_mutex_unlock(philo->print);
+	ft_usleep(philo->eat);
+	pthread_mutex_lock(philo->data_mut);
+	philo->ate++;
+	pthread_mutex_unlock(philo->data_mut);
 }
 
 /// @brief Updates stats, last eating and number of meals, and calls for delay
 /// @param data Main data struct
 /// @param p_num Number of philosopher
-void	ft_eat_dealy_and_stat_update(t_data *data, int p_num)
+void	ft_eat_dealy_and_stat_update(t_philo *philo, int p_num)
 {
-	pthread_mutex_lock(&data->print);
-	if (data->philos[p_num].state)
-		data->philos[p_num].state = 2;
+	pthread_mutex_lock(philo->data_mut);
+	if (!philo->state)
+		{
+			pthread_mutex_unlock(philo->data_mut);
+			return ;
+		}
 	else
-	{
-		pthread_mutex_unlock(&data->print);
-		return ;
-	}
-	ft_print_eat_and_delay(data, p_num);
-	pthread_mutex_lock(&data->print);
-	data->philos[p_num].last_eating = ft_get_time();
-	if (data->philos[p_num].state)
-		data->philos[p_num].state = 1;
-	else
-	{
-		pthread_mutex_unlock(&data->print);
-		return ;
-	}
-	pthread_mutex_unlock(&data->print);
+	ft_print_eat_and_delay(philo, p_num);
+	pthread_mutex_lock(philo->data_mut);
+	philo->last_eating = ft_get_time();
+	pthread_mutex_unlock(philo->data_mut);
 }
 
 /// @brief Prints message that philosopher sleeps and when
 /// @param data Main data struct
 /// @param p_num Number of philosopher
-void	ft_print_take_fork(t_data *data, int p_num)
+void	ft_print_take_fork(t_philo *philo, int p_num)
 {
+	if (ft_death_check(philo))
+		return ;
 	printf("%llu %i has taken a fork\n", (ft_get_time()
-			- data->start_time), p_num + 1);
+			- philo->start_time), p_num + 1);
 }

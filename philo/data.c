@@ -6,7 +6,7 @@
 /*   By: smelicha <smelicha@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/16 19:59:09 by smelicha          #+#    #+#             */
-/*   Updated: 2024/03/02 21:37:37 by smelicha         ###   ########.fr       */
+/*   Updated: 2024/03/02 23:53:56 by smelicha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,12 @@ void	ft_prepare_forks_data(t_data *data)
 	int	i;
 
 	i = 0;
+	data->philos = malloc(sizeof(t_philo) * data->num_of_philos);
+	if (!data->philos)
+		ft_error(data, ALLOCATION_ERR);
+	data->overeaters = malloc(sizeof(char) * data->num_of_philos);
+	if (!data->overeaters)
+		ft_error(data, ALLOCATION_ERR);
 	data->forks = malloc(sizeof(char) * data->num_of_philos);
 	if (!data->forks)
 		ft_error(data, ALLOCATION_ERR);
@@ -46,11 +52,15 @@ void	ft_give_philo_forks(t_data *data, int i)
 	{
 		data->philos[i].right_fork = &data->forks[i - 1];
 		data->philos[i].left_fork = &data->forks[i];
+		data->philos[i].right_sfgrd = &data->fork_mutex[i - 1];
+		data->philos[i].left_sfgrd = &data->fork_mutex[i];
 	}
 	else
 	{
 		data->philos[i].right_fork = &data->forks[data->num_of_philos - 1];
 		data->philos[i].left_fork = &data->forks[i];
+		data->philos[i].right_sfgrd = &data->fork_mutex[data->num_of_philos - 1];
+		data->philos[i].left_sfgrd = &data->fork_mutex[i];
 	}
 }
 
@@ -61,18 +71,16 @@ void	ft_prepare_philos_data(t_data *data)
 	int	i;
 
 	i = 0;
-	data->philos = malloc(sizeof(t_philo) * data->num_of_philos);
-	if (!data->philos)
-		ft_error(data, ALLOCATION_ERR);
-	data->overeaters = malloc(sizeof(char) * data->num_of_philos);
-	if (!data->overeaters)
-		ft_error(data, ALLOCATION_ERR);
 	while (i != data->num_of_philos)
 	{
 		data->philos[i].thread_id = 0;
-		data->philos[i].number = i + 1;
-		data->philos[i].last_eating = 2 * data->num_of_philos;
+		data->philos[i].number = i;
 		data->philos[i].ate = 0;
+		data->philos[i].eat = data->eat;
+		data->philos[i].sleep = data->sleep;
+		data->philos[i].die = data->die;
+		data->philos[i].last_eating = 0; //TODO add function for initialization of thin to main of philo thread
+		data->philos[i].start_time = 0;
 		data->philos[i].state = 0;
 		data->overeaters[i] = 0;
 		ft_give_philo_forks(data, i);

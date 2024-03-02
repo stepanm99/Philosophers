@@ -6,7 +6,7 @@
 /*   By: smelicha <smelicha@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/15 17:59:11 by smelicha          #+#    #+#             */
-/*   Updated: 2024/03/02 19:47:09 by smelicha         ###   ########.fr       */
+/*   Updated: 2024/03/02 23:45:01 by smelicha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,11 +39,18 @@ typedef struct s_philo
 	pthread_t		thread_id;
 	int				number;
 	int				ate;
+	int				eat;
+	int				sleep;
+	int				die;
 	uint64_t		last_eating;
+	uint64_t		start_time;
 	char			state;
-	char			waiter_flag;
 	char			*right_fork;
 	char			*left_fork;
+	pthread_mutex_t	*left_sfgrd;
+	pthread_mutex_t	*right_sfgrd;
+	pthread_mutex_t	*print;
+	pthread_mutex_t	*data_mut;
 }	t_philo;
 
 typedef struct s_data
@@ -77,7 +84,7 @@ int			ft_atoi(const char *str, t_data *data);
 /*Time*/
 uint64_t	ft_get_time(void);
 void		ft_usleep(uint64_t delay);
-void		ft_synchro_start(t_data *data, char w_flag);
+void		ft_synchro_start(uint64_t start_time);
 
 /*Data handling*/
 void		ft_arg_pars(t_data *data, int argc, const char **argv);
@@ -102,17 +109,17 @@ void		ft_wait_for_thread(t_data *data, int p_num);
 
 /*Philosopher functions*/
 void		*ft_philosopher(void *arg_ptr);
-char		ft_eat(t_data *data, int p_num);
-void		ft_sleep(t_data *data, int p_num);
-void		ft_think(t_data *data, int p_num);
-void		ft_forks_unlock(t_data *data, int p_num);
-void		ft_eat_dealy_and_stat_update(t_data *data, int p_num);
-void		ft_right_first_fork_lock(t_data *data, int p_num);
-void		ft_left_first_fork_lock(t_data *data, int p_num);
-char		ft_death_check(t_data *data, int p_num);
-char		ft_check_state(t_data *data, int p_num);
-void		ft_print_take_fork(t_data *data, int p_num);
-void		ft_print_eat_and_delay(t_data *data, int p_num);
+char		ft_eat(t_philo *philo, int p_num);
+void		ft_sleep(t_philo *philo, int p_num);
+void		ft_think(t_philo *philo, int p_num);
+void		ft_forks_release_left_first(t_philo *philo);
+void		ft_forks_release_right_first(t_philo *philo);
+void		ft_eat_dealy_and_stat_update(t_philo *philo, int p_num);
+void		ft_right_first_fork_lock(t_philo *philo, int p_num);
+void		ft_left_first_fork_lock(t_philo *philo, int p_num);
+char		ft_death_check(t_philo *philo);
+void		ft_print_take_fork(t_philo *philo, int p_num);
+void		ft_print_eat_and_delay(t_philo *philo, int p_num);
 
 /*Grim reaper thread function*/
 void		*ft_grim_reaper(t_data *data);

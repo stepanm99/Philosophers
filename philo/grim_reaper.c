@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   grim_reaper.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: stepan <stepan@student.42.fr>              +#+  +:+       +#+        */
+/*   By: smelicha <smelicha@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/17 23:38:01 by smelicha          #+#    #+#             */
-/*   Updated: 2024/02/29 00:22:36 by stepan           ###   ########.fr       */
+/*   Updated: 2024/03/02 23:23:15 by smelicha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,8 +108,7 @@ void	*ft_grim_reaper(t_data *data)
 	int		i;
 
 	i = 0;
-	ft_synchro_start(data, 0);
-	ft_usleep(data->die / 2);
+	ft_synchro_start(data->start_time + (data->die / 2));
 	while (1)
 	{
 		while (i != data->num_of_philos)
