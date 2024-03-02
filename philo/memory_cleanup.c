@@ -6,7 +6,7 @@
 /*   By: smelicha <smelicha@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/14 01:46:35 by smelicha          #+#    #+#             */
-/*   Updated: 2024/02/27 18:29:57 by smelicha         ###   ########.fr       */
+/*   Updated: 2024/03/02 21:14:27 by smelicha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,10 @@ void	ft_free_data(t_data *data, int errno)
 		free(data->philos);
 	if (data->forks)
 		free(data->forks);
+	if (data->philo_data_mutex)
+		free(data->philo_data_mutex);
+	if (data->fork_mutex)
+		free(data->fork_mutex);
 	if (data)
 		free(data);
 }

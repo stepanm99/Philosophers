@@ -6,7 +6,7 @@
 /*   By: smelicha <smelicha@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/16 19:59:09 by smelicha          #+#    #+#             */
-/*   Updated: 2024/03/02 19:46:14 by smelicha         ###   ########.fr       */
+/*   Updated: 2024/03/02 21:18:55 by smelicha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,9 @@
 /// @param data Main data struct
 void	ft_prepare_forks_data(t_data *data)
 {
+	int	i;
+
+	i = 0;
 	data->forks = malloc(sizeof(char) * data->num_of_philos);
 	if (!data->forks)
 		ft_error(data, ALLOCATION_ERR);
@@ -25,6 +28,11 @@ void	ft_prepare_forks_data(t_data *data)
 	data->fork_mutex = malloc(sizeof(pthread_mutex_t) * data->num_of_philos);
 	if (!data->fork_mutex)
 		ft_error(data, ALLOCATION_ERR);
+	while (i != data->num_of_philos)
+	{
+		data->forks[i] = 0;
+		i++;
+	}
 }
 
 /// @brief Gives philosopher acces to forks next to him
