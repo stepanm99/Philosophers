@@ -6,7 +6,7 @@
 /*   By: smelicha <smelicha@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/17 22:39:08 by smelicha          #+#    #+#             */
-/*   Updated: 2024/03/03 20:13:01 by smelicha         ###   ########.fr       */
+/*   Updated: 2024/03/03 21:30:30 by smelicha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,6 +102,9 @@ void	*ft_philosopher(void *arg_ptr)
 	pthread_mutex_lock(philo->data_mut);
 	philo->state = 1;
 	pthread_mutex_unlock(philo->data_mut);
+	pthread_mutex_lock(philo->print);
+	printf("Philo started at %llu\n", ft_get_time() - philo->start_time);
+	pthread_mutex_unlock(philo->print);
 	ft_synchro_start(philo->start_time + ((philo->eat / 2) * (p_num % 2)));
 	while (1)
 	{

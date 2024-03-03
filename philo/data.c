@@ -6,7 +6,7 @@
 /*   By: smelicha <smelicha@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/16 19:59:09 by smelicha          #+#    #+#             */
-/*   Updated: 2024/03/03 20:41:50 by smelicha         ###   ########.fr       */
+/*   Updated: 2024/03/03 21:31:29 by smelicha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,6 +84,7 @@ void	ft_prepare_philos_data(t_data *data)
 		data->philos[i].state = 0;
 		data->overeaters[i] = 0;
 		data->philos[i].data_mut = &data->philo_data_mutex[i];
+		data->philos[i].print = &data->print;
 		ft_give_philo_forks(data, i);
 		i++;
 	}
