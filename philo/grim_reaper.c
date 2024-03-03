@@ -6,7 +6,7 @@
 /*   By: smelicha <smelicha@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/17 23:38:01 by smelicha          #+#    #+#             */
-/*   Updated: 2024/03/03 20:40:35 by smelicha         ###   ########.fr       */
+/*   Updated: 2024/03/03 21:41:39 by smelicha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,15 +118,15 @@ void	*ft_grim_reaper(t_data *data)
 		{
 			if (ft_check_last_eating(data, i))
 				return (NULL);
-			pthread_mutex_lock(&data->print);
+			pthread_mutex_lock(&data->philo_data_mutex[i]);
 			if (data->must_eat && data->philos[i].ate >= data->must_eat)
 			{
-				pthread_mutex_unlock(&data->print);
+				pthread_mutex_unlock(&data->philo_data_mutex[i]);
 				if (obesity_alert(data, i))
 					return (NULL);
 			}
 			else
-				pthread_mutex_unlock(&data->print);
+				pthread_mutex_unlock(&data->philo_data_mutex[i]);
 			i++;
 		}
 		i = 0;
