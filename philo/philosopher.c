@@ -6,7 +6,7 @@
 /*   By: smelicha <smelicha@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/17 22:39:08 by smelicha          #+#    #+#             */
-/*   Updated: 2024/03/02 23:21:46 by smelicha         ###   ########.fr       */
+/*   Updated: 2024/03/03 20:13:01 by smelicha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,9 +99,9 @@ void	*ft_philosopher(void *arg_ptr)
 	philo = arg->philo;
 	p_num = arg->p_num;
 	eat_return = 1;
-	pthread_mutex_lock(philo->print);
+	pthread_mutex_lock(philo->data_mut);
 	philo->state = 1;
-	pthread_mutex_unlock(philo->print);
+	pthread_mutex_unlock(philo->data_mut);
 	ft_synchro_start(philo->start_time + ((philo->eat / 2) * (p_num % 2)));
 	while (1)
 	{

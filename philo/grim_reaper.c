@@ -6,7 +6,7 @@
 /*   By: smelicha <smelicha@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/17 23:38:01 by smelicha          #+#    #+#             */
-/*   Updated: 2024/03/02 23:23:15 by smelicha         ###   ########.fr       */
+/*   Updated: 2024/03/03 18:17:31 by smelicha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,9 +49,9 @@ void	ft_funeral(t_data *data, int carcass_nr, char print)
 	}
 	while (i != data->num_of_philos)
 	{
-		pthread_mutex_lock(&data->print);
+		pthread_mutex_lock(&data->philo_data_mutex[i]);
 		data->philos[i].state = 0;
-		pthread_mutex_unlock(&data->print);
+		pthread_mutex_unlock(&data->philo_data_mutex[i]);
 		i++;
 	}
 	return ;
@@ -88,15 +88,15 @@ char	obesity_alert(t_data *data, int fatty_nr)
 /// @return 1 when philo starved to death, 0 if philo is OK
 static char	ft_check_last_eating(t_data *data, int i)
 {
-	pthread_mutex_lock(&data->print);
+	pthread_mutex_lock(&data->philo_data_mutex[i]);
 	if (((ft_get_time() - data->philos[i].last_eating > (uint64_t)data->die)
 			|| !data->philos[i].state) && data->philos[i].state != 2)
 	{
-		pthread_mutex_unlock(&data->print);
+		pthread_mutex_unlock(&data->philo_data_mutex[i]);
 		ft_funeral(data, i, 1);
 		return (1);
 	}
-	pthread_mutex_unlock(&data->print);
+	pthread_mutex_unlock(&data->philo_data_mutex[i]);
 	return (0);
 }
 

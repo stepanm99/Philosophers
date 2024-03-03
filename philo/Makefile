@@ -15,12 +15,12 @@ all: $(NAME)
 
 $(NAME): $(OBJ)
 	@echo "Linking $@"
-	@$(CC) $(OBJ) $(FLAGS) -o $(NAME)
+	@$(CC) $(OBJ) $(DFLAGS) -o $(NAME)
 	@echo "Done!"
 
 %.o: %.c
 	@echo "Compiling $<"
-	@$(CC) $(FLAGS) $(PRINT_FLAG) -c $< -o $@
+	@$(CC) $(DFLAGS) $(PRINT_FLAG) -c $< -o $@
 
 clean:
 	@rm -f $(OBJ)
