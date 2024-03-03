@@ -6,7 +6,7 @@
 /*   By: smelicha <smelicha@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/15 17:59:11 by smelicha          #+#    #+#             */
-/*   Updated: 2024/03/02 23:45:01 by smelicha         ###   ########.fr       */
+/*   Updated: 2024/03/03 20:29:32 by smelicha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,6 +83,7 @@ int			ft_atoi(const char *str, t_data *data);
 
 /*Time*/
 uint64_t	ft_get_time(void);
+uint64_t	ft_get_utime(void);
 void		ft_usleep(uint64_t delay);
 void		ft_synchro_start(uint64_t start_time);
 
@@ -99,12 +100,6 @@ void		ft_single_philo(t_data *data);
 
 /*Philosopher thread deploying*/
 void		ft_deploy_philosophers(t_data *data);
-void		deploy_eaters(t_data *data);
-void		deploy_rest(t_data *data);
-void		ft_odd_deploy_loop(t_data *data, t_philo_arg arg, int i,
-				char w_flag);
-void		ft_even_deploy_loop(t_data *data, t_philo_arg arg, int i,
-				char w_flag);
 void		ft_wait_for_thread(t_data *data, int p_num);
 
 /*Philosopher functions*/

@@ -6,7 +6,7 @@
 /*   By: smelicha <smelicha@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/17 23:38:01 by smelicha          #+#    #+#             */
-/*   Updated: 2024/03/03 18:17:31 by smelicha         ###   ########.fr       */
+/*   Updated: 2024/03/03 20:40:35 by smelicha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,6 +109,9 @@ void	*ft_grim_reaper(t_data *data)
 
 	i = 0;
 	ft_synchro_start(data->start_time + (data->die / 2));
+	pthread_mutex_lock(&data->print);
+	printf("Grim reaper started at %llu\n", ft_get_time() - data->start_time);
+	pthread_mutex_unlock(&data->print);
 	while (1)
 	{
 		while (i != data->num_of_philos)
