@@ -6,7 +6,7 @@
 /*   By: smelicha <smelicha@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/09 20:51:18 by smelicha          #+#    #+#             */
-/*   Updated: 2024/03/02 23:29:08 by smelicha         ###   ########.fr       */
+/*   Updated: 2024/03/03 21:12:22 by smelicha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,7 @@ void	ft_eat_dealy_and_stat_update(t_philo *philo, int p_num)
 			return ;
 		}
 	else
+		pthread_mutex_unlock(philo->data_mut);
 	ft_print_eat_and_delay(philo, p_num);
 	pthread_mutex_lock(philo->data_mut);
 	philo->last_eating = ft_get_time();
