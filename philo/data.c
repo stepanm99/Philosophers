@@ -6,7 +6,7 @@
 /*   By: smelicha <smelicha@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/16 19:59:09 by smelicha          #+#    #+#             */
-/*   Updated: 2024/03/03 22:45:21 by smelicha         ###   ########.fr       */
+/*   Updated: 2024/03/04 23:00:18 by smelicha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,7 @@ void	ft_prepare_philos_data(t_data *data)
 		data->philos[i].die = data->die;
 		data->philos[i].last_eating = data->start_time;
 		data->philos[i].start_time = data->start_time;
-		data->philos[i].state = 0;
+		data->philos[i].state = 2;
 		data->overeaters[i] = 0;
 		data->philos[i].data_mut = &data->philo_data_mutex[i];
 		data->philos[i].print = &data->print;

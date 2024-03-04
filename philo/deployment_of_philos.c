@@ -6,7 +6,7 @@
 /*   By: smelicha <smelicha@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/17 22:40:52 by smelicha          #+#    #+#             */
-/*   Updated: 2024/03/03 18:23:13 by smelicha         ###   ########.fr       */
+/*   Updated: 2024/03/04 23:00:06 by smelicha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,6 @@ void	ft_deploy_philosophers(t_data *data)
 	{
 		arg.p_num = i;
 		arg.philo = &data->philos[i];
-		data->philos[i].last_eating = data->start_time;
-		data->philos[i].state = 2;
 		pthread_create(&data->philos[i].thread_id, NULL,
 			(void *)&ft_philosopher, &arg);
 		ft_wait_for_thread(data, i);

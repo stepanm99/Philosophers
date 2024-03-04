@@ -6,7 +6,7 @@
 /*   By: smelicha <smelicha@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/09 20:51:18 by smelicha          #+#    #+#             */
-/*   Updated: 2024/03/04 22:16:52 by smelicha         ###   ########.fr       */
+/*   Updated: 2024/03/04 23:02:12 by smelicha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,8 @@ void	ft_forks_release_right_first(t_philo *philo)
 {
 	pthread_mutex_lock(philo->right_sfgrd);
 	pthread_mutex_lock(philo->left_sfgrd);
-	philo->left_fork = 0;
-	philo->right_fork = 0;
+	*philo->left_fork = 0;
+	*philo->right_fork = 0;
 	pthread_mutex_unlock(philo->right_sfgrd);
 	pthread_mutex_unlock(philo->left_sfgrd);
 }
@@ -29,8 +29,8 @@ void	ft_forks_release_left_first(t_philo *philo)
 {
 	pthread_mutex_lock(philo->left_sfgrd);
 	pthread_mutex_lock(philo->right_sfgrd);
-	philo->left_fork = 0;
-	philo->right_fork = 0;
+	*philo->left_fork = 0;
+	*philo->right_fork = 0;
 	pthread_mutex_unlock(philo->left_sfgrd);
 	pthread_mutex_unlock(philo->right_sfgrd);
 }
