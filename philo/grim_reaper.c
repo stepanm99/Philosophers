@@ -6,7 +6,7 @@
 /*   By: smelicha <smelicha@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/17 23:38:01 by smelicha          #+#    #+#             */
-/*   Updated: 2024/03/03 21:41:39 by smelicha         ###   ########.fr       */
+/*   Updated: 2024/03/04 22:48:37 by smelicha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,8 +89,8 @@ char	obesity_alert(t_data *data, int fatty_nr)
 static char	ft_check_last_eating(t_data *data, int i)
 {
 	pthread_mutex_lock(&data->philo_data_mutex[i]);
-	if (((ft_get_time() - data->philos[i].last_eating > (uint64_t)data->die)
-			|| !data->philos[i].state) && data->philos[i].state != 2)
+	if ((ft_get_time() - data->philos[i].last_eating > (uint64_t)data->die)
+			|| !data->philos[i].state)
 	{
 		pthread_mutex_unlock(&data->philo_data_mutex[i]);
 		ft_funeral(data, i, 1);
@@ -109,9 +109,9 @@ void	*ft_grim_reaper(t_data *data)
 
 	i = 0;
 	ft_synchro_start(data->start_time + (data->die / 2));
-	pthread_mutex_lock(&data->print);
-	printf("Grim reaper started at %llu\n", ft_get_time() - data->start_time);
-	pthread_mutex_unlock(&data->print);
+	// pthread_mutex_lock(&data->print);
+	// printf("Grim reaper started at %llu\n", ft_get_time() - data->start_time);
+	// pthread_mutex_unlock(&data->print);
 	while (1)
 	{
 		while (i != data->num_of_philos)

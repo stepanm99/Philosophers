@@ -6,7 +6,7 @@
 /*   By: smelicha <smelicha@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/17 22:39:08 by smelicha          #+#    #+#             */
-/*   Updated: 2024/03/03 23:13:00 by smelicha         ###   ########.fr       */
+/*   Updated: 2024/03/04 22:47:00 by smelicha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,18 +102,18 @@ void	*ft_philosopher(void *arg_ptr)
 	pthread_mutex_lock(philo->data_mut);
 	philo->state = 1;
 	pthread_mutex_unlock(philo->data_mut);
-	pthread_mutex_lock(philo->print);
-	printf("(philo->eat / 2) * (p_num %% 2) is %i\n", ((philo->eat / 2) * (p_num % 2)));
-	pthread_mutex_unlock(philo->print);
-	ft_synchro_start(philo->start_time + ((philo->eat / 2) * (p_num % 2)));
-	pthread_mutex_lock(philo->print);
-	printf("After synchro start\n");
-	pthread_mutex_unlock(philo->print);
+	// pthread_mutex_lock(philo->print);
+	// printf("(philo->eat / 2) * (p_num %% 2) is %llu\n", (uint64_t)((philo->eat / 2) * (p_num % 2)));
+	// pthread_mutex_unlock(philo->print);
+	ft_synchro_start((philo->start_time + (uint64_t)((philo->eat / 2) * (p_num % 2))));
+	// pthread_mutex_lock(philo->print);
+	// printf("After synchro start\n");
+	// pthread_mutex_unlock(philo->print);
 	while (1)
 	{
-		pthread_mutex_lock(philo->print);
-		printf("eat_return: %i\n", eat_return);
-		pthread_mutex_unlock(philo->print);
+		// pthread_mutex_lock(philo->print);
+		// printf("eat_return: %i\n", eat_return);
+		// pthread_mutex_unlock(philo->print);
 		if (eat_return)
 			eat_return = ft_eat(philo, philo->number);
 		else

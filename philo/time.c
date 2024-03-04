@@ -6,7 +6,7 @@
 /*   By: smelicha <smelicha@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/16 19:59:19 by smelicha          #+#    #+#             */
-/*   Updated: 2024/03/02 23:20:16 by smelicha         ###   ########.fr       */
+/*   Updated: 2024/03/04 22:47:41 by smelicha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,10 +47,9 @@ void	ft_usleep(uint64_t delay)
 
 void	ft_synchro_start(uint64_t start_time)
 {
-	start_time *= 1000;
 	while (1)
 	{
-		if (start_time <= ft_get_utime())
+		if (start_time <= ft_get_time())
 			break ;
 		ft_usleep(10);
 	}

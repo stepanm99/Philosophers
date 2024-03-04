@@ -6,7 +6,7 @@ SRC = main.c arg_parsing.c data.c deployment_utils.c error.c time.c \
 
 CC = cc
 FLAGS = -Wall -Wextra -Werror -g
-DFLAGS = -Wall -Wextra -Werror -g -fsanitize=address -static-libsan
+DFLAGS = -Wall -Wextra -Werror -g# -fsanitize=address -static-libsan
 PRINT_FLAG = -D PRINT_NUMBER_OF_EATS=1
 
 OBJ = $(SRC:.c=.o)
