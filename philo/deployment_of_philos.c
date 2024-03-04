@@ -6,7 +6,7 @@
 /*   By: smelicha <smelicha@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/17 22:40:52 by smelicha          #+#    #+#             */
-/*   Updated: 2024/03/04 23:00:06 by smelicha         ###   ########.fr       */
+/*   Updated: 2024/03/04 23:52:37 by smelicha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ void	ft_deploy_philosophers(t_data *data)
 		ft_wait_for_thread(data, i);
 		i++;
 	}
+	data->start_time = ft_get_time() + 50;
 	pthread_join(data->grim_reaper, NULL);
 	return ;
 }

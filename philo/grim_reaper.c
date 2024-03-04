@@ -6,11 +6,25 @@
 /*   By: smelicha <smelicha@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/17 23:38:01 by smelicha          #+#    #+#             */
-/*   Updated: 2024/03/04 22:48:37 by smelicha         ###   ########.fr       */
+/*   Updated: 2024/03/04 23:54:58 by smelicha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers.h"
+
+void	ft_print_time_since_last_eating(t_data *data)
+{
+	int	i;
+	
+	i = 0;
+	while (i != data->num_of_philos)
+	{
+		pthread_mutex_lock(&data->print);
+		printf("Time since last eating of %i: %llu\n", i + 1, ft_get_time() - data->philos[i].last_eating);
+		pthread_mutex_unlock(&data->print);
+		i++;
+	}
+}
 
 /// @brief Prints how many times each philosopher ate
 /// @param data Main data struct
@@ -47,6 +61,7 @@ void	ft_funeral(t_data *data, int carcass_nr, char print)
 		printf("%lu %i died\n", t_o_d, carcass_nr + 1);
 		pthread_mutex_unlock(&data->print);
 	}
+//	ft_print_time_since_last_eating(data);
 	while (i != data->num_of_philos)
 	{
 		pthread_mutex_lock(&data->philo_data_mutex[i]);
@@ -108,6 +123,7 @@ void	*ft_grim_reaper(t_data *data)
 	int		i;
 
 	i = 0;
+	ft_wait_for_start_time(&data->start_time);
 	ft_synchro_start(data->start_time + (data->die / 2));
 	// pthread_mutex_lock(&data->print);
 	// printf("Grim reaper started at %llu\n", ft_get_time() - data->start_time);

@@ -6,7 +6,7 @@
 /*   By: smelicha <smelicha@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/15 17:59:18 by smelicha          #+#    #+#             */
-/*   Updated: 2024/03/04 22:46:12 by smelicha         ###   ########.fr       */
+/*   Updated: 2024/03/04 23:39:31 by smelicha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ int	main(int argc, const char **argv)
 		ft_error(data, ALLOCATION_ERR);
 	ft_arg_pars(data, argc, argv);
 	pthread_mutex_init(&data->print, NULL);
-	data->start_time = ft_get_time() + ((data->num_of_philos * 100));
+	data->start_time = 0;
 	ft_prepare_forks_data(data);
 	ft_prepare_philos_data(data);
 //	data->delayed_start = data->start_time + (data->eat / 2);

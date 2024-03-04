@@ -6,7 +6,7 @@
 /*   By: smelicha <smelicha@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/09 20:51:18 by smelicha          #+#    #+#             */
-/*   Updated: 2024/03/04 23:02:12 by smelicha         ###   ########.fr       */
+/*   Updated: 2024/03/04 23:45:09 by smelicha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ void	ft_print_eat_and_delay(t_philo *philo, int p_num)
 	if (ft_death_check(philo))
 		return ;
 	pthread_mutex_lock(philo->print);
-	printf("%llu %i is eating\n", (ft_get_time() - philo->start_time),
+	printf("%llu %i is eating\n", (ft_get_time() - *philo->start_time),
 		p_num + 1);
 	pthread_mutex_unlock(philo->print);
 	ft_usleep(philo->eat);
@@ -59,16 +59,13 @@ void	ft_eat_dealy_and_stat_update(t_philo *philo, int p_num)
 {
 	pthread_mutex_lock(philo->data_mut);
 	if (!philo->state)
-		{
-			pthread_mutex_unlock(philo->data_mut);
-			return ;
-		}
-	else
+	{
 		pthread_mutex_unlock(philo->data_mut);
-	ft_print_eat_and_delay(philo, p_num);
-	pthread_mutex_lock(philo->data_mut);
+		return ;
+	}
 	philo->last_eating = ft_get_time();
 	pthread_mutex_unlock(philo->data_mut);
+	ft_print_eat_and_delay(philo, p_num);
 }
 
 /// @brief Prints message that philosopher sleeps and when
@@ -80,6 +77,6 @@ void	ft_print_take_fork(t_philo *philo, int p_num)
 		return ;
 	pthread_mutex_lock(philo->print);
 	printf("%llu %i has taken a fork\n", (ft_get_time()
-			- philo->start_time), p_num + 1);
+			- *philo->start_time), p_num + 1);
 	pthread_mutex_unlock(philo->print);
 }

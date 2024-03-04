@@ -6,7 +6,7 @@
 /*   By: smelicha <smelicha@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/09 20:51:28 by smelicha          #+#    #+#             */
-/*   Updated: 2024/03/04 23:01:53 by smelicha         ###   ########.fr       */
+/*   Updated: 2024/03/04 23:35:51 by smelicha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ void	ft_right_first_fork_lock(t_philo *philo, int p_num)
 			pthread_mutex_unlock(philo->left_sfgrd);
 			pthread_mutex_unlock(philo->right_sfgrd);
 		}
-		ft_usleep(philo->eat / 10);
+		usleep(1);
 	}
 }
 
@@ -68,6 +68,6 @@ void	ft_left_first_fork_lock(t_philo *philo, int p_num)
 			pthread_mutex_unlock(philo->left_sfgrd);
 			pthread_mutex_unlock(philo->right_sfgrd);
 		}
-		ft_usleep(philo->eat / 10);
+		usleep(1);
 	}
 }

@@ -6,7 +6,7 @@
 /*   By: smelicha <smelicha@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/15 17:59:11 by smelicha          #+#    #+#             */
-/*   Updated: 2024/03/04 22:45:38 by smelicha         ###   ########.fr       */
+/*   Updated: 2024/03/04 23:47:07 by smelicha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ typedef struct s_philo
 	int				sleep;
 	int				die;
 	uint64_t		last_eating;
-	uint64_t		start_time;
+	uint64_t		*start_time;
 	char			state;
 	char			*right_fork;
 	char			*left_fork;
@@ -86,6 +86,7 @@ uint64_t	ft_get_time(void);
 uint64_t	ft_get_utime(void);
 void		ft_usleep(uint64_t delay);
 void		ft_synchro_start(uint64_t start_time);
+void		ft_wait_for_start_time(uint64_t *start_time);
 
 /*Data handling*/
 void		ft_arg_pars(t_data *data, int argc, const char **argv);
