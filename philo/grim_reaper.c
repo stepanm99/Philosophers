@@ -20,7 +20,7 @@ void	ft_print_time_since_last_eating(t_data *data)
 	while (i != data->num_of_philos)
 	{
 		pthread_mutex_lock(&data->print);
-		printf("Time since last eating of %i: %llu\n", i + 1, ft_get_time() - data->philos[i].last_eating);
+		printf("Time since last eating of %i: %lu\n", i + 1, ft_get_time() - data->philos[i].last_eating);
 		pthread_mutex_unlock(&data->print);
 		i++;
 	}
@@ -38,7 +38,9 @@ void	ft_print_philos_stomachs(t_data *data)
 	while (i != data->num_of_philos)
 	{
 		pthread_mutex_lock(&data->print);
+		pthread_mutex_lock(&data->philo_data_mutex[i]);
 		printf("Philo %i ate %i times\n", i + 1, data->philos[i].ate);
+		pthread_mutex_unlock(&data->philo_data_mutex[i]);
 		pthread_mutex_unlock(&data->print);
 		i++;
 	}
@@ -123,10 +125,10 @@ void	*ft_grim_reaper(t_data *data)
 	int		i;
 
 	i = 0;
-	ft_wait_for_start_time(&data->start_time);
+	ft_wait_for_start_time(&data->start_time, &data->print);
 	ft_synchro_start(data->start_time + (data->die / 2));
 	// pthread_mutex_lock(&data->print);
-	// printf("Grim reaper started at %llu\n", ft_get_time() - data->start_time);
+	// printf("Grim reaper started at %lu\n", ft_get_time() - data->start_time);
 	// pthread_mutex_unlock(&data->print);
 	while (1)
 	{

@@ -43,7 +43,7 @@ void	ft_sleep(t_philo *philo, int p_num)
 	if (ft_death_check(philo))
 		return ;
 	pthread_mutex_lock(philo->print);
-	printf("%llu %i is sleeping\n", (ft_get_time() - *philo->start_time),
+	printf("%lu %i is sleeping\n", (ft_get_time() - *philo->start_time),
 		p_num + 1);
 	pthread_mutex_unlock(philo->print);
 	ft_usleep(philo->sleep);
@@ -58,7 +58,7 @@ void	ft_think(t_philo *philo, int p_num)
 	if (ft_death_check(philo))
 		return ;
 	pthread_mutex_lock(philo->print);
-	printf("%llu %i is thinking\n", (ft_get_time() - *philo->start_time),
+	printf("%lu %i is thinking\n", (ft_get_time() - *philo->start_time),
 		p_num + 1);
 	pthread_mutex_unlock(philo->print);
 }
@@ -105,9 +105,9 @@ void	*ft_philosopher(void *arg_ptr)
 	philo->state = 1;
 	pthread_mutex_unlock(philo->data_mut);
 	// pthread_mutex_lock(philo->print);
-	// printf("(philo->eat / 2) * (p_num %% 2) is %llu\n", (uint64_t)((philo->eat / 2) * (p_num % 2)));
+	// printf("(philo->eat / 2) * (p_num %% 2) is %lu\n", (uint64_t)((philo->eat / 2) * (p_num % 2)));
 	// pthread_mutex_unlock(philo->print);
-	ft_wait_for_start_time(philo->start_time);
+	ft_wait_for_start_time(philo->start_time, philo->print);
 	ft_synchro_start((*philo->start_time + (uint64_t)((philo->eat / 2) * (p_num % 2))));
 	// pthread_mutex_lock(philo->print);
 	// printf("After synchro start\n");

@@ -43,7 +43,7 @@ void	ft_print_eat_and_delay(t_philo *philo, int p_num)
 	if (ft_death_check(philo))
 		return ;
 	pthread_mutex_lock(philo->print);
-	printf("%llu %i is eating\n", (ft_get_time() - *philo->start_time),
+	printf("%lu %i is eating\n", (ft_get_time() - *philo->start_time),
 		p_num + 1);
 	pthread_mutex_unlock(philo->print);
 	ft_usleep(philo->eat);
@@ -76,7 +76,7 @@ void	ft_print_take_fork(t_philo *philo, int p_num)
 	if (ft_death_check(philo))
 		return ;
 	pthread_mutex_lock(philo->print);
-	printf("%llu %i has taken a fork\n", (ft_get_time()
+	printf("%lu %i has taken a fork\n", (ft_get_time()
 			- *philo->start_time), p_num + 1);
 	pthread_mutex_unlock(philo->print);
 }

@@ -45,8 +45,19 @@ void	ft_usleep(uint64_t delay)
 		usleep(1);
 }
 
-void	ft_wait_for_start_time(uint64_t *start_time)
+void	ft_wait_for_start_time(uint64_t *start_time, pthread_mutex_t *lock)
 {
+	while (1)
+	{
+		pthread_mutex_lock(lock);
+		if (*start_time != 0)
+		{
+			pthread_mutex_unlock(lock);
+			break ;
+		}
+		pthread_mutex_unlock(lock);
+		ft_usleep(5);
+	}
 	while (*start_time == 0)
 		ft_usleep(5);
 }

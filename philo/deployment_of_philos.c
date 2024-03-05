@@ -31,7 +31,9 @@ void	ft_deploy_philosophers(t_data *data)
 		ft_wait_for_thread(data, i);
 		i++;
 	}
+	pthread_mutex_lock(&data->print);
 	data->start_time = ft_get_time() + 50;
+	pthread_mutex_unlock(&data->print);
 	pthread_join(data->grim_reaper, NULL);
 	return ;
 }

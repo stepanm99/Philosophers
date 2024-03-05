@@ -86,7 +86,7 @@ uint64_t	ft_get_time(void);
 uint64_t	ft_get_utime(void);
 void		ft_usleep(uint64_t delay);
 void		ft_synchro_start(uint64_t start_time);
-void		ft_wait_for_start_time(uint64_t *start_time);
+void		ft_wait_for_start_time(uint64_t *start_time, pthread_mutex_t *lock);
 
 /*Data handling*/
 void		ft_arg_pars(t_data *data, int argc, const char **argv);
