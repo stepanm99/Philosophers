@@ -6,7 +6,7 @@
 /*   By: smelicha <smelicha@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/09 20:51:18 by smelicha          #+#    #+#             */
-/*   Updated: 2024/03/06 15:53:55 by smelicha         ###   ########.fr       */
+/*   Updated: 2024/03/06 17:47:16 by smelicha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,9 +40,12 @@ void	ft_forks_release_left_first(t_philo *philo)
 /// @param p_num Number of philosopher
 void	ft_print_eat_and_delay(t_philo *philo, int p_num)
 {
-	if (ft_death_check(philo))
-		return ;
 	pthread_mutex_lock(philo->print);
+	if (ft_death_check(philo))
+	{
+		pthread_mutex_unlock(philo->print);
+		return ;
+	}
 	printf("%llu %i is eating\n", (ft_get_time() - *philo->start_time),
 		p_num + 1);
 	pthread_mutex_unlock(philo->print);
@@ -73,9 +76,12 @@ void	ft_eat_dealy_and_stat_update(t_philo *philo, int p_num)
 /// @param p_num Number of philosopher
 void	ft_print_take_fork(t_philo *philo, int p_num)
 {
-	if (ft_death_check(philo))
-		return ;
 	pthread_mutex_lock(philo->print);
+	if (ft_death_check(philo))
+	{
+		pthread_mutex_unlock(philo->print);
+		return ;
+	}
 	printf("%llu %i has taken a fork\n", (ft_get_time()
 			- *philo->start_time), p_num + 1);
 	pthread_mutex_unlock(philo->print);

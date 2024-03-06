@@ -6,7 +6,7 @@
 /*   By: smelicha <smelicha@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/17 22:39:08 by smelicha          #+#    #+#             */
-/*   Updated: 2024/03/06 17:17:20 by smelicha         ###   ########.fr       */
+/*   Updated: 2024/03/06 17:46:52 by smelicha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,9 +40,12 @@ char	ft_eat(t_philo *philo, int p_num)
 /// @param p_num Number of philosopher
 void	ft_sleep(t_philo *philo, int p_num)
 {
-	if (ft_death_check(philo))
-		return ;
 	pthread_mutex_lock(philo->print);
+	if (ft_death_check(philo))
+	{
+		pthread_mutex_unlock(philo->print);
+		return ;
+	}
 	printf("%llu %i is sleeping\n", (ft_get_time() - *philo->start_time),
 		p_num + 1);
 	pthread_mutex_unlock(philo->print);
@@ -55,9 +58,12 @@ void	ft_sleep(t_philo *philo, int p_num)
 /// @param p_num Number of philosopher
 void	ft_think(t_philo *philo, int p_num)
 {
-	if (ft_death_check(philo))
-		return ;
 	pthread_mutex_lock(philo->print);
+	if (ft_death_check(philo))
+	{
+		pthread_mutex_unlock(philo->print);
+		return ;
+	}
 	printf("%llu %i is thinking\n", (ft_get_time() - *philo->start_time),
 		p_num + 1);
 	pthread_mutex_unlock(philo->print);
@@ -72,12 +78,6 @@ char	ft_death_check(t_philo *philo)
 	pthread_mutex_lock(philo->data_mut);
 	if (philo->state == 0)
 	{
-		pthread_mutex_unlock(philo->data_mut);
-		return (1);
-	}
-	if ((ft_get_time() - philo->last_eating) > (uint64_t)philo->die)
-	{
-		philo->state = 0;
 		pthread_mutex_unlock(philo->data_mut);
 		return (1);
 	}
