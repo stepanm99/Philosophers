@@ -6,7 +6,7 @@
 /*   By: smelicha <smelicha@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/17 23:38:01 by smelicha          #+#    #+#             */
-/*   Updated: 2024/03/04 23:54:58 by smelicha         ###   ########.fr       */
+/*   Updated: 2024/03/06 17:12:47 by smelicha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,12 +15,13 @@
 void	ft_print_time_since_last_eating(t_data *data)
 {
 	int	i;
-	
+
 	i = 0;
 	while (i != data->num_of_philos)
 	{
 		pthread_mutex_lock(&data->print);
-		printf("Time since last eating of %i: %lu\n", i + 1, ft_get_time() - data->philos[i].last_eating);
+		printf("Time since last eating of %i: %llu\n", i + 1,
+			ft_get_time() - data->philos[i].last_eating);
 		pthread_mutex_unlock(&data->print);
 		i++;
 	}
@@ -63,7 +64,6 @@ void	ft_funeral(t_data *data, int carcass_nr, char print)
 		printf("%lu %i died\n", t_o_d, carcass_nr + 1);
 		pthread_mutex_unlock(&data->print);
 	}
-//	ft_print_time_since_last_eating(data);
 	while (i != data->num_of_philos)
 	{
 		pthread_mutex_lock(&data->philo_data_mutex[i]);
@@ -107,7 +107,7 @@ static char	ft_check_last_eating(t_data *data, int i)
 {
 	pthread_mutex_lock(&data->philo_data_mutex[i]);
 	if ((ft_get_time() - data->philos[i].last_eating > (uint64_t)data->die)
-			|| !data->philos[i].state)
+		|| !data->philos[i].state)
 	{
 		pthread_mutex_unlock(&data->philo_data_mutex[i]);
 		ft_funeral(data, i, 1);
@@ -117,38 +117,40 @@ static char	ft_check_last_eating(t_data *data, int i)
 	return (0);
 }
 
-/// @brief Function of the thread that takes care of the dead
-/// @param data Main data struct
-/// @return NULL (always)
-void	*ft_grim_reaper(t_data *data)
+void	ft_grim_loop(t_data *data)
 {
-	int		i;
+	int	i;
 
 	i = 0;
-	ft_wait_for_start_time(&data->start_time, &data->print);
-	ft_synchro_start(data->start_time + (data->die / 2));
-	// pthread_mutex_lock(&data->print);
-	// printf("Grim reaper started at %lu\n", ft_get_time() - data->start_time);
-	// pthread_mutex_unlock(&data->print);
 	while (1)
 	{
 		while (i != data->num_of_philos)
 		{
 			if (ft_check_last_eating(data, i))
-				return (NULL);
+				return ;
 			pthread_mutex_lock(&data->philo_data_mutex[i]);
 			if (data->must_eat && data->philos[i].ate >= data->must_eat)
 			{
 				pthread_mutex_unlock(&data->philo_data_mutex[i]);
 				if (obesity_alert(data, i))
-					return (NULL);
+					return ;
 			}
 			else
 				pthread_mutex_unlock(&data->philo_data_mutex[i]);
 			i++;
 		}
 		i = 0;
-		usleep(data->die / 10);
+		usleep(10);
 	}
+}
+
+/// @brief Function of the thread that takes care of the dead
+/// @param data Main data struct
+/// @return NULL (always)
+void	*ft_grim_reaper(t_data *data)
+{
+	ft_wait_for_start_time(&data->start_time, &data->print);
+	ft_synchro_start(data->start_time + (data->die / 2));
+	ft_grim_loop(data);
 	return (NULL);
 }

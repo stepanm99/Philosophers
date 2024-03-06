@@ -6,19 +6,14 @@
 /*   By: smelicha <smelicha@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/16 19:59:09 by smelicha          #+#    #+#             */
-/*   Updated: 2024/03/04 23:44:29 by smelicha         ###   ########.fr       */
+/*   Updated: 2024/03/06 17:06:15 by smelicha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers.h"
 
-/// @brief Allocates memory for mutexes (forks, safegurds, ...)
-/// @param data Main data struct
-void	ft_prepare_forks_data(t_data *data)
+void	ft_allocate_memory(t_data *data)
 {
-	int	i;
-
-	i = 0;
 	data->philos = malloc(sizeof(t_philo) * data->num_of_philos);
 	if (!data->philos)
 		ft_error(data, ALLOCATION_ERR);
@@ -28,12 +23,23 @@ void	ft_prepare_forks_data(t_data *data)
 	data->forks = malloc(sizeof(char) * data->num_of_philos);
 	if (!data->forks)
 		ft_error(data, ALLOCATION_ERR);
-	data->philo_data_mutex = malloc(sizeof(pthread_mutex_t) * data->num_of_philos);
+	data->philo_data_mutex
+		= malloc(sizeof(pthread_mutex_t) * data->num_of_philos);
 	if (!data->philo_data_mutex)
 		ft_error(data, ALLOCATION_ERR);
 	data->fork_mutex = malloc(sizeof(pthread_mutex_t) * data->num_of_philos);
 	if (!data->fork_mutex)
 		ft_error(data, ALLOCATION_ERR);
+}
+
+/// @brief Allocates memory for mutexes (forks, safegurds, ...)
+/// @param data Main data struct
+void	ft_prepare_forks_data(t_data *data)
+{
+	int	i;
+
+	i = 0;
+	ft_allocate_memory(data);
 	while (i != data->num_of_philos)
 	{
 		data->forks[i] = 0;
@@ -59,7 +65,8 @@ void	ft_give_philo_forks(t_data *data, int i)
 	{
 		data->philos[i].right_fork = &data->forks[data->num_of_philos - 1];
 		data->philos[i].left_fork = &data->forks[i];
-		data->philos[i].right_sfgrd = &data->fork_mutex[data->num_of_philos - 1];
+		data->philos[i].right_sfgrd
+			= &data->fork_mutex[data->num_of_philos - 1];
 		data->philos[i].left_sfgrd = &data->fork_mutex[i];
 	}
 }

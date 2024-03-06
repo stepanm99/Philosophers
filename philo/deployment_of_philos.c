@@ -6,7 +6,7 @@
 /*   By: smelicha <smelicha@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/17 22:40:52 by smelicha          #+#    #+#             */
-/*   Updated: 2024/03/04 23:52:37 by smelicha         ###   ########.fr       */
+/*   Updated: 2024/03/06 17:06:37 by smelicha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void	ft_deploy_philosophers(t_data *data)
 {
 	int			i;
 	t_philo_arg	arg;
-	
+
 	arg.data = data;
 	i = 0;
 	pthread_create(&data->grim_reaper, NULL, (void *)&ft_grim_reaper, data);

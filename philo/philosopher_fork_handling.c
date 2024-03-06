@@ -6,7 +6,7 @@
 /*   By: smelicha <smelicha@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/09 20:51:28 by smelicha          #+#    #+#             */
-/*   Updated: 2024/03/04 23:35:51 by smelicha         ###   ########.fr       */
+/*   Updated: 2024/03/06 17:17:46 by smelicha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ void	ft_right_first_fork_lock(t_philo *philo, int p_num)
 			return ;
 		pthread_mutex_lock(philo->right_sfgrd);
 		pthread_mutex_lock(philo->left_sfgrd);
-		if (*philo->left_fork == 0 
+		if (*philo->left_fork == 0
 			&& *philo->right_fork == 0)
 		{
 			*philo->left_fork = 1;

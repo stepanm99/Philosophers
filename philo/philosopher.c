@@ -6,7 +6,7 @@
 /*   By: smelicha <smelicha@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/17 22:39:08 by smelicha          #+#    #+#             */
-/*   Updated: 2024/03/04 23:46:40 by smelicha         ###   ########.fr       */
+/*   Updated: 2024/03/06 17:17:20 by smelicha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ void	ft_sleep(t_philo *philo, int p_num)
 	if (ft_death_check(philo))
 		return ;
 	pthread_mutex_lock(philo->print);
-	printf("%lu %i is sleeping\n", (ft_get_time() - *philo->start_time),
+	printf("%llu %i is sleeping\n", (ft_get_time() - *philo->start_time),
 		p_num + 1);
 	pthread_mutex_unlock(philo->print);
 	ft_usleep(philo->sleep);
@@ -58,7 +58,7 @@ void	ft_think(t_philo *philo, int p_num)
 	if (ft_death_check(philo))
 		return ;
 	pthread_mutex_lock(philo->print);
-	printf("%lu %i is thinking\n", (ft_get_time() - *philo->start_time),
+	printf("%llu %i is thinking\n", (ft_get_time() - *philo->start_time),
 		p_num + 1);
 	pthread_mutex_unlock(philo->print);
 }
@@ -85,8 +85,6 @@ char	ft_death_check(t_philo *philo)
 	return (0);
 }
 
-
-
 /// @brief Routine of a single philosopher
 /// @param data Main struct where philosopher finds own data
 /// @param p_num Number of philosopher, used to acces OWN data from array
@@ -104,20 +102,12 @@ void	*ft_philosopher(void *arg_ptr)
 	pthread_mutex_lock(philo->data_mut);
 	philo->state = 1;
 	pthread_mutex_unlock(philo->data_mut);
-	// pthread_mutex_lock(philo->print);
-	// printf("(philo->eat / 2) * (p_num %% 2) is %lu\n", (uint64_t)((philo->eat / 2) * (p_num % 2)));
-	// pthread_mutex_unlock(philo->print);
 	ft_wait_for_start_time(philo->start_time, philo->print);
-	ft_synchro_start((*philo->start_time + (uint64_t)((philo->eat / 2) * (p_num % 2))));
-	// pthread_mutex_lock(philo->print);
-	// printf("After synchro start\n");
-	// pthread_mutex_unlock(philo->print);
+	ft_synchro_start((*philo->start_time
+			+ (uint64_t)((philo->eat / 2) * (p_num % 2))));
 	philo->last_eating = *philo->start_time;
 	while (1)
 	{
-		// pthread_mutex_lock(philo->print);
-		// printf("eat_return: %i\n", eat_return);
-		// pthread_mutex_unlock(philo->print);
 		if (eat_return)
 			eat_return = ft_eat(philo, philo->number);
 		else
