@@ -6,46 +6,11 @@
 /*   By: smelicha <smelicha@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/17 23:38:01 by smelicha          #+#    #+#             */
-/*   Updated: 2024/03/06 17:12:47 by smelicha         ###   ########.fr       */
+/*   Updated: 2024/03/06 18:04:24 by smelicha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers.h"
-
-void	ft_print_time_since_last_eating(t_data *data)
-{
-	int	i;
-
-	i = 0;
-	while (i != data->num_of_philos)
-	{
-		pthread_mutex_lock(&data->print);
-		printf("Time since last eating of %i: %llu\n", i + 1,
-			ft_get_time() - data->philos[i].last_eating);
-		pthread_mutex_unlock(&data->print);
-		i++;
-	}
-}
-
-/// @brief Prints how many times each philosopher ate
-/// @param data Main data struct
-void	ft_print_philos_stomachs(t_data *data)
-{
-	int	i;
-
-	i = 0;
-	if (!PRINT_NUMBER_OF_EATS)
-		return ;
-	while (i != data->num_of_philos)
-	{
-		pthread_mutex_lock(&data->print);
-		pthread_mutex_lock(&data->philo_data_mutex[i]);
-		printf("Philo %i ate %i times\n", i + 1, data->philos[i].ate);
-		pthread_mutex_unlock(&data->philo_data_mutex[i]);
-		pthread_mutex_unlock(&data->print);
-		i++;
-	}
-}
 
 /// @brief Procedure to terminate execution of threads to honor the dead philo
 /// @param data Main data struct
