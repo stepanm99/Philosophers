@@ -6,7 +6,7 @@
 /*   By: smelicha <smelicha@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/15 17:59:11 by smelicha          #+#    #+#             */
-/*   Updated: 2024/03/06 17:18:03 by smelicha         ###   ########.fr       */
+/*   Updated: 2024/03/06 18:25:56 by smelicha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,11 +115,5 @@ void		ft_left_first_fork_lock(t_philo *philo, int p_num);
 char		ft_death_check(t_philo *philo);
 void		ft_print_take_fork(t_philo *philo, int p_num);
 void		ft_print_eat_and_delay(t_philo *philo, int p_num);
-
-/*Grim reaper thread function*/
-void		*ft_grim_reaper(t_data *data);
-void		ft_funeral(t_data *data, int carcass_nr, char print);
-char		obesity_alert(t_data *data, int fatty_nr);
-void		ft_print_philos_stomachs(t_data *data);
 
 #endif

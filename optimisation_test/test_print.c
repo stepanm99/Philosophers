@@ -99,7 +99,7 @@ void	ft_print_uint64(uint64_t num)
 	return ;
 }
 
-//"time from %i is: %lu\n"
+//"time from %i is: %llu\n"
 void	ft_write_message(int id, uint64_t time)
 {
 	write(1, "time from ", 10);
@@ -339,7 +339,7 @@ int	thread(void *arg)
 
 		pthread_mutex_lock(data->main_mut);
 		timer_start = ft_get_utime();
-		printf("time from %i is: %lu\n", data->id, ft_get_time());
+		printf("time from %i is: %llu\n", data->id, ft_get_time());
 		timer_end = ft_get_utime();
 		pthread_mutex_unlock(data->main_mut);
 		cummulative_delay_lib += timer_end - timer_start;
@@ -347,7 +347,7 @@ int	thread(void *arg)
 	}
 	ft_usleep(100000);
 	pthread_mutex_lock(data->main_mut);
-	printf("Average delay from %i is own:\t%lu\tlib:\t%lu\n", data->id, (cummulative_delay_own / 10), (cummulative_delay_lib / 10));
+	printf("Average delay from %i is own:\t%llu\tlib:\t%llu\n", data->id, (cummulative_delay_own / 10), (cummulative_delay_lib / 10));
 	pthread_mutex_unlock(data->main_mut);
 	return (0);
 }
