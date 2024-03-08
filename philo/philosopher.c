@@ -6,7 +6,7 @@
 /*   By: smelicha <smelicha@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/17 22:39:08 by smelicha          #+#    #+#             */
-/*   Updated: 2024/02/20 21:49:20 by smelicha         ###   ########.fr       */
+/*   Updated: 2024/03/08 16:52:17 by smelicha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ void	ft_sleep(t_data *data, int p_num)
 	if (ft_check_state(data, p_num))
 		return ;
 	pthread_mutex_lock(&data->print);
-	printf("%lu %i is sleeping\n", (ft_get_time() - data->start_time),
+	printf("%llu %i is sleeping\n", (ft_get_time() - data->start_time),
 		p_num + 1);
 	pthread_mutex_unlock(&data->print);
 	ft_usleep(data->sleep);
@@ -56,7 +56,7 @@ void	ft_think(t_data *data, int p_num)
 		return ;
 	ft_death_check(data, p_num);
 	pthread_mutex_lock(&data->print);
-	printf("%lu %i is thinking\n", (ft_get_time() - data->start_time),
+	printf("%llu %i is thinking\n", (ft_get_time() - data->start_time),
 		p_num + 1);
 	pthread_mutex_unlock(&data->print);
 }
