@@ -6,7 +6,7 @@
 /*   By: smelicha <smelicha@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/17 22:39:08 by smelicha          #+#    #+#             */
-/*   Updated: 2024/03/06 17:46:52 by smelicha         ###   ########.fr       */
+/*   Updated: 2024/03/08 16:52:17 by smelicha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,8 +46,8 @@ void	ft_sleep(t_philo *philo, int p_num)
 		pthread_mutex_unlock(philo->print);
 		return ;
 	}
-	printf("%llu %i is sleeping\n", (ft_get_time() - *philo->start_time),
-		p_num + 1);
+	pthread_mutex_lock(&data->print);
+	printf("%llu %i is sleeping\n", (ft_get_time() - *philo->start_time), p_num + 1);
 	pthread_mutex_unlock(philo->print);
 	ft_usleep(philo->sleep);
 	ft_think(philo, p_num);
@@ -64,8 +64,9 @@ void	ft_think(t_philo *philo, int p_num)
 		pthread_mutex_unlock(philo->print);
 		return ;
 	}
-	printf("%llu %i is thinking\n", (ft_get_time() - *philo->start_time),
-		p_num + 1);
+	ft_death_check(data, p_num);
+	pthread_mutex_lock(&data->print);
+	printf("%llu %i is thinking\n", (ft_get_time() - *philo->start_time), p_num + 1);
 	pthread_mutex_unlock(philo->print);
 }
 
