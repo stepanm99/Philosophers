@@ -46,7 +46,7 @@ void	ft_sleep(t_philo *philo, int p_num)
 		pthread_mutex_unlock(philo->print);
 		return ;
 	}
-	printf("%llu %i is sleeping\n", (ft_get_time() - *philo->start_time),
+	printf("%lu %i is sleeping\n", (ft_get_time() - *philo->start_time),
 		p_num + 1);
 	pthread_mutex_unlock(philo->print);
 	ft_usleep(philo->sleep);
@@ -64,7 +64,7 @@ void	ft_think(t_philo *philo, int p_num)
 		pthread_mutex_unlock(philo->print);
 		return ;
 	}
-	printf("%llu %i is thinking\n", (ft_get_time() - *philo->start_time),
+	printf("%lu %i is thinking\n", (ft_get_time() - *philo->start_time),
 		p_num + 1);
 	pthread_mutex_unlock(philo->print);
 }
