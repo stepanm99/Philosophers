@@ -20,7 +20,7 @@ void	ft_print_time_since_last_eating(t_data *data)
 	while (i != data->num_of_philos)
 	{
 		pthread_mutex_lock(&data->print);
-		printf("Time since last eating of %i: %llu\n", i + 1,
+		printf("Time since last eating of %i: %lu\n", i + 1,
 			ft_get_time() - data->philos[i].last_eating);
 		pthread_mutex_unlock(&data->print);
 		i++;
