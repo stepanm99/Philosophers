@@ -6,7 +6,7 @@
 /*   By: smelicha <smelicha@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/17 22:39:08 by smelicha          #+#    #+#             */
-/*   Updated: 2024/03/11 18:17:03 by smelicha         ###   ########.fr       */
+/*   Updated: 2024/03/12 22:54:08 by smelicha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,7 @@ void	ft_think(t_philo *philo, int p_num)
 	printf("%llu %i is thinking\n", (ft_get_time() - *philo->start_time),
 		p_num + 1);
 	pthread_mutex_unlock(philo->print);
+	ft_usleep(1);
 }
 
 /// @brief Check if the philo is still alive

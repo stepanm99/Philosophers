@@ -39,12 +39,32 @@ Tested functions
 
 void	ft_usleep(uint64_t delay)
 {
-	uint64_t	start;
+	uint64_t	current;
+	uint64_t	end;
+	uint64_t	rest;
 
-	start = ft_get_utime();
-	while ((ft_get_utime() - start) < delay)
-		usleep(1);
+	current = ft_get_utime();
+	end = current + delay;
+	rest = end - current;
+	while (rest)
+	{
+		usleep(rest / 2);
+		current = ft_get_utime();
+		if (current < end)
+			rest = end - current;
+		else
+			rest = 0;
+	}
 }
+
+// void	ft_usleep(uint64_t delay)
+// {
+// 	uint64_t	start;
+
+// 	start = ft_get_utime();
+// 	while ((ft_get_utime() - start) < delay)
+// 		usleep(1);
+// }
 
 /*
 Util functions
@@ -260,7 +280,7 @@ int	thread(void *arg)
 		cummulative_delay_lib += timer_end - timer_start;
 	}
 	pthread_mutex_lock(data->main_mut);
-	printf("Average delay from %i is own:\t%lu\tlib:\t%lu\tdifference: %li\n", data->id, (cummulative_delay_own / 10),
+	printf("Average delay from %i is own:\t%llu\tlib:\t%llu\tdifference: %li\n", data->id, (cummulative_delay_own / 10),
 		(cummulative_delay_lib / 10), (long int)((cummulative_delay_lib / 10) - (cummulative_delay_own / 10)));
 	pthread_mutex_unlock(data->main_mut);
 	return (0);
