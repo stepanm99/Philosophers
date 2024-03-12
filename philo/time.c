@@ -6,14 +6,13 @@
 /*   By: smelicha <smelicha@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/16 19:59:19 by smelicha          #+#    #+#             */
-/*   Updated: 2024/03/04 23:52:30 by smelicha         ###   ########.fr       */
+/*   Updated: 2024/03/11 18:24:52 by smelicha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers.h"
 
 /// @brief Gets current time since unix epoch in ms
-/// @param 
 /// @return miliseconds since unix epoch
 uint64_t	ft_get_time(void)
 {
@@ -25,6 +24,8 @@ uint64_t	ft_get_time(void)
 		return (0);
 }
 
+/// @brief Return unix time with microsecond accuracy
+/// @return microseconds since unix epoch
 uint64_t	ft_get_utime(void)
 {
 	struct timeval	t;
@@ -35,6 +36,8 @@ uint64_t	ft_get_utime(void)
 		return (0);
 }
 
+/// @brief Functions holds execution of program for delay miliseconds
+/// @param delay number of miliseconds to wait
 void	ft_usleep(uint64_t delay)
 {
 	uint64_t	start;
@@ -45,6 +48,9 @@ void	ft_usleep(uint64_t delay)
 		usleep(1);
 }
 
+/// @brief Function waits until the start time is set, i.e. is not zero
+/// @param start_time pointer to memory location of start time variable
+/// @param lock mutex that gurads the start time variable
 void	ft_wait_for_start_time(uint64_t *start_time, pthread_mutex_t *lock)
 {
 	while (1)
@@ -62,6 +68,8 @@ void	ft_wait_for_start_time(uint64_t *start_time, pthread_mutex_t *lock)
 		ft_usleep(5);
 }
 
+/// @brief Waits until the current time is not equal or greater than start time
+/// @param start_time future point in time when to exit from this function
 void	ft_synchro_start(uint64_t start_time)
 {
 	while (1)

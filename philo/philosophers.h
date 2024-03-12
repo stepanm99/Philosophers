@@ -6,7 +6,7 @@
 /*   By: smelicha <smelicha@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/15 17:59:11 by smelicha          #+#    #+#             */
-/*   Updated: 2024/03/06 17:18:03 by smelicha         ###   ########.fr       */
+/*   Updated: 2024/03/11 18:57:51 by smelicha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,6 @@
 # include <stdlib.h>
 # include <pthread.h>
 # include <sys/time.h>
-# include <stdint.h>
 
 # define ALLOCATION_ERR 1
 # define ARGUMENT_ERR 2
@@ -29,7 +28,8 @@
 #  define PRINT_NUMBER_OF_EATS 0
 # endif
 
-/*state:
+/*Philosopher data struct
+	state:
 	0 - dead
 	1 - alive
 	2 - eating/starting
@@ -53,6 +53,7 @@ typedef struct s_philo
 	pthread_mutex_t	*data_mut;
 }	t_philo;
 
+/*Main data struct*/
 typedef struct s_data
 {
 	int				num_of_philos;
@@ -70,6 +71,7 @@ typedef struct s_data
 	t_philo			*philos;
 }	t_data;
 
+/*Struct for argument given to philo thread function*/
 typedef struct s_philo_arg
 {
 	t_data	*data;
@@ -80,7 +82,7 @@ typedef struct s_philo_arg
 /*Utilities*/
 int			ft_atoi(const char *str, t_data *data);
 
-/*Time*/
+/*Time functions*/
 uint64_t	ft_get_time(void);
 uint64_t	ft_get_utime(void);
 void		ft_usleep(uint64_t delay);
@@ -88,6 +90,7 @@ void		ft_synchro_start(uint64_t start_time);
 void		ft_wait_for_start_time(uint64_t *start_time, pthread_mutex_t *lock);
 
 /*Data handling*/
+void		ft_data_init(t_data *data);
 void		ft_arg_pars(t_data *data, int argc, const char **argv);
 void		ft_free_data(t_data *data, int errno);
 void		ft_destroy_mutexes(t_data *data);
@@ -102,14 +105,14 @@ void		ft_single_philo(t_data *data);
 void		ft_deploy_philosophers(t_data *data);
 void		ft_wait_for_thread(t_data *data, int p_num);
 
-/*Philosopher functions*/
+/*Philosopher thread functions*/
 void		*ft_philosopher(void *arg_ptr);
 char		ft_eat(t_philo *philo, int p_num);
 void		ft_sleep(t_philo *philo, int p_num);
 void		ft_think(t_philo *philo, int p_num);
 void		ft_forks_release_left_first(t_philo *philo);
 void		ft_forks_release_right_first(t_philo *philo);
-void		ft_eat_dealy_and_stat_update(t_philo *philo, int p_num);
+void		ft_eat_delay_and_stat_update(t_philo *philo, int p_num);
 void		ft_right_first_fork_lock(t_philo *philo, int p_num);
 void		ft_left_first_fork_lock(t_philo *philo, int p_num);
 char		ft_death_check(t_philo *philo);

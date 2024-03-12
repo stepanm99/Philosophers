@@ -6,15 +6,14 @@
 /*   By: smelicha <smelicha@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/09 20:51:18 by smelicha          #+#    #+#             */
-/*   Updated: 2024/03/08 16:52:30 by smelicha         ###   ########.fr       */
+/*   Updated: 2024/03/11 18:16:17 by smelicha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers.h"
 
-/// @brief Simple routine to unlock forks
+/// @brief Simple routine to unlock forks starting with right
 /// @param data Main data struct
-/// @param p_num Number of philosopher
 void	ft_forks_release_right_first(t_philo *philo)
 {
 	pthread_mutex_lock(philo->right_sfgrd);
@@ -25,6 +24,8 @@ void	ft_forks_release_right_first(t_philo *philo)
 	pthread_mutex_unlock(philo->left_sfgrd);
 }
 
+/// @brief Simple routine to unlock forks starting with left
+/// @param data Main data struct
 void	ft_forks_release_left_first(t_philo *philo)
 {
 	pthread_mutex_lock(philo->left_sfgrd);
@@ -46,7 +47,7 @@ void	ft_print_eat_and_delay(t_philo *philo, int p_num)
 		pthread_mutex_unlock(philo->print);
 		return ;
 	}
-	printf("%lu %i is eating\n", (ft_get_time() - *philo->start_time),
+	printf("%llu %i is eating\n", (ft_get_time() - *philo->start_time),
 		p_num + 1);
 	pthread_mutex_unlock(philo->print);
 	ft_usleep(philo->eat);
@@ -58,7 +59,7 @@ void	ft_print_eat_and_delay(t_philo *philo, int p_num)
 /// @brief Updates stats, last eating and number of meals, and calls for delay
 /// @param data Main data struct
 /// @param p_num Number of philosopher
-void	ft_eat_dealy_and_stat_update(t_philo *philo, int p_num)
+void	ft_eat_delay_and_stat_update(t_philo *philo, int p_num)
 {
 	pthread_mutex_lock(philo->data_mut);
 	if (!philo->state)
@@ -82,7 +83,7 @@ void	ft_print_take_fork(t_philo *philo, int p_num)
 		pthread_mutex_unlock(philo->print);
 		return ;
 	}
-	printf("%lu %i has taken a fork\n", (ft_get_time()
+	printf("%llu %i has taken a fork\n", (ft_get_time()
 			- *philo->start_time), p_num + 1);
 	pthread_mutex_unlock(philo->print);
 }
