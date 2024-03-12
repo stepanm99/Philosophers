@@ -6,7 +6,7 @@
 /*   By: smelicha <smelicha@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/17 23:38:01 by smelicha          #+#    #+#             */
-/*   Updated: 2024/03/06 18:04:24 by smelicha         ###   ########.fr       */
+/*   Updated: 2024/03/11 18:11:51 by smelicha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 /// @brief Procedure to terminate execution of threads to honor the dead philo
 /// @param data Main data struct
 /// @param carcass_nr Number of dead philosopher
-/// @param print flag in case philos die from obesity
+/// @param print flag in case philos die from obesity (so no need to print die)
 void	ft_funeral(t_data *data, int carcass_nr, char print)
 {
 	int				i;
@@ -115,7 +115,7 @@ void	ft_grim_loop(t_data *data)
 void	*ft_grim_reaper(t_data *data)
 {
 	ft_wait_for_start_time(&data->start_time, &data->print);
-	ft_synchro_start(data->start_time + (data->die / 2));
+	ft_synchro_start(data->start_time + data->die);
 	ft_grim_loop(data);
 	return (NULL);
 }

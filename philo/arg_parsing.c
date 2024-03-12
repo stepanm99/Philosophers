@@ -6,11 +6,21 @@
 /*   By: smelicha <smelicha@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/16 19:59:14 by smelicha          #+#    #+#             */
-/*   Updated: 2024/02/20 18:53:12 by smelicha         ###   ########.fr       */
+/*   Updated: 2024/03/11 18:10:29 by smelicha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers.h"
+
+/// @brief In case of one philosopher, which will die at time to die
+/// @param data Main data struct
+void	ft_single_philo(t_data *data)
+{
+	ft_usleep(data->die);
+	printf("%i 1 died\n", data->die);
+	ft_free_data(data, 2);
+	exit(0);
+}
 
 /// @brief Checks if the argument is number only
 /// @param str String of the input argument

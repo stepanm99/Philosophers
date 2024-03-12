@@ -6,7 +6,7 @@
 /*   By: smelicha <smelicha@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/15 17:59:18 by smelicha          #+#    #+#             */
-/*   Updated: 2024/03/06 17:16:09 by smelicha         ###   ########.fr       */
+/*   Updated: 2024/03/11 18:31:09 by smelicha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@ int	main(int argc, const char **argv)
 	data = malloc(sizeof(t_data));
 	if (!data)
 		ft_error(data, ALLOCATION_ERR);
+	ft_data_init(data);
 	ft_arg_pars(data, argc, argv);
 	pthread_mutex_init(&data->print, NULL);
 	data->start_time = 0;

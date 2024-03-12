@@ -6,12 +6,31 @@
 /*   By: smelicha <smelicha@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/16 19:59:09 by smelicha          #+#    #+#             */
-/*   Updated: 2024/03/06 17:06:15 by smelicha         ###   ########.fr       */
+/*   Updated: 2024/03/11 18:29:55 by smelicha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers.h"
 
+/// @brief Data initialization
+/// @param data main data struct
+void	ft_data_init(t_data *data)
+{
+	data->num_of_philos = 0;
+	data->eat = 0;
+	data->sleep = 0;
+	data->die = 0;
+	data->must_eat = 0;
+	data->start_time = 0;
+	data->overeaters = NULL;
+	data->philo_data_mutex = NULL;
+	data->fork_mutex = NULL;
+	data->forks = NULL;
+	data->philos = NULL;
+}
+
+/// @brief Allocates all memory
+/// @param data Main data struct
 void	ft_allocate_memory(t_data *data)
 {
 	data->philos = malloc(sizeof(t_philo) * data->num_of_philos);

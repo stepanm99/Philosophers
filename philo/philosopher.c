@@ -6,7 +6,7 @@
 /*   By: smelicha <smelicha@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/17 22:39:08 by smelicha          #+#    #+#             */
-/*   Updated: 2024/03/06 17:46:52 by smelicha         ###   ########.fr       */
+/*   Updated: 2024/03/11 18:17:03 by smelicha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ char	ft_eat(t_philo *philo, int p_num)
 		ft_left_first_fork_lock(philo, p_num);
 	if (ft_death_check(philo))
 		return (0);
-	ft_eat_dealy_and_stat_update(philo, p_num);
+	ft_eat_delay_and_stat_update(philo, p_num);
 	if (!(p_num % 2))
 		ft_forks_release_right_first(philo);
 	else
