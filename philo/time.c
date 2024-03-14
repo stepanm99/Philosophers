@@ -6,7 +6,7 @@
 /*   By: smelicha <smelicha@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/16 19:59:19 by smelicha          #+#    #+#             */
-/*   Updated: 2024/03/12 22:41:01 by smelicha         ###   ########.fr       */
+/*   Updated: 2024/03/14 18:42:31 by smelicha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ void	ft_usleep(uint64_t delay)
 	rest = end - current;
 	while (rest)
 	{
-		usleep(rest / 2);
+		usleep((rest / 4) * 3);
 		current = ft_get_utime();
 		if (current < end)
 			rest = end - current;
